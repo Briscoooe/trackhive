@@ -4,7 +4,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['newjams-images.scdn.co'],
+    domains: ['newjams-images.scdn.co', 'i.scdn.co'],
   }
 }
 

@@ -14,7 +14,7 @@ import PlaylistRow from "@/components/PlaylistRow";
 
 export const dynamic = 'force-dynamic'
 
-const token =  "BQDOTIE_nhZYsQr2KkC2yNIC-qF7KY1X9l9bpv1gfUWtKHj3R844SWwomNp0qxm3rI2Ko97yKJAqAsUIpPkgX2fElfjh30Rqw1DHt5xJ_4YDisNG92MGLy6LjvYSZq5dStca8H571SVoeHPFsxTupSPSqgw3xhWSGSvYnjcORCoJDgdl3mPjI7L9x5p3siVmIhKA0_4oGO2MgNgbanZ1seHWaaMvQGSbQzv6DC623p3xNwl_99RhQmRJohvVwtX2"
+const token =  "BQCKQPap8uERfJ95VRTDnKe1EzYstEqFxKlyjvbbGTa0o0KjLohIg7hAGjkNdpVr90kWpRMMn88xgXaaGJvwNbCUopDTdz13ZlMfN6TawuUtbb6cFE2S2RvWSpLXueoRHBJ2R__S8UqYmWDM3sT1LU8ZiErNshp4O10suD9UwwUgEfywNrqMrChkghPKxcsbVoZg5YxzpctKgFRsyWUfDR2yFG-4YXG95lZvjLqA_3xiblIimeGkW997Rnv1xQLo"
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
@@ -29,25 +29,11 @@ export default async function Index() {
 
   const discoverWeekly: SpotifySimplifiedPlaylistObject | null = await getDiscoverWeeklyPlaylist(token)
   const releaseRadar: SpotifySimplifiedPlaylistObject | null = await getReleaseRadarPlaylist(token)
-  const releaseRadarTracks = await getPlaylistTracks(token, releaseRadar?.id as string)
 
   return (
     <div className="w-full flex flex-col items-center space-y-2">
       <PlaylistRow playlist={discoverWeekly} />
       <PlaylistRow playlist={releaseRadar} />
-      {releaseRadarTracks && (
-        <>
-          <span>Release readar tracks</span>
-          {releaseRadarTracks.map((track: SpotifyTrackObject) => {
-            return (
-              <div key={track.id}>
-                {track.name}
-              </div>
-            )
-          })}
-        </>
-      )
-      }
     </div>
   )
 }
