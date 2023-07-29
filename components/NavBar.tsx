@@ -21,10 +21,10 @@ export default async function NavBar() {
         <div>
           {user ? (
             <div className="flex items-center gap-4">
-              <div className={'flex items-center space-x-1'}>
-                <UserIcon className="w-4 h-4 text-gray-600" />
-                <span className={'text-gray-600 text-sm'}>{user.email}</span>
-              </div>
+              {/*<div className={'flex items-center space-x-1'}>*/}
+              {/*  <UserIcon className="w-4 h-4 text-gray-600" />*/}
+              {/*  /!*<span className={'text-gray-600 text-sm'}>{user.email}</span>*!/*/}
+              {/*</div>*/}
               <LogoutButton />
             </div>
           ) : (
