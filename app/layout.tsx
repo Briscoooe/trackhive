@@ -3,9 +3,10 @@ import NavBar from "@/components/NavBar";
 
 export const metadata = {
   title: "Trackhive",
-  description: "Trackhive is a web app to archive Spotify playlists so you never lose your favorite songs.",
+  description:
+    "Trackhive is a web app to archive Spotify playlists so you never lose your favorite songs.",
 };
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export default function RootLayout({
   children,
 }: {

@@ -23,7 +23,7 @@ export default function PlaylistSearch() {
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       <Input
-        className={'text-md'}
+        className={"text-md"}
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={"Search for a playlist"}

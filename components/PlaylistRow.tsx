@@ -11,10 +11,8 @@ import {
   MusicalNoteIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import {
-  CheckBadgeIcon,
-} from "@heroicons/react/24/solid";
-import {getPlaylistTracks, SPOTIFY_OWNER_URI} from "@/app/lib/spotify";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { getPlaylistTracks, SPOTIFY_OWNER_URI } from "@/app/lib/spotify";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
@@ -68,10 +66,9 @@ export default function PlaylistRow({
               <span className={"text-md text-gray-500"}>
                 {playlist.owner.display_name}
               </span>
-              {playlist.owner.uri === SPOTIFY_OWNER_URI &&
-                (
-                  <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
-                )}
+              {playlist.owner.uri === SPOTIFY_OWNER_URI && (
+                <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
+              )}
             </div>
             <div className={"flex flex-row items-center space-x-1"}>
               <MusicalNoteIcon className={"text-gray-500 h-4 w-4"} />

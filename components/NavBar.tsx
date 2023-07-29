@@ -1,9 +1,9 @@
 import HamburgerMenu from "@/components/HamburgerMenu";
 import Link from "next/link";
-import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
-import {cookies} from "next/headers";
-import {UserIcon} from "@heroicons/react/24/outline";
-import {NavBarLink} from "@/components/NavBarLink";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import { UserIcon } from "@heroicons/react/24/outline";
+import { NavBarLink } from "@/components/NavBarLink";
 
 export default async function NavBar() {
   const supabase = createServerComponentClient({ cookies });
