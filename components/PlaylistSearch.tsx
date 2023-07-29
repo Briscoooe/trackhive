@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@/components/Input";
+import { Input } from "@/components/ui/Input";
 import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types";
 import { searchPlaylists } from "@/app/lib/spotify";
