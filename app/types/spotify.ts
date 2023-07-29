@@ -218,3 +218,7 @@ export type SpotifyPlaylistItemsResponse = {
   total: number;
   items: SpotifyPlaylistTrackObject[];
 };
+
+export type SpotifyUserObject = {
+  id: string;
+}

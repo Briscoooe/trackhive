@@ -9,7 +9,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - route for showing playlists being archived
 - footer for about stuff
 - badges underneath search bar for disover weekly
-- Figure out how to make everything server rendered
+- [x] Figure out how to make everything server rendered
 
 # UI bits
 
@@ -24,3 +24,4 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist
 - https://supabase.com/docs/guides/api/rest/generating-types
 - https://nextjs.org/docs/getting-started/react-essentials#client-components
+- https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming

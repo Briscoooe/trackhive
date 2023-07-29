@@ -48,6 +48,20 @@ export default function PlaylistRow({
     }
   }, [isOpen]);
 
+  const handleArchive = async () => {
+    const response = await fetch(
+      `/api/spotify/playlists/${playlist.id}/archive`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+  }
+
   return (
     <div
       className={
@@ -95,7 +109,7 @@ export default function PlaylistRow({
               }`}
             />
           </button>
-          <Button variant={"outline"} className={"mt-auto"}>
+          <Button onClick={handleArchive} variant={"outline"} className={"mt-auto"}>
             Archive
           </Button>
         </div>
