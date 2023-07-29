@@ -19,7 +19,7 @@ export default function TrackRow({
       }
     >
       <div className={"flex flex-row items-center space-x-3"}>
-        <span className={"text-gray-500 text-sm"}>{index + 1}</span>
+        <span className={"text-gray-500 text-sm text-right w-auto"}>{index + 1}</span>
         <img
           src={imgUrl}
           alt={track.name}
