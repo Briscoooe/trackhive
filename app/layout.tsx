@@ -1,4 +1,5 @@
 import './globals.css'
+import NavBar from "@/components/NavBar";
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,7 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main className="min-h-screen bg-background flex flex-col items-center">
-          {children}
+          <NavBar/>
+          <div className="animate-in flex flex-col gap-14 opacity-0 max-w-4xl px-3 py-16 lg:py-24 text-foreground">
+            {children}
+          </div>
         </main>
       </body>
     </html>

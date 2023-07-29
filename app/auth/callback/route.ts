@@ -13,7 +13,8 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = createRouteHandlerClient({ cookies })
-    await supabase.auth.exchangeCodeForSession(code)
+    const authtoekn = await supabase.auth.exchangeCodeForSession(code)
+    console.log('AUTH TOKENNN', authtoekn)
   }
 
   // URL to redirect to after sign in process completes
