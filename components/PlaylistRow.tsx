@@ -12,13 +12,11 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { getPlaylistTracks, SPOTIFY_OWNER_URI } from "@/app/lib/spotify";
+import {isPlaylistOwnedBySpotify} from "@/app/lib/spotify";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
 import { Button } from "@/components/ui/Button";
-import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
-import { getCookie } from "@/app/lib/utils";
 
 export default function PlaylistRow({
   playlist,
@@ -77,7 +75,7 @@ export default function PlaylistRow({
               <span className={"text-md text-gray-500"}>
                 {playlist.owner.display_name}
               </span>
-              {playlist.owner.uri === SPOTIFY_OWNER_URI && (
+              {isPlaylistOwnedBySpotify(playlist) && (
                 <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
               )}
             </div>

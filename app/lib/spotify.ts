@@ -98,3 +98,9 @@ export const getReleaseRadarPlaylist = async (
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
   return await _searchSpotifyOwnedPlaylist(accessToken, RELEASE_RADAR_NAME);
 };
+
+export const isPlaylistOwnedBySpotify = (
+  playlist: SpotifySimplifiedPlaylistObject
+): boolean => {
+  return playlist.owner.uri === SPOTIFY_OWNER_URI;
+}
