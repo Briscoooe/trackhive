@@ -12,7 +12,7 @@ export default async function NavBar() {
     data: { user },
   } = await supabase.auth.getUser();
   return (
-    <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+    <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white">
       <div className="w-full max-w-2xl flex justify-between items-center p-3 text-sm text-foreground">
         <div className={"space-x-1 flex flex-row items-center"}>
           <NavBarLink href={"/"}>Home</NavBarLink>
