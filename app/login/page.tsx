@@ -37,7 +37,7 @@ export default function Login() {
         theme="dark"
         showLinks={false}
         providers={["spotify"]}
-        redirectTo={`${process.env.NEXT_PUBLIC_APP_URL}auth/callback`}
+        redirectTo={`${process.env.NEXT_PUBLIC_SUPABASE_REDIRECT_URL}`}
         providerScopes={{
           spotify:
             "user-read-email,playlist-read-private,playlist-modify-public,playlist-modify-private",
