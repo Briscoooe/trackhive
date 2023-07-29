@@ -15,7 +15,7 @@ export default function TrackRow({
     <div
       key={index}
       className={
-        "flex flex-row items-center justify-between overflow-x-hidden truncate"
+        "flex flex-row items-center justify-between overflow-x-hidden truncate animate-in"
       }
     >
       <div className={"flex flex-row items-center space-x-3"}>

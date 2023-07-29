@@ -44,13 +44,13 @@ export default function PlaylistRow({
   return (
     <div
       className={
-        "w-full border-1 border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
+        "w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
       }
     >
       <div className={"flex flex-row items-start justify-between space-x-4"}>
         <div
           className={
-            "flex flex-row items-start justify-start space-x-2 overflow-y-hidden"
+            "flex flex-row items-start justify-start space-x-2 overflow-x-hidden"
           }
         >
           <img
