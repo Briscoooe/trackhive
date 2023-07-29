@@ -5,7 +5,7 @@ import { SpotifyPlaylistSearchResponse } from "@/app/types";
 import { searchPlaylists } from "@/app/lib/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
 const token =
-  "BQDLIvhPS6nBD-JkGp7R3kI8Qrdaodf8ojIhyyFDRe9Hs-bN2aD42v7QXFzyzFK7sZyuiHHHy6eW21Pi-fnHivZ6fGIXYDko1cguSCm0aOHc42Vosh7co1G70v8xhwEZOQHISr9z0cXKXyzmCsG6RmaR4GdUn9ndRSei-EE1HcapEtA1Nube7LFwst0vWGsxrFjN6T868hyJ-esabRgmzKmGSX9GzouxQ3Hf3HDmLEh7vYCQZDEnSiGWcvraue0R";
+  "BQAt_8ahSNncLZnfZWT8shQvdaF3VnrkZsJAS_1szbcZ570pY8Rineh7-sLTkp_kKU51dp8btaJzHAhTcs5H3-BNfJ4b_1dJ34x4ks97k-y3kJMbOVnY9TJCCwMId7SGXnfOCBZTds70IEUaI7Z9PxNUjn6uPtRC4gPiNWWuGN6n-43cGkUkm3qCZdrh1MoFu11PkYkXhihmyiDtOhMlU7erYCXk6Q5Bw2Ke8OtsPUZI8j963uEO3_nG3VouJZpc";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");

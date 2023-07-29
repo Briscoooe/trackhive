@@ -33,10 +33,10 @@ export const searchPlaylists = async (
 const _searchSpotifyOwnedPlaylist = async (
   accessToken: string,
   query: string
-): Promise<SpotifySimplifiedPlaylistObject | null> => {
+): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
   const playlists = await searchPlaylists(accessToken, query);
   if (!playlists) {
-    return null;
+    return;
   }
   const { items } = playlists;
   return items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
@@ -88,12 +88,12 @@ export const getPlaylistTracks = async (
 
 export const getDiscoverWeeklyPlaylist = async (
   accessToken: string
-): Promise<SpotifySimplifiedPlaylistObject | null> => {
+): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
   return await _searchSpotifyOwnedPlaylist(accessToken, DISCOVER_WEEKLY_NAME);
 };
 
 export const getReleaseRadarPlaylist = async (
   accessToken: string
-): Promise<SpotifySimplifiedPlaylistObject | null> => {
+): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
   return await _searchSpotifyOwnedPlaylist(accessToken, RELEASE_RADAR_NAME);
 };
