@@ -13,8 +13,10 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = createRouteHandlerClient({ cookies })
-    const authtoekn = await supabase.auth.exchangeCodeForSession(code)
-    console.log('AUTH TOKENNN', authtoekn)
+    const authToken = await supabase.auth.exchangeCodeForSession(code)
+    const { provider_token, provider_refresh_token } = authToken.data.session;
+    console.log('provider_token', provider_token)
+    console.log('provider_refresh_token', provider_refresh_token)
   }
 
   // URL to redirect to after sign in process completes

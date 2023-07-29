@@ -38,6 +38,9 @@ export default function Login() {
         showLinks={false}
         providers={['spotify']}
         redirectTo="http://localhost:3000/auth/callback"
+        providerScopes={{
+          spotify: 'user-read-email,playlist-read-private,playlist-modify-public,playlist-modify-private',
+        }}
       />
     </div>
   )
