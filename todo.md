@@ -1,0 +1,1 @@
+https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an-upload-widget
