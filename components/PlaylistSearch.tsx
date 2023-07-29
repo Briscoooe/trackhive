@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Input } from "@/components/ui/Input";
 import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
@@ -11,9 +11,9 @@ export default function PlaylistSearch() {
   useEffect(() => {
     async function search() {
       const response = await fetch(`/api/spotify/search?q=${searchText}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       const data = await response.json();

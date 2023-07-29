@@ -15,8 +15,8 @@ import { GearIcon } from "@radix-ui/react-icons";
 import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
-import {deleteCookie} from "@/app/lib/utils";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
+import { deleteCookie } from "@/app/lib/utils";
 
 export default function HamburgerMenu() {
   const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
@@ -25,7 +25,7 @@ export default function HamburgerMenu() {
   const supabase = createClientComponentClient();
 
   const signOut = async () => {
-    deleteCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME)
+    deleteCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME);
     await supabase.auth.signOut();
     router.refresh();
   };

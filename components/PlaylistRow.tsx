@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
@@ -17,8 +17,8 @@ import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
 import { Button } from "@/components/ui/Button";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
-import {getCookie} from "@/app/lib/utils";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
+import { getCookie } from "@/app/lib/utils";
 
 export default function PlaylistRow({
   playlist,
@@ -33,14 +33,17 @@ export default function PlaylistRow({
 
   useEffect(() => {
     const getTracks = async () => {
-      const response = await fetch(`/api/spotify/playlists/${playlist.id}/tracks`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `/api/spotify/playlists/${playlist.id}/tracks`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
-      setTracks(data)
+      setTracks(data);
     };
     if (isOpen && !tracks.length) {
       getTracks();

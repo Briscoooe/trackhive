@@ -2,7 +2,7 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { Database } from "@/app/types/supabase";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -27,18 +27,16 @@ export async function GET(request: Request) {
     }
     const { provider_token, provider_refresh_token } = session;
 
-    await supabase
-      .from("spotify_auth_tokens")
-      .upsert(
-        {
-          refresh_token: provider_refresh_token,
-          access_token: provider_token,
-          user_id: session.user.id,
-        },
-        { onConflict: "user_id" }
-      );
+    await supabase.from("spotify_auth_tokens").upsert(
+      {
+        refresh_token: provider_refresh_token,
+        access_token: provider_token,
+        user_id: session.user.id,
+      },
+      { onConflict: "user_id" }
+    );
     response.cookies.set({
-      name:SPOTIFY_ACCESS_TOKEN_COOKIE_NAME,
+      name: SPOTIFY_ACCESS_TOKEN_COOKIE_NAME,
       value: provider_token,
     });
   }
