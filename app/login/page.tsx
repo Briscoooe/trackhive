@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import Link from 'next/link'
-import {Auth} from "@supabase/auth-ui-react";
-import {ThemeSupa} from "@supabase/auth-ui-shared";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import Link from "next/link";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 export default function Login() {
-  const supabase = createClientComponentClient()
+  const supabase = createClientComponentClient();
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -27,7 +27,7 @@ export default function Login() {
           className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
         >
           <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
+        </svg>{" "}
         Back
       </Link>
       <Auth
@@ -36,12 +36,13 @@ export default function Login() {
         onlyThirdPartyProviders
         theme="dark"
         showLinks={false}
-        providers={['spotify']}
+        providers={["spotify"]}
         redirectTo="http://localhost:3000/auth/callback"
         providerScopes={{
-          spotify: 'user-read-email,playlist-read-private,playlist-modify-public,playlist-modify-private',
+          spotify:
+            "user-read-email,playlist-read-private,playlist-modify-public,playlist-modify-private",
         }}
       />
     </div>
-  )
+  );
 }
