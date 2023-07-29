@@ -9,7 +9,7 @@ import {
 import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
-} from "@/app/types";
+} from "@/app/types/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
 import PlaylistSearch from "@/components/PlaylistSearch";
 

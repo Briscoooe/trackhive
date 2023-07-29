@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/Input";
 import { useEffect, useState } from "react";
-import { SpotifyPlaylistSearchResponse } from "@/app/types";
+import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
 import { searchPlaylists } from "@/app/lib/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
 const token =

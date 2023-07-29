@@ -2,7 +2,7 @@
 import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
-} from "@/app/types";
+} from "@/app/types/spotify";
 import Image from "next/image";
 import {
   ChevronDownIcon,
@@ -16,6 +16,9 @@ import { getPlaylistTracks, SPOTIFY_OWNER_URI } from "@/app/lib/spotify";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
+import {Button} from "@/components/ui/Button";
+import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
+import {Database} from "@/app/types/supabase";
 const token =
   "BQAt_8ahSNncLZnfZWT8shQvdaF3VnrkZsJAS_1szbcZ570pY8Rineh7-sLTkp_kKU51dp8btaJzHAhTcs5H3-BNfJ4b_1dJ34x4ks97k-y3kJMbOVnY9TJCCwMId7SGXnfOCBZTds70IEUaI7Z9PxNUjn6uPtRC4gPiNWWuGN6n-43cGkUkm3qCZdrh1MoFu11PkYkXhihmyiDtOhMlU7erYCXk6Q5Bw2Ke8OtsPUZI8j963uEO3_nG3VouJZpc";
 
@@ -39,6 +42,7 @@ export default function PlaylistRow({
       getTracks();
     }
   }, [isOpen]);
+
   return (
     <div
       className={
@@ -78,7 +82,7 @@ export default function PlaylistRow({
             </div>
           </div>
         </div>
-        <div className={"flex flex-row items-center"}>
+        <div className={"flex flex-col items-end"}>
           <button onClick={() => setIsOpen(!isOpen)}>
             <ChevronDownIcon
               className={`text-gray-500 transition h-5 w-5 ${
@@ -86,6 +90,7 @@ export default function PlaylistRow({
               }`}
             />
           </button>
+          <Button variant={'outline'} className={"mt-auto"}>Archive</Button>
         </div>
       </div>
       {isOpen && (

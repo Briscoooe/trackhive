@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { SpotifyTrackObject } from "@/app/types";
+import { SpotifyTrackObject } from "@/app/types/spotify";
 
 export default function TrackRow({
   index,
