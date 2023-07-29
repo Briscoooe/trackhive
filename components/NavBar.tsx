@@ -1,4 +1,4 @@
-import LogoutButton from "@/components/LogoutButton";
+import HamburgerMenu from "@/components/HamburgerMenu";
 import Link from "next/link";
 import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
 import {cookies} from "next/headers";
@@ -25,7 +25,7 @@ export default async function NavBar() {
               {/*  <UserIcon className="w-4 h-4 text-gray-600" />*/}
               {/*  /!*<span className={'text-gray-600 text-sm'}>{user.email}</span>*!/*/}
               {/*</div>*/}
-              <LogoutButton />
+              <HamburgerMenu />
             </div>
           ) : (
             <Link

@@ -19,6 +19,7 @@ export const searchPlaylists = async (
     `${SPOTIFY_API_BASE_URL}/search?${new URLSearchParams({
       q: query,
       type: "playlist",
+      limit: "50",
     })}`,
     {
       headers: {

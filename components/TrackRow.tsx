@@ -9,6 +9,8 @@ export default function TrackRow({
   index: number;
   track: SpotifyTrackObject;
 }) {
+
+  const imgUrl = track.album.images.length ? track.album.images[0].url : "";
   return (
     <div
       key={index}
@@ -19,7 +21,7 @@ export default function TrackRow({
       <div className={"flex flex-row items-center space-x-3"}>
         <span className={"text-gray-500 text-sm"}>{index + 1}</span>
         <img
-          src={track.album.images[0].url}
+          src={imgUrl}
           alt={track.name}
           width={40}
           height={40}

@@ -44,7 +44,7 @@ export default function PlaylistRow({
   return (
     <div
       className={
-        "w-full border-1 border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 lg:px-8 lg:py-4  hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
+        "w-full border-1 border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
       }
     >
       <div className={"flex flex-row items-start justify-between space-x-4"}>
@@ -60,7 +60,7 @@ export default function PlaylistRow({
             height={80}
           />
           <div className={"flex flex-col space-y-1"}>
-            <span className={"text-xl text-gray-800 leading-6 truncate"}>
+            <span className={"text-xl text-gray-700 leading-6 truncate"}>
               {playlist.name}
             </span>
             <div className={"flex flex-row items-center space-x-1"}>
