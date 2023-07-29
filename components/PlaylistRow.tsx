@@ -9,7 +9,9 @@ import {
 } from "@heroicons/react/24/outline";
 import {getPlaylistTracks} from "@/app/lib/spotify";
 import {useEffect, useState} from "react";
-const token =  "BQCKQPap8uERfJ95VRTDnKe1EzYstEqFxKlyjvbbGTa0o0KjLohIg7hAGjkNdpVr90kWpRMMn88xgXaaGJvwNbCUopDTdz13ZlMfN6TawuUtbb6cFE2S2RvWSpLXueoRHBJ2R__S8UqYmWDM3sT1LU8ZiErNshp4O10suD9UwwUgEfywNrqMrChkghPKxcsbVoZg5YxzpctKgFRsyWUfDR2yFG-4YXG95lZvjLqA_3xiblIimeGkW997Rnv1xQLo"
+import TrackRow from "@/components/TrackRow";
+import TrackRowSkeleton from "@/components/TrackRowSkeleton";
+const token =  "BQDLIvhPS6nBD-JkGp7R3kI8Qrdaodf8ojIhyyFDRe9Hs-bN2aD42v7QXFzyzFK7sZyuiHHHy6eW21Pi-fnHivZ6fGIXYDko1cguSCm0aOHc42Vosh7co1G70v8xhwEZOQHISr9z0cXKXyzmCsG6RmaR4GdUn9ndRSei-EE1HcapEtA1Nube7LFwst0vWGsxrFjN6T868hyJ-esabRgmzKmGSX9GzouxQ3Hf3HDmLEh7vYCQZDEnSiGWcvraue0R"
 
 export default function PlaylistRow({ playlist}: { playlist: SpotifySimplifiedPlaylistObject | null}) {
   const [isOpen, setIsOpen] = useState(false)
@@ -28,10 +30,10 @@ export default function PlaylistRow({ playlist}: { playlist: SpotifySimplifiedPl
     }
   }, [isOpen])
   return (
-    <div className={'w-full border-1 border-gray-200 flex flex-col rounded-lg px-4 py-2 lg:px-8 lg:py-4  hover:bg-gray-100 transition hover:cursor-pointer'}>
-    <div className={'flex flex-row items-start justify-between'}>
-        <div className={'flex flex-row items-start justify-start space-x-2'}>
-          <Image src={playlist.images[0].url} alt={playlist.name} width={80} height={80} />
+    <div className={'w-full border-1 border-gray-200 flex flex-col rounded-lg px-4 py-2 lg:px-8 lg:py-4  hover:bg-gray-100 transition hover:cursor-pointer overflow-x-hidden'}>
+    <div className={'flex flex-row items-start justify-between space-x-4'}>
+        <div className={'flex flex-row items-start justify-start space-x-2 overflow-y-hidden'}>
+          <img src={playlist.images[0].url} alt={playlist.name} width={80} height={80} />
           <div className={'flex flex-col space-y-1'}>
           <span className={'text-2xl text-gray-800 leading-6 truncate'}>
             {playlist.name}
@@ -57,33 +59,16 @@ export default function PlaylistRow({ playlist}: { playlist: SpotifySimplifiedPl
         </div>
       </div>
       {isOpen && (
-        <div className={'space-y-2 border-t-1 mt-3 lg:mt-4 pt-3 lg:pt-4'}>
-          {tracks.map((track, index) => (
-            <div key={index} className={'flex flex-row items-center justify-between'}>
-              <div className={'flex flex-row items-center space-x-3'}>
-              <span className={'text-gray-500 text-sm'}>
-                {index + 1}
-              </span>
-                <Image src={track.album.images[0].url} alt={track.name} width={40} height={40} />
-                <div className={'flex flex-col'}>
-                <span className={'text-md text-gray-800 leading-6 truncate'}>
-                  {track.name}
-                </span>
-                  <div className={'flex flex-row items-center space-x-1'}>
-                    <span className={'text-md text-gray-500'}>
-                  {track.artists.map((artist, index) => (
-                    <span key={index}>
-                      {artist.name}
-                      {index < track.artists.length - 1 && ', '}
-                    </span>
-                  ))}
-                </span>
-                  </div>
-                </div>
-              </div>
+            <div className={'space-y-2 border-t-1 mt-3 lg:mt-4 pt-3 lg:pt-4'}>
+              {tracks.length > 0 && tracks.map((track, index) => (
+                <TrackRow key={track.id} index={index} track={track}/>
+              ))}
+              {!tracks.length && (
+                [...Array(10)].map((_, index) => (
+                  <TrackRowSkeleton key={index}/>
+                ))
+              )}
             </div>
-          ))}
-        </div>
       )}
     </div>
   )

@@ -1,6 +1,6 @@
 import {
   SpotifyEpisodeObject, SpotifyPlaylistItemsResponse,
-  SpotifyPlaylistResponse,
+  SpotifyPlaylistSearchResponse,
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject
 } from "@/app/types";
@@ -10,8 +10,7 @@ const SPOTIFY_OWNER_URI = 'spotify:user:spotify';
 const DISCOVER_WEEKLY_NAME = 'Discover Weekly';
 const RELEASE_RADAR_NAME = 'Release Radar';
 
-
-const searchSpotifyOwnedPlaylist = async (accessToken: string, query: string): Promise<SpotifySimplifiedPlaylistObject | null> => {
+export const searchPlaylists = async (accessToken: string, query: string): Promise<SpotifyPlaylistSearchResponse | null> => {
   const response = await fetch(`${SPOTIFY_API_BASE_URL}/search?${new URLSearchParams({
     q: query,
     type: 'playlist'
@@ -21,10 +20,19 @@ const searchSpotifyOwnedPlaylist = async (accessToken: string, query: string): P
     }
   });
   const { playlists } = await response.json()
-  return playlists.items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
+  return playlists;
 }
 
-const recursivelyGetPlaylistTracks = async (accessToken: string, playlistId: string, url: string = ''): Promise<SpotifyPlaylistItemsResponse> => {
+const _searchSpotifyOwnedPlaylist = async (accessToken: string, query: string): Promise<SpotifySimplifiedPlaylistObject | null> => {
+  const playlists = await searchPlaylists(accessToken, query);
+  if (!playlists) {
+    return null;
+  }
+  const { items } = playlists;
+  return items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
+}
+
+const _recursivelyGetPlaylistTracks = async (accessToken: string, playlistId: string, url: string = ''): Promise<SpotifyPlaylistItemsResponse> => {
   const endpoint = url || `${SPOTIFY_API_BASE_URL}/playlists/${playlistId}/tracks?${new URLSearchParams({
     fields: 'items(track(name,artists(name),album(name,images))),next',
     limit: '50'
@@ -39,21 +47,22 @@ const recursivelyGetPlaylistTracks = async (accessToken: string, playlistId: str
   const data: SpotifyPlaylistItemsResponse = await response.json();
 
   if (data.next) {
-    const nextData = await recursivelyGetPlaylistTracks(accessToken, playlistId, data.next);
+    const nextData = await _recursivelyGetPlaylistTracks(accessToken, playlistId, data.next);
     data.items = [...data.items, ...nextData.items];
   }
   return data;
 }
 
 export const getPlaylistTracks = async (accessToken: string, playlistId: string): Promise<SpotifyTrackObject[]> => {
-  const { items } = await recursivelyGetPlaylistTracks(accessToken, playlistId);
+  const { items } = await _recursivelyGetPlaylistTracks(accessToken, playlistId);
   return items.map(({ track }) => track as SpotifyTrackObject);
 }
 
+
 export const getDiscoverWeeklyPlaylist = async (accessToken: string): Promise<SpotifySimplifiedPlaylistObject | null> => {
-  return await searchSpotifyOwnedPlaylist(accessToken, DISCOVER_WEEKLY_NAME);
+  return await _searchSpotifyOwnedPlaylist(accessToken, DISCOVER_WEEKLY_NAME);
 }
 
 export const getReleaseRadarPlaylist = async (accessToken: string): Promise<SpotifySimplifiedPlaylistObject | null> => {
-  return await searchSpotifyOwnedPlaylist(accessToken, RELEASE_RADAR_NAME);
+  return await _searchSpotifyOwnedPlaylist(accessToken, RELEASE_RADAR_NAME);
 }

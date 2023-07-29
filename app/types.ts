@@ -37,7 +37,7 @@ export type SpotifySimplifiedPlaylistObject = {
   type: 'playlist';
   uri: string;
 }
-export type SpotifyPlaylistResponse = {
+export type SpotifyPlaylistSearchResponse = {
   href: string;
   limit: number;
   next: string | null;

@@ -11,10 +11,11 @@ import {
   SpotifyTrackObject
 } from "@/app/types";
 import PlaylistRow from "@/components/PlaylistRow";
+import PlaylistSearch from "@/components/PlaylistSearch";
 
 export const dynamic = 'force-dynamic'
 
-const token =  "BQCKQPap8uERfJ95VRTDnKe1EzYstEqFxKlyjvbbGTa0o0KjLohIg7hAGjkNdpVr90kWpRMMn88xgXaaGJvwNbCUopDTdz13ZlMfN6TawuUtbb6cFE2S2RvWSpLXueoRHBJ2R__S8UqYmWDM3sT1LU8ZiErNshp4O10suD9UwwUgEfywNrqMrChkghPKxcsbVoZg5YxzpctKgFRsyWUfDR2yFG-4YXG95lZvjLqA_3xiblIimeGkW997Rnv1xQLo"
+const token =  "BQDLIvhPS6nBD-JkGp7R3kI8Qrdaodf8ojIhyyFDRe9Hs-bN2aD42v7QXFzyzFK7sZyuiHHHy6eW21Pi-fnHivZ6fGIXYDko1cguSCm0aOHc42Vosh7co1G70v8xhwEZOQHISr9z0cXKXyzmCsG6RmaR4GdUn9ndRSei-EE1HcapEtA1Nube7LFwst0vWGsxrFjN6T868hyJ-esabRgmzKmGSX9GzouxQ3Hf3HDmLEh7vYCQZDEnSiGWcvraue0R"
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
@@ -32,8 +33,9 @@ export default async function Index() {
 
   return (
     <div className="w-full flex flex-col items-center space-y-2">
-      <PlaylistRow playlist={discoverWeekly} />
-      <PlaylistRow playlist={releaseRadar} />
+      <PlaylistSearch/>
+      {/*<PlaylistRow playlist={discoverWeekly} />*/}
+      {/*<PlaylistRow playlist={releaseRadar} />*/}
     </div>
   )
 }

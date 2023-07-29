@@ -52,7 +52,7 @@ export default async function ProtectedRoute() {
       </div>
 
       <div className="flex gap-8 justify-center mt-12">
-        <Image
+        <img
           src="/supabase.svg"
           alt="Supabase Logo"
           width={225}
@@ -60,7 +60,7 @@ export default async function ProtectedRoute() {
           priority
         />
         <div className="border-l rotate-45 h-10"></div>
-        <Image
+        <img
           src="/next.svg"
           alt="Vercel Logo"
           width={150}
