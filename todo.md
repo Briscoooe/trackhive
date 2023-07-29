@@ -23,3 +23,4 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://developer.spotify.com/documentation/web-api/reference/create-playlist
 - https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist
 - https://supabase.com/docs/guides/api/rest/generating-types
+- https://nextjs.org/docs/getting-started/react-essentials#client-components

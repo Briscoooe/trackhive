@@ -1,12 +1,8 @@
-"use client";
+'use client';
 import { Input } from "@/components/ui/Input";
 import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
-import { searchPlaylists } from "@/app/lib/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
-import {getTokenType} from "@typescript-eslint/typescript-estree/dist/node-utils";
-import {getCookie} from "@/app/lib/utils";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");
@@ -14,8 +10,14 @@ export default function PlaylistSearch() {
     useState<SpotifyPlaylistSearchResponse | null>();
   useEffect(() => {
     async function search() {
-      const response = await searchPlaylists(getCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME), searchText);
-      setSearchResponse(response);
+      const response = await fetch(`/api/spotify/search?q=${searchText}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setSearchResponse(data);
     }
     if (searchText.length > 3) {
       search();

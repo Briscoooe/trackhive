@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
@@ -31,20 +31,21 @@ export default function PlaylistRow({
     return null;
   }
 
-
   useEffect(() => {
     const getTracks = async () => {
-      const tracks = await getPlaylistTracks(getCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME), playlist.id);
-      setTracks(tracks);
+      const response = await fetch(`/api/spotify/playlists/${playlist.id}/tracks`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setTracks(data)
     };
     if (isOpen && !tracks.length) {
       getTracks();
     }
   }, [isOpen]);
-  // const supabase = createClientComponentClient();
-  // const handleArchive = async () => {
-  //   sup
-  // }
 
   return (
     <div
