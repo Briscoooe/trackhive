@@ -7,9 +7,9 @@ import {
 } from "@/app/types";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
-const SPOTIFY_OWNER_URI = "spotify:user:spotify";
-const DISCOVER_WEEKLY_NAME = "Discover Weekly";
-const RELEASE_RADAR_NAME = "Release Radar";
+export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
+export const DISCOVER_WEEKLY_NAME = "Discover Weekly";
+export const RELEASE_RADAR_NAME = "Release Radar";
 
 export const searchPlaylists = async (
   accessToken: string,
