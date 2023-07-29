@@ -19,12 +19,9 @@ export default async function NavBar() {
           <NavBarLink href={"/app"}>App</NavBarLink>
         </div>
         <div>
+          {process.env.NEXT_PUBLIC_APP_URL}
           {user ? (
             <div className="flex items-center gap-4">
-              {/*<div className={'flex items-center space-x-1'}>*/}
-              {/*  <UserIcon className="w-4 h-4 text-gray-600" />*/}
-              {/*  /!*<span className={'text-gray-600 text-sm'}>{user.email}</span>*!/*/}
-              {/*</div>*/}
               <HamburgerMenu />
             </div>
           ) : (
