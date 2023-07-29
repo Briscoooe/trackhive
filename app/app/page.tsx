@@ -15,9 +15,6 @@ import PlaylistSearch from "@/components/PlaylistSearch";
 
 export const dynamic = "force-dynamic";
 
-const token =
-  "BQAt_8ahSNncLZnfZWT8shQvdaF3VnrkZsJAS_1szbcZ570pY8Rineh7-sLTkp_kKU51dp8btaJzHAhTcs5H3-BNfJ4b_1dJ34x4ks97k-y3kJMbOVnY9TJCCwMId7SGXnfOCBZTds70IEUaI7Z9PxNUjn6uPtRC4gPiNWWuGN6n-43cGkUkm3qCZdrh1MoFu11PkYkXhihmyiDtOhMlU7erYCXk6Q5Bw2Ke8OtsPUZI8j963uEO3_nG3VouJZpc";
-
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
   const {

@@ -9,6 +9,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - route for showing playlists being archived
 - footer for about stuff
 - badges underneath search bar for disover weekly
+- Figure out how to make everything server rendered
 
 # UI bits
 

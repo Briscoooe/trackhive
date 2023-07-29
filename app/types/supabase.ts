@@ -36,6 +36,30 @@ export interface Database {
         }
         Relationships: []
       }
+      user_spotify_playlists: {
+        Row: {
+          id: number
+          inserted_at: string
+          spotify_playlist_uri: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          inserted_at?: string
+          spotify_playlist_uri: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: number
+          inserted_at?: string
+          spotify_playlist_uri?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

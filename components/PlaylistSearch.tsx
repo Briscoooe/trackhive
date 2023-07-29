@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
 import { searchPlaylists } from "@/app/lib/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
-const token =
-  "BQAt_8ahSNncLZnfZWT8shQvdaF3VnrkZsJAS_1szbcZ570pY8Rineh7-sLTkp_kKU51dp8btaJzHAhTcs5H3-BNfJ4b_1dJ34x4ks97k-y3kJMbOVnY9TJCCwMId7SGXnfOCBZTds70IEUaI7Z9PxNUjn6uPtRC4gPiNWWuGN6n-43cGkUkm3qCZdrh1MoFu11PkYkXhihmyiDtOhMlU7erYCXk6Q5Bw2Ke8OtsPUZI8j963uEO3_nG3VouJZpc";
+import {getTokenType} from "@typescript-eslint/typescript-estree/dist/node-utils";
+import {getCookie} from "@/app/lib/utils";
+import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");
@@ -13,7 +14,7 @@ export default function PlaylistSearch() {
     useState<SpotifyPlaylistSearchResponse | null>();
   useEffect(() => {
     async function search() {
-      const response = await searchPlaylists(token, searchText);
+      const response = await searchPlaylists(getCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME), searchText);
       setSearchResponse(response);
     }
     if (searchText.length > 3) {

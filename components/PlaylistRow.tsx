@@ -16,11 +16,9 @@ import { getPlaylistTracks, SPOTIFY_OWNER_URI } from "@/app/lib/spotify";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
-import {Button} from "@/components/ui/Button";
-import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
-import {Database} from "@/app/types/supabase";
-const token =
-  "BQAt_8ahSNncLZnfZWT8shQvdaF3VnrkZsJAS_1szbcZ570pY8Rineh7-sLTkp_kKU51dp8btaJzHAhTcs5H3-BNfJ4b_1dJ34x4ks97k-y3kJMbOVnY9TJCCwMId7SGXnfOCBZTds70IEUaI7Z9PxNUjn6uPtRC4gPiNWWuGN6n-43cGkUkm3qCZdrh1MoFu11PkYkXhihmyiDtOhMlU7erYCXk6Q5Bw2Ke8OtsPUZI8j963uEO3_nG3VouJZpc";
+import { Button } from "@/components/ui/Button";
+import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
+import {getCookie} from "@/app/lib/utils";
 
 export default function PlaylistRow({
   playlist,
@@ -33,15 +31,20 @@ export default function PlaylistRow({
     return null;
   }
 
+
   useEffect(() => {
     const getTracks = async () => {
-      const tracks = await getPlaylistTracks(token, playlist.id);
+      const tracks = await getPlaylistTracks(getCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME), playlist.id);
       setTracks(tracks);
     };
     if (isOpen && !tracks.length) {
       getTracks();
     }
   }, [isOpen]);
+  // const supabase = createClientComponentClient();
+  // const handleArchive = async () => {
+  //   sup
+  // }
 
   return (
     <div
@@ -90,7 +93,9 @@ export default function PlaylistRow({
               }`}
             />
           </button>
-          <Button variant={'outline'} className={"mt-auto"}>Archive</Button>
+          <Button variant={"outline"} className={"mt-auto"}>
+            Archive
+          </Button>
         </div>
       </div>
       {isOpen && (
