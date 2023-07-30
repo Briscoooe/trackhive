@@ -9,7 +9,6 @@ export async function GET(
   request: Request,
   { params }: { params: { playlistId: string } }
 ) {
-  const requestUrl = new URL(request.url);
   const authCookie = cookies().get(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME)?.value;
   if (!authCookie) {
     return NextResponse.redirect("/auth/signin");

@@ -1,5 +1,5 @@
 import {
-  SpotifyPlaylistSearchResponse,
+  SpotifyPlaylistSearchResponse, SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
 } from "@/app/types/spotify";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";

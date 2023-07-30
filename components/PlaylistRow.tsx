@@ -48,8 +48,6 @@ export default function PlaylistRow({
   const {
     data: tracks,
     isLoading,
-    isFetching,
-    error,
   } = useQuery({
     queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
     queryFn: () => {
