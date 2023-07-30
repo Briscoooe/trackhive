@@ -8,26 +8,23 @@ import {
 } from "@/app/types/spotify";
 import {Simulate} from "react-dom/test-utils";
 import play = Simulate.play;
+import {SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME} from "@/lib/constants";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
-export const DISCOVER_WEEKLY_NAME = "Discover Weekly";
-export const RELEASE_RADAR_NAME = "Release Radar";
 
 const _serializePlaylist = (
   json: SpotifySimplifiedPlaylistObject
 ): SpotifySimplifiedPlaylistObject => {
-  // const { owner, ...rest } = json;
-  // const newOwner = {
-  //   ...owner,
-  //   is_spotify: owner.uri === SPOTIFY_OWNER_URI,
-  // }
-  // const res = {
-  //   ...rest,
-  //   owner: newOwner,
-  // };
-  // return res;
-  return json;
+  const { owner, ...rest } = json;
+  const newOwner = {
+    ...owner,
+    is_spotify: owner.uri === SPOTIFY_OWNER_URI,
+  }
+   return {
+    ...rest,
+    owner: newOwner,
+  };
 }
 
 const _searchSpotifyOwnedPlaylist = async (
@@ -154,13 +151,13 @@ export const getPlaylistTracks = async (
 export const getDiscoverWeeklyPlaylist = async (
   accessToken: string
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(accessToken, DISCOVER_WEEKLY_NAME);
+  return await _searchSpotifyOwnedPlaylist(accessToken, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME);
 };
 
 export const getReleaseRadarPlaylist = async (
   accessToken: string
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(accessToken, RELEASE_RADAR_NAME);
+  return await _searchSpotifyOwnedPlaylist(accessToken, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME);
 };
 
 export const archivePlaylist = async (

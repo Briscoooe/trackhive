@@ -12,6 +12,13 @@ import {
 } from "@/store/queries";
 import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
 import {Input} from "@/components/ui/input";
+import {Badge} from "@/components/ui/badge";
+import {
+  SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME,
+  SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME,
+  SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
+  SPOTIFY_PLAYLIST_VIVA_LATINO_NAME, SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME
+} from "@/lib/constants";
 
 export default function PlaylistSearch() {
   const { data: userArchives } = useQuery({
@@ -42,6 +49,11 @@ export default function PlaylistSearch() {
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={"Search for a playlist"}
       />
+      <div className={'flex flex-row items-center gap-2 flex-wrap'}>
+        {[SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME, SPOTIFY_PLAYLIST_VIVA_LATINO_NAME]
+          .map((playlistName:string) => (<Badge className={'cursor-pointer whitespace-nowrap'} onClick={() => setSearchText(playlistName)}>{playlistName}</Badge>
+          ))}
+      </div>
       {searchResults &&
         searchResults.items.map((playlist, index) => (
           <PlaylistRow
