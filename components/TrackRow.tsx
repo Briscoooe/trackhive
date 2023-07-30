@@ -12,7 +12,7 @@ export default function TrackRow({
   const imgUrl = track.album.images.length ? track.album.images[0].url : "";
   return (
     <div
-      key={index}
+      key={track.id}
       className={
         "flex flex-row items-center justify-between overflow-x-hidden truncate animate-in"
       }

@@ -112,7 +112,7 @@ function PlaylistRowActions({
         {!isArchived ? (
           <Button
             onClick={() => handleArchiveMutation.mutate()}
-            variant={"outline"}
+            variant={"default"}
             className={"mt-auto flex-1"}
             disabled={handleArchiveMutation.isLoading}
           >
@@ -120,15 +120,15 @@ function PlaylistRowActions({
               "Archiving..."
             ) : (
               <>
-                <ArchiveBoxIcon className={"text-gray-500 w-4 h-4 mr-1"}/>
-                <span className={"text-md text-gray-500"}>Archive</span>
+                <ArchiveBoxIcon className={"w-4 h-4 mr-1"}/>
+                <span className={"text-md "}>Archive</span>
               </>
             )}
           </Button>
         ) : (
           <Button
             onClick={() => handleUnarchiveMutation.mutate()}
-            variant={"destructive"}
+            variant={"secondary"}
             className={"mt-auto flex-1"}
             disabled={handleUnarchiveMutation.isLoading}
           >
@@ -136,7 +136,7 @@ function PlaylistRowActions({
               "Unarchiving..."
             ) : (
               <>
-                <TrashIcon className={"text-white w-4 h-4 mr-1"}/>
+                <TrashIcon className={"text-red-500 w-4 h-4 mr-1"}/>
                 Unarchive
               </>
             )}

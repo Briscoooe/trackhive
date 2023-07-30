@@ -10,8 +10,16 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - footer for about stuff
 - [x] badges underneath search bar for disover weekly
 - [x] Figure out how to make everything server rendered
+- offer differnt archive options (e.g. append vs snapshot)
+  - [ ] append - add new tracks to playlist
+  - [ ] snapshot - create new playlist with new tracks
+- show information on archived playlists in tab
+    - archived since
+    - archived versions
+    - archive mode
 - delete cookie thing
-- rename - snapshot?
+- rename - snapshotify?
+- skeleton for playlist row
 
 # UI bits
 
@@ -34,6 +42,6 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - supabase - weird split happening here
 
 # known refactors
-- playlistRow
+- [x] playlistRow
 - isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
 - reduce returned fields by spotify

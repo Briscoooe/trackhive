@@ -19,7 +19,7 @@ export default function UserArchivedPlaylists() {
       {archivedPlaylists && archivedPlaylists.map((archivedPlaylist, index) => (
         <PlaylistRow
           playlist={archivedPlaylist}
-          key={index}
+          key={archivedPlaylist.id}
           isArchived={true}
         />
       ))}

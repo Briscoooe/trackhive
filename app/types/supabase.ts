@@ -38,6 +38,7 @@ export interface Database {
       }
       user_tracked_playlist: {
         Row: {
+          archive_mode: number
           id: number
           inserted_at: string
           playlist_id: string
@@ -45,13 +46,15 @@ export interface Database {
           user_id: string
         }
         Insert: {
+          archive_mode?: number
           id?: number
           inserted_at?: string
-          playlist_id: string
+          playlist_id?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          archive_mode?: number
           id?: number
           inserted_at?: string
           playlist_id?: string
