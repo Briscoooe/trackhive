@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { archivePlaylist, refreshAuthToken } from "@/app/lib/spotify-client";
 // https://vercel.com/docs/cron-jobs
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest, { params:{ userId } }: { params: { userId: string } }) {
   if (
     !process.env.SUPABASE_SERVICE_ROLE_KEY ||
     !process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -15,23 +15,27 @@ export async function GET(request: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 
+  const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", userId).single();
   const userTrackedPlaylist = await supabase
     .from("user_tracked_playlist")
-    .select();
+    .select()
+    .eq("user_id", userId)
   if (!userTrackedPlaylist.data?.length) {
-    return NextResponse.json({ message: "ok" });
+    return NextResponse.json({ message: userId });
   }
-  const authKeys = await supabase.from("decrypted_auth_token").select();
-  const firstUser = authKeys.data?.[0];
-  if (!firstUser) {
-    return NextResponse.json({ message: "ok" });
+  const { user_id, decrypted_refresh_token } = userAuthKey.data;
+  if (!decrypted_refresh_token) {
+    return NextResponse.json({ message: "no refresh token" });
   }
-  const { user_id, decrypted_refresh_token } = firstUser;
   const accessToken = await refreshAuthToken(decrypted_refresh_token);
+  if (!accessToken) {
+    return NextResponse.json({ message: "no access token" });
+  }
   await supabase
     .from("auth_token")
     .update({ access_token: accessToken })
     .eq("user_id", user_id);
+  console.log('access token', accessToken)
   for (const playlist of userTrackedPlaylist.data) {
     const newPlaylist = await archivePlaylist(
       accessToken,
