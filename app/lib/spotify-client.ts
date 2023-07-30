@@ -185,23 +185,25 @@ export const getReleaseRadarPlaylist = async (
 export const archivePlaylist = async (
   accessToken: string,
   playlistId: string
-): Promise<void> => {
+): Promise<SpotifySimplifiedPlaylistObject> => {
   const currentPlaylist = await getPlaylist(accessToken, playlistId);
   const me = await _getCurrentUser(accessToken);
   const currentPlaylistTracks = await getPlaylistTracks(
     accessToken,
     playlistId
   );
+  const dateFormatYYYYMMDD = new Date().toISOString().split("T")[0];
   const newPlaylist = await _createPlaylist(
     accessToken,
     me.id,
-    `${currentPlaylist.name} - ${new Date().toLocaleDateString()}`
+    `${currentPlaylist.name} - ${dateFormatYYYYMMDD} (Archived)`
   );
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
     currentPlaylistTracks.map((track) => track.uri)
   );
+  return newPlaylist;
 };
 
 export const searchPlaylists = async (
