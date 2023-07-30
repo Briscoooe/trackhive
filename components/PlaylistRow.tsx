@@ -51,7 +51,7 @@ export default function PlaylistRow({
     queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
     queryFn: () => {
       if (!isOpen) {
-        return Promise.resolve({ items: [] } as SpotifyTrackObject[]);
+        return Promise.resolve([]);
       }
       return getSpotifyPlaylistTracksQuery(playlist.id);
     },
@@ -132,7 +132,7 @@ export default function PlaylistRow({
           <div className={"mt-6"}>
             {!isArchived ? (
               <Button
-                onClick={handleArchiveMutation.mutate}
+                onClick={() => handleArchiveMutation.mutate()}
                 variant={"outline"}
                 className={"mt-auto flex-1"}
                 disabled={handleArchiveMutation.isLoading}
@@ -148,7 +148,7 @@ export default function PlaylistRow({
               </Button>
             ) : (
               <Button
-                onClick={handleUnarchiveMutation.mutate}
+                onClick={() => handleUnarchiveMutation.mutate()}
                 variant={"destructive"}
                 className={"mt-auto flex-1"}
                 disabled={handleUnarchiveMutation.isLoading}
@@ -168,7 +168,7 @@ export default function PlaylistRow({
       </div>
       {isOpen && (
         <div className={"space-y-2 border-t-1 mt-3 lg:mt-4 pt-3 lg:pt-4"}>
-          {tracks?.length > 0 &&
+          {tracks && tracks?.length > 0 &&
             tracks?.map((track, index) => (
               <TrackRow key={track.id} index={index} track={track} />
             ))}

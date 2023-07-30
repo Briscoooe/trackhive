@@ -1,7 +1,10 @@
 "use client";
 import { Input } from "@/components/primitives/Input";
 import { useEffect, useState } from "react";
-import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
+import {
+  SpotifyPlaylistSearchResponse,
+  SpotifySimplifiedPlaylistObject
+} from "@/app/types/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -20,7 +23,8 @@ export default function PlaylistSearch() {
     queryKey: [PLAYLIST_SEARCH_RESULTS_KEY, searchText],
     queryFn: () => {
       if (!searchText || searchText.length < 2) {
-        return Promise.resolve({ items: [] } as SpotifyPlaylistSearchResponse);
+        const items: SpotifySimplifiedPlaylistObject[] = [];
+        return Promise.resolve({ items });
       }
       return searchSpotifyPlaylistsQuery(searchText);
     },
