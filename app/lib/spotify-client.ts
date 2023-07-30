@@ -11,7 +11,9 @@ import play = Simulate.play;
 import {SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME} from "@/lib/constants";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
+const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
+
 
 const _serializePlaylist = (
   json: SpotifySimplifiedPlaylistObject
@@ -112,6 +114,26 @@ const _addItemsToPlaylist = async (
   });
 };
 
+export const refreshAuthToken = async (refreshToken: string): Promise<string> => {
+  console.log('refreshToken', refreshToken)
+  const res = await fetch(`${SPOTIFY_AUTH_BASE_URL}/token`, {
+    method: "POST",
+    headers: {
+Authorization: `Basic ${Buffer.from(
+  `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+).toString("base64")}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+    }),
+  });
+  console.log('REs', res)
+  const data = await res.json();
+  console.log('data', data)
+  return data.access_token;
+}
 export const getPlaylist = async (
   accessToken: string,
   playlistId: string

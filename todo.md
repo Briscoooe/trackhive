@@ -13,6 +13,8 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - offer differnt archive options (e.g. append vs snapshot)
   - [ ] append - add new tracks to playlist
   - [ ] snapshot - create new playlist with new tracks
+- [x] https://supabase.com/docs/guides/database/column-encryption IMPORTANT
+- [x] https://supabase.com/docs/guides/database/vault
 - show information on archived playlists in tab
     - archived since
     - archived versions
@@ -20,6 +22,11 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - delete cookie thing
 - rename - snapshotify?
 - skeleton for playlist row
+- find out best async/scheduled task framework for nextjs
+  - https://quirrel.dev/
+  - https://docs.upstash.com/qstash
+  - deno
+  - https://developers.cloudflare.com/workers/platform/limits/
 
 # UI bits
 
@@ -36,6 +43,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://nextjs.org/docs/getting-started/react-essentials#client-components
 - https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
 - https://makerkit.dev/blog/saas/supabase-react-query
+- https://vercel.com/docs/cron-jobs
 
 # DESIGN PRINCIPLES
 - all spotify interaction is handled server side
