@@ -22,7 +22,7 @@ export async function POST(
 
   const user = await supabase.auth.getUser();
   const { data, error } = await supabase
-    .from("user_archives")
+    .from("user_tracked_playlist")
     .delete()
     .eq("playlist_id", params.playlistId)
     .eq("user_id", user.data.user?.id)

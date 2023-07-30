@@ -21,7 +21,7 @@ export async function POST(
   }
 
   // await archivePlaylist(authCookie, params.playlistId);
-  const { data, error } = await supabase.from("user_archives").insert({
+  const { data, error } = await supabase.from("user_tracked_playlist").insert({
     playlist_id: params.playlistId,
     user_id: session.data.session?.user.id,
   });

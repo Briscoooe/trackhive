@@ -4,74 +4,101 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
 export interface Database {
   public: {
     Tables: {
-      spotify_auth_tokens: {
+      auth_token: {
         Row: {
-          access_token: string | null;
-          id: number;
-          inserted_at: string;
-          refresh_token: string | null;
-          updated_at: string;
-          user_id: string | null;
-        };
+          access_token: string | null
+          id: number
+          inserted_at: string
+          refresh_token: string | null
+          updated_at: string
+          user_id: string | null
+        }
         Insert: {
-          access_token?: string | null;
-          id?: number;
-          inserted_at?: string;
-          refresh_token?: string | null;
-          updated_at?: string;
-          user_id?: string | null;
-        };
+          access_token?: string | null
+          id?: number
+          inserted_at?: string
+          refresh_token?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
         Update: {
-          access_token?: string | null;
-          id?: number;
-          inserted_at?: string;
-          refresh_token?: string | null;
-          updated_at?: string;
-          user_id?: string | null;
-        };
-        Relationships: [];
-      };
-      user_archives: {
+          access_token?: string | null
+          id?: number
+          inserted_at?: string
+          refresh_token?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_tracked_playlist: {
         Row: {
-          id: number;
-          inserted_at: string;
-          playlist_id: string;
-          updated_at: string;
-          user_id: string;
-        };
+          id: number
+          inserted_at: string
+          playlist_id: string
+          updated_at: string
+          user_id: string
+        }
         Insert: {
-          id?: number;
-          inserted_at?: string;
-          playlist_id: string;
-          updated_at?: string;
-          user_id: string;
-        };
+          id?: number
+          inserted_at?: string
+          playlist_id: string
+          updated_at?: string
+          user_id: string
+        }
         Update: {
-          id?: number;
-          inserted_at?: string;
-          playlist_id?: string;
-          updated_at?: string;
-          user_id?: string;
-        };
-        Relationships: [];
-      };
-    };
+          id?: number
+          inserted_at?: string
+          playlist_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_tracked_playlist_snapshot: {
+        Row: {
+          id: number
+          inserted_at: string
+          original_playlist_id: string
+          updated_at: string
+          user_id: string
+          user_playlist_id: string | null
+        }
+        Insert: {
+          id?: number
+          inserted_at?: string
+          original_playlist_id: string
+          updated_at?: string
+          user_id: string
+          user_playlist_id?: string | null
+        }
+        Update: {
+          id?: number
+          inserted_at?: string
+          original_playlist_id?: string
+          updated_at?: string
+          user_id?: string
+          user_playlist_id?: string | null
+        }
+        Relationships: []
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
 }

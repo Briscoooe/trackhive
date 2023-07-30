@@ -43,15 +43,15 @@ export async function getSpotifyPlaylistQuery(
 }
 
 export async function getDatabaseUserArchivesQuery(): Promise<
-  Database["public"]["Tables"]["user_archives"]["Row"][]
+  Database["public"]["Tables"]["user_tracked_playlist"]["Row"][]
 > {
   const supabase = createClientComponentClient();
   const user = await supabase.auth.getUser();
   const response = await supabase
-    .from("user_archives")
+    .from("user_tracked_playlist")
     .select()
     .eq("user_id", user.data.user?.id);
-  return response.data as Database["public"]["Tables"]["user_archives"]["Row"][];
+  return response.data as Database["public"]["Tables"]["user_tracked_playlist"]["Row"][];
 }
 
 export async function getSpotifyUserAchivesQuery(): Promise<SpotifySimplifiedPlaylistObject[]>

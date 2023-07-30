@@ -8,9 +8,10 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] figure out acces token stuff
 - [x] route for showing playlists being archived
 - footer for about stuff
-- badges underneath search bar for disover weekly
+- [x] badges underneath search bar for disover weekly
 - [x] Figure out how to make everything server rendered
 - delete cookie thing
+- rename - snapshot?
 
 # UI bits
 

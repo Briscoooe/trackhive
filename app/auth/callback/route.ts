@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     }
     const { provider_token, provider_refresh_token } = session;
 
-    await supabase.from("spotify_auth_tokens").upsert(
+    await supabase.from("auth_token").upsert(
       {
         refresh_token: provider_refresh_token,
         access_token: provider_token,
