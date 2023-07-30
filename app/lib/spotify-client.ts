@@ -3,14 +3,14 @@ import {
   SpotifyPlaylistItemsResponse,
   SpotifyPlaylistSearchResponse,
   SpotifySimplifiedPlaylistObject,
-  SpotifyTrackObject, SpotifyUserObject,
+  SpotifyTrackObject,
+  SpotifyUserObject,
 } from "@/app/types/spotify";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
 export const DISCOVER_WEEKLY_NAME = "Discover Weekly";
 export const RELEASE_RADAR_NAME = "Release Radar";
-
 
 const _searchSpotifyOwnedPlaylist = async (
   accessToken: string,
@@ -75,7 +75,7 @@ const _createPlaylist = async (
     }
   );
   return response.json();
-}
+};
 
 const _addItemsToPlaylist = async (
   accessToken: string,
@@ -91,7 +91,7 @@ const _addItemsToPlaylist = async (
       uris,
     }),
   });
-}
+};
 
 export const getPlaylist = async (
   accessToken: string,
@@ -106,21 +106,18 @@ export const getPlaylist = async (
     }
   );
   return response.json();
-}
+};
 
 export const _getCurrentUser = async (
   accessToken: string
 ): Promise<SpotifyUserObject> => {
-  const response = await fetch(
-    `${SPOTIFY_API_BASE_URL}/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+  const response = await fetch(`${SPOTIFY_API_BASE_URL}/me`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return response.json();
-}
+};
 export const getPlaylistTracks = async (
   accessToken: string,
   playlistId: string
@@ -150,7 +147,10 @@ export const archivePlaylist = async (
 ): Promise<void> => {
   const currentPlaylist = await getPlaylist(accessToken, playlistId);
   const me = await _getCurrentUser(accessToken);
-  const currentPlaylistTracks = await getPlaylistTracks(accessToken, playlistId);
+  const currentPlaylistTracks = await getPlaylistTracks(
+    accessToken,
+    playlistId
+  );
   const newPlaylist = await _createPlaylist(
     accessToken,
     me.id,
@@ -159,15 +159,9 @@ export const archivePlaylist = async (
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
-    currentPlaylistTracks.map(track => track.uri)
+    currentPlaylistTracks.map((track) => track.uri)
   );
-}
-
-export const isPlaylistOwnedBySpotify = (
-  playlist: SpotifySimplifiedPlaylistObject
-): boolean => {
-  return playlist.owner.uri === SPOTIFY_OWNER_URI;
-}
+};
 
 export const searchPlaylists = async (
   accessToken: string,

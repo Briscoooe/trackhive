@@ -10,21 +10,22 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   ClockIcon,
-  MusicalNoteIcon, TrashIcon,
+  MusicalNoteIcon,
+  TrashIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import {isPlaylistOwnedBySpotify} from "@/app/lib/spotify-client";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
 import { Button } from "@/components/primitives/Button";
-import {useMutation, useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getSpotifyPlaylistTracksQuery } from "@/store/queries";
 import {
-  archivePlaylistMutation,
-  getPlaylistTracksQuery,
-  searchPlaylistsQuery, unarchivePlaylistMutation
-} from "@/app/lib/api-client";
+  archiveSpotifyPlaylistMutation,
+  unarchiveSpotifyPlaylistMutation,
+} from "@/store/mutations";
+import { isPlaylistOwnedBySpotify } from "@/lib/utils";
 
 export default function PlaylistRow({
   playlist,
@@ -37,26 +38,30 @@ export default function PlaylistRow({
   if (!playlist) {
     return null;
   }
-  const { data: tracks, isLoading, isFetching, error } = useQuery({
+  const {
+    data: tracks,
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
     queryKey: ["getPlaylistTracks", playlist.id, isOpen],
     queryFn: () => {
       if (!isOpen) {
         return Promise.resolve({ items: [] } as SpotifyTrackObject[]);
       }
-      return getPlaylistTracksQuery(playlist.id);
+      return getSpotifyPlaylistTracksQuery(playlist.id);
     },
   });
 
   const handleArchiveMutation = useMutation({
-    mutationFn: () => archivePlaylistMutation(playlist.id),
+    mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
     mutationKey: ["archivedPlaylist", playlist.id],
   });
 
   const handleUnarchiveMutation = useMutation({
-    mutationFn: () => unarchivePlaylistMutation(playlist.id),
+    mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
     mutationKey: ["archivedPlaylist", playlist.id],
   });
-
 
   return (
     <div
@@ -107,30 +112,40 @@ export default function PlaylistRow({
               />
             </button>
           </div>
-          <div className={'mt-6'}>
-            {isArchived ? (
-            <Button onClick={handleArchiveMutation.mutate} variant={"outline"} className={"mt-auto flex-1"} disabled={handleArchiveMutation.isLoading}>
-              {handleArchiveMutation.isLoading ? "Archiving..." : (
-                <>
-                  <ArchiveBoxIcon className={"text-gray-500 w-4 h-4 mr-1"} />
-                  <span className={"text-md text-gray-500"}>
-                    Archive
-                  </span>
-                </>
-              )}
-            </Button>
-              ) : (
-              <Button onClick={handleUnarchiveMutation.mutate} variant={"destructive"} className={"mt-auto flex-1"} disabled={handleArchiveMutation.isLoading}>
-                {handleArchiveMutation.isLoading ? "Unarchiving..." : (
+          <div className={"mt-6"}>
+            {!isArchived ? (
+              <Button
+                onClick={handleArchiveMutation.mutate}
+                variant={"outline"}
+                className={"mt-auto flex-1"}
+                disabled={handleArchiveMutation.isLoading}
+              >
+                {handleArchiveMutation.isLoading ? (
+                  "Archiving..."
+                ) : (
                   <>
-                    <TrashIcon className={"text-red-500 w-4 h-4 mr-1"} />
-                    <span className={"text-md text-gray-500"}>
-                    Unarchive
-                  </span>
+                    <ArchiveBoxIcon className={"text-gray-500 w-4 h-4 mr-1"} />
+                    <span className={"text-md text-gray-500"}>Archive</span>
                   </>
                 )}
               </Button>
-              )}
+            ) : (
+              <Button
+                onClick={handleUnarchiveMutation.mutate}
+                variant={"destructive"}
+                className={"mt-auto flex-1"}
+                disabled={handleUnarchiveMutation.isLoading}
+              >
+                {handleUnarchiveMutation.isLoading ? (
+                  "Unarchiving..."
+                ) : (
+                  <>
+                    <TrashIcon className={"text-white w-4 h-4 mr-1"} />
+                    Unarchive
+                  </>
+                )}
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -141,7 +156,9 @@ export default function PlaylistRow({
               <TrackRow key={track.id} index={index} track={track} />
             ))}
           {isLoading &&
-            [...Array(playlist.tracks.total)].map((_, index) => <TrackRowSkeleton key={index} />)}
+            [...Array(playlist.tracks.total)].map((_, index) => (
+              <TrackRowSkeleton key={index} />
+            ))}
         </div>
       )}
     </div>

@@ -3,20 +3,31 @@ import { Input } from "@/components/primitives/Input";
 import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
-import {useQuery} from "@tanstack/react-query";
-import {searchPlaylistsQuery} from "@/app/lib/api-client";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getUserArchivesQuery,
+  searchSpotifyPlaylistsQuery,
+} from "@/store/queries";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");
-  const { data, isLoading, isFetching, error } = useQuery({
+  const { data: userArchives } = useQuery({
+    queryKey: ["archivedPlaylist"],
+    queryFn: getUserArchivesQuery,
+  });
+  const { data: searchResults } = useQuery({
     queryKey: ["searchPlaylists", searchText],
     queryFn: () => {
-      if (!searchText ||  searchText.length < 2) {
+      if (!searchText || searchText.length < 2) {
         return Promise.resolve({ items: [] } as SpotifyPlaylistSearchResponse);
       }
-      return searchPlaylistsQuery(searchText);
+      return searchSpotifyPlaylistsQuery(searchText);
     },
   });
+
+  const userHasArchivedPlaylist = (playlistId: string) => {
+    return userArchives?.some((archive) => archive.playlist_id === playlistId);
+  };
 
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
@@ -26,9 +37,13 @@ export default function PlaylistSearch() {
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={"Search for a playlist"}
       />
-      {data &&
-        data.items.map((playlist, index) => (
-          <PlaylistRow playlist={playlist} key={index} />
+      {searchResults &&
+        searchResults.items.map((playlist, index) => (
+          <PlaylistRow
+            playlist={playlist}
+            key={index}
+            isArchived={userHasArchivedPlaylist(playlist.id)}
+          />
         ))}
     </div>
   );

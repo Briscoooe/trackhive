@@ -26,3 +26,4 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://supabase.com/docs/guides/api/rest/generating-types
 - https://nextjs.org/docs/getting-started/react-essentials#client-components
 - https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
+- https://makerkit.dev/blog/saas/supabase-react-query

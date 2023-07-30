@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
-import {archivePlaylist} from "@/app/lib/spotify-client";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { archivePlaylist } from "@/app/lib/spotify-client";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +21,9 @@ export async function POST(
   }
 
   // await archivePlaylist(authCookie, params.playlistId);
-  const { data, error } = await supabase
-    .from("user_archives")
-    .insert({
-      playlist_id: params.playlistId,
-      user_id: session.data.session?.user.id
-    })
+  const { data, error } = await supabase.from("user_archives").insert({
+    playlist_id: params.playlistId,
+    user_id: session.data.session?.user.id,
+  });
   return NextResponse.json({ data, error });
 }

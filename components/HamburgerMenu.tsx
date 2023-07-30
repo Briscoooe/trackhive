@@ -16,7 +16,7 @@ import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
-import { deleteCookie } from "@/app/lib/utils";
+import { deleteCookie } from "@/lib/utils";
 
 export default function HamburgerMenu() {
   const [userEmail, setUserEmail] = useState<string | undefined>(undefined);

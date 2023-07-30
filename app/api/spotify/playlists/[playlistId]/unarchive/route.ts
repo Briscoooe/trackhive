@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import {createRouteHandlerClient} from "@supabase/auth-helpers-nextjs";
-import {archivePlaylist} from "@/app/lib/spotify-client";
-import {SPOTIFY_ACCESS_TOKEN_COOKIE_NAME} from "@/app/constants";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { archivePlaylist } from "@/app/lib/spotify-client";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +25,6 @@ export async function POST(
     .from("user_archives")
     .delete()
     .eq("playlist_id", params.playlistId)
-    .eq("user_id", session.data.session?.user.id)
+    .eq("user_id", session.data.session?.user.id);
   return NextResponse.json({ data, error });
 }
