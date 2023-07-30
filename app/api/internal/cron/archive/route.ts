@@ -4,9 +4,15 @@ import {createClient} from "@supabase/supabase-js";
 import {archivePlaylist, refreshAuthToken} from "@/app/lib/spotify-client";
 // https://vercel.com/docs/cron-jobs
 export async function GET(request: NextRequest) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY || !process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return NextResponse.json({message: 'ok'});
+  }
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
 
   const userTrackedPlaylist = await supabase.from('user_tracked_playlist').select()
+  if (!userTrackedPlaylist.data?.length) {
+    return NextResponse.json({message: 'ok'});
+  }
   const authKeys = await supabase.from('decrypted_auth_token').select();
   const firstUser = authKeys.data?.[0];
   if (!firstUser) {

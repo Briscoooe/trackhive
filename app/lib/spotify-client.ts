@@ -115,7 +115,6 @@ const _addItemsToPlaylist = async (
 };
 
 export const refreshAuthToken = async (refreshToken: string): Promise<string> => {
-  console.log('refreshToken', refreshToken)
   const res = await fetch(`${SPOTIFY_AUTH_BASE_URL}/token`, {
     method: "POST",
     headers: {
@@ -129,9 +128,7 @@ Authorization: `Basic ${Buffer.from(
       refresh_token: refreshToken,
     }),
   });
-  console.log('REs', res)
   const data = await res.json();
-  console.log('data', data)
   return data.access_token;
 }
 export const getPlaylist = async (
