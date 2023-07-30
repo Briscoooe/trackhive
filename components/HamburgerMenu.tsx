@@ -2,21 +2,17 @@
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/primitives/Button";
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/primitives/DropdownMenu";
 import { GearIcon } from "@radix-ui/react-icons";
 import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
 import { deleteCookie } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 export default function HamburgerMenu() {
   const [userEmail, setUserEmail] = useState<string | undefined>(undefined);

@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@/components/primitives/Input";
 import { useEffect, useState } from "react";
 import {
   SpotifyPlaylistSearchResponse,
@@ -12,6 +11,7 @@ import {
   searchSpotifyPlaylistsQuery,
 } from "@/store/queries";
 import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
+import {Input} from "@/components/ui/input";
 
 export default function PlaylistSearch() {
   const { data: userArchives } = useQuery({

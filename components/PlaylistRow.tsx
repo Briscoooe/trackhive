@@ -18,7 +18,6 @@ import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
-import { Button } from "@/components/primitives/Button";
 import {
   QueryClient,
   useMutation,
@@ -31,6 +30,7 @@ import {
   unarchiveSpotifyPlaylistMutation,
 } from "@/store/mutations";
 import {PLAYLIST_TRACKS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
+import {Button} from "@/components/ui/button";
 
 export default function PlaylistRow({
   playlist,
@@ -105,9 +105,9 @@ export default function PlaylistRow({
             <div className={"flex flex-row items-center space-x-1"}>
               <UserIcon className={"text-gray-500 w-4 h-4"} />
               <span className={"text-md text-gray-500"}>
-                {playlist.owner?.display_name}
+                {playlist.owner.display_name}
               </span>
-              {playlist.owner?.is_spotify && (
+              {playlist.owner.is_spotify && (
                 <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
               )}
             </div>
