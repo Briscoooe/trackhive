@@ -1,5 +1,6 @@
 import {
-  SpotifyPlaylistSearchResponse, SpotifySimplifiedPlaylistObject,
+  SpotifyPlaylistSearchResponse,
+  SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
 } from "@/app/types/spotify";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -54,8 +55,9 @@ export async function getDatabaseUserArchivesQuery(): Promise<
   return response.data as Database["public"]["Tables"]["user_tracked_playlist"]["Row"][];
 }
 
-export async function getSpotifyUserAchivesQuery(): Promise<SpotifySimplifiedPlaylistObject[]>
-{
+export async function getSpotifyUserAchivesQuery(): Promise<
+  SpotifySimplifiedPlaylistObject[]
+> {
   const archives = await getDatabaseUserArchivesQuery();
   const playlistIds = archives.map((archive) => archive.playlist_id);
   const playlists = await Promise.all(

@@ -1,5 +1,5 @@
 "use client";
-import {SpotifySimplifiedPlaylistObject,} from "@/app/types/spotify";
+import { SpotifySimplifiedPlaylistObject } from "@/app/types/spotify";
 import {
   ArchiveBoxIcon,
   ChevronDownIcon,
@@ -7,12 +7,12 @@ import {
   TrashIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import {CheckBadgeIcon} from "@heroicons/react/24/solid";
-import {useState} from "react";
+import { CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {getSpotifyPlaylistTracksQuery} from "@/store/queries";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getSpotifyPlaylistTracksQuery } from "@/store/queries";
 import {
   archiveSpotifyPlaylistMutation,
   unarchiveSpotifyPlaylistMutation,
@@ -20,54 +20,59 @@ import {
 import {
   PLAYLIST_TRACKS_KEY,
   USER_ARCHIVED_DATABASE_ROWS_KEY,
-  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
+  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
 } from "@/store/keys";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
-function PlaylistRowInformation({playlist}: { playlist: SpotifySimplifiedPlaylistObject }) {
-  const playlistImage = playlist.images?.length > 0 ? playlist.images[0].url : "";
+function PlaylistRowInformation({
+  playlist,
+}: {
+  playlist: SpotifySimplifiedPlaylistObject;
+}) {
+  const playlistImage =
+    playlist.images?.length > 0 ? playlist.images[0].url : "";
   return (
     <div
       className={
         "flex flex-row items-start justify-start space-x-2 overflow-x-hidden"
       }
     >
-      <img
-        src={playlistImage}
-        alt={playlist.name}
-        width={80}
-        height={80}
-      />
+      <img src={playlistImage} alt={playlist.name} width={80} height={80} />
       <div className={"flex flex-col space-y-1"}>
-            <span className={"text-xl text-gray-700 leading-6 truncate"}>
-              {playlist.name}
-            </span>
+        <span className={"text-xl text-gray-700 leading-6 truncate"}>
+          {playlist.name}
+        </span>
         <div className={"flex flex-row items-center space-x-1"}>
-          <UserIcon className={"text-gray-500 w-4 h-4"}/>
+          <UserIcon className={"text-gray-500 w-4 h-4"} />
           <span className={"text-md text-gray-500"}>
-                {playlist.owner.display_name}
-              </span>
+            {playlist.owner.display_name}
+          </span>
           {playlist.owner.is_spotify && (
-            <CheckBadgeIcon className={"text-green-500 w-4 h-4"}/>
+            <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
           )}
         </div>
         <div className={"flex flex-row items-center space-x-1"}>
-          <MusicalNoteIcon className={"text-gray-500 h-4 w-4"}/>
+          <MusicalNoteIcon className={"text-gray-500 h-4 w-4"} />
           <span className={"text-md text-gray-500"}>
-                {playlist.tracks?.total}
-              </span>
+            {playlist.tracks?.total}
+          </span>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function PlaylistRowActions({
-                              playlist,
-                              isArchived,
-                              isOpen,
-                              setIsOpen
-                            }: { playlist: SpotifySimplifiedPlaylistObject, isArchived: boolean, isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
+  playlist,
+  isArchived,
+  isOpen,
+  setIsOpen,
+}: {
+  playlist: SpotifySimplifiedPlaylistObject;
+  isArchived: boolean;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}) {
   const queryClient = useQueryClient();
   const handleArchiveMutation = useMutation({
     mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
@@ -80,7 +85,7 @@ function PlaylistRowActions({
         queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
         exact: true,
       });
-    }
+    },
   });
 
   const handleUnarchiveMutation = useMutation({
@@ -89,16 +94,20 @@ function PlaylistRowActions({
       queryClient.invalidateQueries({
         queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
         exact: true,
-        refetchType: 'active',
+        refetchType: "active",
       });
       queryClient.invalidateQueries({
         queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
         exact: true,
       });
-    }
+    },
   });
   return (
-    <div className={"flex flex-row sm:flex-col items-end justify-between w-full sm:w-auto sm:justify-end"}>
+    <div
+      className={
+        "flex flex-row sm:flex-col items-end justify-between w-full sm:w-auto sm:justify-end"
+      }
+    >
       <div>
         <button onClick={() => setIsOpen(!isOpen)}>
           <ChevronDownIcon
@@ -120,7 +129,7 @@ function PlaylistRowActions({
               "Archiving..."
             ) : (
               <>
-                <ArchiveBoxIcon className={"w-4 h-4 mr-1"}/>
+                <ArchiveBoxIcon className={"w-4 h-4 mr-1"} />
                 <span className={"text-md "}>Archive</span>
               </>
             )}
@@ -136,7 +145,7 @@ function PlaylistRowActions({
               "Unarchiving..."
             ) : (
               <>
-                <TrashIcon className={"text-red-500 w-4 h-4 mr-1"}/>
+                <TrashIcon className={"text-red-500 w-4 h-4 mr-1"} />
                 Unarchive
               </>
             )}
@@ -144,26 +153,22 @@ function PlaylistRowActions({
         )}
       </div>
     </div>
-  )
-
+  );
 }
 
 export default function PlaylistRow({
-                                      playlist,
-                                      isArchived = false,
-                                    }: {
+  playlist,
+  isArchived = false,
+}: {
   playlist: SpotifySimplifiedPlaylistObject | null;
   isArchived?: boolean;
 }) {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
     return null;
   }
-  const {
-    data: tracks,
-    isLoading,
-  } = useQuery({
+  const { data: tracks, isLoading } = useQuery({
     queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
     queryFn: () => {
       if (!isOpen) {
@@ -173,7 +178,6 @@ export default function PlaylistRow({
     },
   });
 
-
   return (
     <div
       className={
@@ -181,20 +185,28 @@ export default function PlaylistRow({
       }
     >
       <div
-        className={"flex flex-col sm:flex-row items-start justify-between space-y-2 space-x-0 sm:space-x-4 sm:space-y-0"}>
-        <PlaylistRowInformation playlist={playlist}/>
-        <PlaylistRowActions playlist={playlist} isArchived={isArchived} isOpen={isOpen}
-                            setIsOpen={setIsOpen}/>
+        className={
+          "flex flex-col sm:flex-row items-start justify-between space-y-2 space-x-0 sm:space-x-4 sm:space-y-0"
+        }
+      >
+        <PlaylistRowInformation playlist={playlist} />
+        <PlaylistRowActions
+          playlist={playlist}
+          isArchived={isArchived}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
       </div>
       {isOpen && (
         <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>
-          {tracks && tracks?.length > 0 &&
+          {tracks &&
+            tracks?.length > 0 &&
             tracks?.map((track, index) => (
-              <TrackRow key={track.id} index={index} track={track}/>
+              <TrackRow key={track.id} index={index} track={track} />
             ))}
           {isLoading &&
             [...Array(playlist.tracks.total)].map((_, index) => (
-              <TrackRowSkeleton key={index}/>
+              <TrackRowSkeleton key={index} />
             ))}
         </div>
       )}

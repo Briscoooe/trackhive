@@ -10,8 +10,11 @@ import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
 import { deleteCookie } from "@/lib/utils";
 import {
   DropdownMenu,
-  DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export default function HamburgerMenu() {

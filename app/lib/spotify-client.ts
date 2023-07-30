@@ -6,14 +6,16 @@ import {
   SpotifyTrackObject,
   SpotifyUserObject,
 } from "@/app/types/spotify";
-import {Simulate} from "react-dom/test-utils";
+import { Simulate } from "react-dom/test-utils";
 import play = Simulate.play;
-import {SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME} from "@/lib/constants";
+import {
+  SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME,
+  SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
+} from "@/lib/constants";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
-
 
 const _serializePlaylist = (
   json: SpotifySimplifiedPlaylistObject
@@ -22,12 +24,12 @@ const _serializePlaylist = (
   const newOwner = {
     ...owner,
     is_spotify: owner.uri === SPOTIFY_OWNER_URI,
-  }
-   return {
+  };
+  return {
     ...rest,
     owner: newOwner,
   };
-}
+};
 
 const _searchSpotifyOwnedPlaylist = async (
   accessToken: string,
@@ -38,7 +40,9 @@ const _searchSpotifyOwnedPlaylist = async (
     return;
   }
   const { items } = playlists;
-  const result = items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
+  const result = items.find(
+    (playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI
+  );
   if (!result) {
     return;
   }
@@ -114,13 +118,15 @@ const _addItemsToPlaylist = async (
   });
 };
 
-export const refreshAuthToken = async (refreshToken: string): Promise<string> => {
+export const refreshAuthToken = async (
+  refreshToken: string
+): Promise<string> => {
   const res = await fetch(`${SPOTIFY_AUTH_BASE_URL}/token`, {
     method: "POST",
     headers: {
-Authorization: `Basic ${Buffer.from(
-  `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-).toString("base64")}`,
+      Authorization: `Basic ${Buffer.from(
+        `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+      ).toString("base64")}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
@@ -130,7 +136,7 @@ Authorization: `Basic ${Buffer.from(
   });
   const data = await res.json();
   return data.access_token;
-}
+};
 export const getPlaylist = async (
   accessToken: string,
   playlistId: string
@@ -170,13 +176,19 @@ export const getPlaylistTracks = async (
 export const getDiscoverWeeklyPlaylist = async (
   accessToken: string
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(accessToken, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME);
+  return await _searchSpotifyOwnedPlaylist(
+    accessToken,
+    SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME
+  );
 };
 
 export const getReleaseRadarPlaylist = async (
   accessToken: string
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(accessToken, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME);
+  return await _searchSpotifyOwnedPlaylist(
+    accessToken,
+    SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME
+  );
 };
 
 export const archivePlaylist = async (

@@ -1,12 +1,10 @@
-'use client';
-import {useQuery} from "@tanstack/react-query";
+"use client";
+import { useQuery } from "@tanstack/react-query";
 import {
   USER_ARCHIVED_DATABASE_ROWS_KEY,
-  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
+  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
 } from "@/store/keys";
-import {
-  getSpotifyUserAchivesQuery,
-} from "@/store/queries";
+import { getSpotifyUserAchivesQuery } from "@/store/queries";
 import PlaylistRow from "@/components/PlaylistRow";
 
 export default function UserArchivedPlaylists() {
@@ -16,13 +14,14 @@ export default function UserArchivedPlaylists() {
   });
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
-      {archivedPlaylists && archivedPlaylists.map((archivedPlaylist, index) => (
-        <PlaylistRow
-          playlist={archivedPlaylist}
-          key={archivedPlaylist.id}
-          isArchived={true}
-        />
-      ))}
+      {archivedPlaylists &&
+        archivedPlaylists.map((archivedPlaylist, index) => (
+          <PlaylistRow
+            playlist={archivedPlaylist}
+            key={archivedPlaylist.id}
+            isArchived={true}
+          />
+        ))}
     </div>
   );
 }

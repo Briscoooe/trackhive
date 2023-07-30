@@ -16,9 +16,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] https://supabase.com/docs/guides/database/column-encryption IMPORTANT
 - [x] https://supabase.com/docs/guides/database/vault
 - show information on archived playlists in tab
-    - archived since
-    - archived versions
-    - archive mode
+  - archived since
+  - archived versions
+  - archive mode
 - delete cookie thing
 - rename - snapshotify?
 - skeleton for playlist row
@@ -46,10 +46,12 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://vercel.com/docs/cron-jobs
 
 # DESIGN PRINCIPLES
+
 - all spotify interaction is handled server side
 - supabase - weird split happening here
 
 # known refactors
+
 - [x] playlistRow
 - isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
 - reduce returned fields by spotify

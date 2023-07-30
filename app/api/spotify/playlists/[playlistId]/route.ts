@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
-import {getPlaylist, getPlaylistTracks} from "@/app/lib/spotify-client";
+import { getPlaylist, getPlaylistTracks } from "@/app/lib/spotify-client";
 
 export const dynamic = "force-dynamic";
 
