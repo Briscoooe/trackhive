@@ -105,16 +105,16 @@ export default function PlaylistRow({
             <div className={"flex flex-row items-center space-x-1"}>
               <UserIcon className={"text-gray-500 w-4 h-4"} />
               <span className={"text-md text-gray-500"}>
-                {playlist.owner.display_name}
+                {playlist.owner?.display_name}
               </span>
-              {playlist.owner.is_spotify && (
+              {playlist.owner?.is_spotify && (
                 <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
               )}
             </div>
             <div className={"flex flex-row items-center space-x-1"}>
               <MusicalNoteIcon className={"text-gray-500 h-4 w-4"} />
               <span className={"text-md text-gray-500"}>
-                {playlist.tracks.total}
+                {playlist.tracks?.total}
               </span>
             </div>
           </div>

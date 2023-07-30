@@ -17,15 +17,18 @@ export const RELEASE_RADAR_NAME = "Release Radar";
 const _serializePlaylist = (
   json: SpotifySimplifiedPlaylistObject
 ): SpotifySimplifiedPlaylistObject => {
+  console.log('SERIALIZER PRE', json)
   const { owner, ...rest } = json;
   const newOwner = {
     ...owner,
     is_spotify: owner.uri === SPOTIFY_OWNER_URI,
   }
-  return {
+  const res = {
     ...rest,
     owner: newOwner,
   };
+  console.log('SERIALIZER POST', res)
+  return res;
 }
 
 const _searchSpotifyOwnedPlaylist = async (
