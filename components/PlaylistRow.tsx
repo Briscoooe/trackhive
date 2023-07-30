@@ -19,7 +19,12 @@ import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
 import { Button } from "@/components/primitives/Button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient
+} from "@tanstack/react-query";
 import { getSpotifyPlaylistTracksQuery } from "@/store/queries";
 import {
   archiveSpotifyPlaylistMutation,
@@ -35,6 +40,7 @@ export default function PlaylistRow({
   playlist: SpotifySimplifiedPlaylistObject | null;
   isArchived?: boolean;
 }) {
+  const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
     return null;
@@ -56,12 +62,23 @@ export default function PlaylistRow({
 
   const handleArchiveMutation = useMutation({
     mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
-    mutationKey: [USER_ARCHIVED_PLAYLISTS_KEY, playlist.id],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
+        exact: true,
+      });
+    }
   });
 
   const handleUnarchiveMutation = useMutation({
     mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
-    mutationKey: [USER_ARCHIVED_PLAYLISTS_KEY, playlist.id],
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
+        exact: true,
+        refetchType: 'active',
+      });
+    }
   });
 
   return (

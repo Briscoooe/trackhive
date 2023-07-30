@@ -11,11 +11,11 @@ import {
 import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
 
 export default function PlaylistSearch() {
-  const [searchText, setSearchText] = useState<string>("");
   const { data: userArchives } = useQuery({
     queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
     queryFn: getUserArchivesQuery,
   });
+  const [searchText, setSearchText] = useState<string>("");
   const { data: searchResults } = useQuery({
     queryKey: [PLAYLIST_SEARCH_RESULTS_KEY, searchText],
     queryFn: () => {
