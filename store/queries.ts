@@ -30,6 +30,18 @@ export async function getSpotifyPlaylistTracksQuery(
   return response.json();
 }
 
+export async function getSpotifyPlaylistQuery(
+  playlistId: string
+): Promise<SpotifySimplifiedPlaylistObject> {
+  const response = await fetch(`/api/spotify/playlists/${playlistId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response.json();
+}
+
 export async function getUserArchivesQuery(): Promise<
   Database["public"]["Tables"]["user_archives"]["Row"][]
 > {
@@ -40,4 +52,14 @@ export async function getUserArchivesQuery(): Promise<
     .select()
     .eq("user_id", user.data.user?.id);
   return response.data as Database["public"]["Tables"]["user_archives"]["Row"][];
+}
+
+export async function getUserArchivePlaylistsQuery(): Promise<SpotifySimplifiedPlaylistObject[]>
+{
+  const archives = await getUserArchivesQuery();
+  const playlistIds = archives.map((archive) => archive.playlist_id);
+  const playlists = await Promise.all(
+    playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
+  );
+  return playlists;
 }
