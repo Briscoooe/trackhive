@@ -18,10 +18,13 @@ const _serializePlaylist = (
   json: SpotifySimplifiedPlaylistObject
 ): SpotifySimplifiedPlaylistObject => {
   const { owner, ...rest } = json;
-  owner.is_spotify = owner.uri === SPOTIFY_OWNER_URI;
+  const newOwner = {
+    ...owner,
+    is_spotify: owner.uri === SPOTIFY_OWNER_URI,
+  }
   return {
     ...rest,
-    owner,
+    owner: newOwner,
   };
 }
 
