@@ -61,5 +61,6 @@ export async function getSpotifyUserAchivesQuery(): Promise<SpotifySimplifiedPla
   const playlists = await Promise.all(
     playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
   );
+  console.log('PLAYLISTS', JSON.stringify(playlists[0]))
   return playlists;
 }

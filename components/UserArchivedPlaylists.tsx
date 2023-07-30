@@ -1,6 +1,9 @@
 'use client';
 import {useQuery} from "@tanstack/react-query";
-import {USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
+import {
+  USER_ARCHIVED_DATABASE_ROWS_KEY,
+  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
+} from "@/store/keys";
 import {
   getSpotifyUserAchivesQuery,
 } from "@/store/queries";
@@ -8,7 +11,7 @@ import PlaylistRow from "@/components/PlaylistRow";
 
 export default function UserArchivedPlaylists() {
   const { data: archivedPlaylists } = useQuery({
-    queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
+    queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
     queryFn: getSpotifyUserAchivesQuery,
   });
   return (

@@ -29,7 +29,11 @@ import {
   archiveSpotifyPlaylistMutation,
   unarchiveSpotifyPlaylistMutation,
 } from "@/store/mutations";
-import {PLAYLIST_TRACKS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
+import {
+  PLAYLIST_TRACKS_KEY,
+  USER_ARCHIVED_DATABASE_ROWS_KEY,
+  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
+} from "@/store/keys";
 import {Button} from "@/components/ui/button";
 
 export default function PlaylistRow({
@@ -61,7 +65,11 @@ export default function PlaylistRow({
     mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
+        queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
+        exact: true,
+      });
+      queryClient.invalidateQueries({
+        queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
         exact: true,
       });
     }
@@ -71,9 +79,13 @@ export default function PlaylistRow({
     mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
+        queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
         exact: true,
         refetchType: 'active',
+      });
+      queryClient.invalidateQueries({
+        queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
+        exact: true,
       });
     }
   });
