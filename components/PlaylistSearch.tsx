@@ -8,15 +8,16 @@ import {
   getUserArchivesQuery,
   searchSpotifyPlaylistsQuery,
 } from "@/store/queries";
+import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");
   const { data: userArchives } = useQuery({
-    queryKey: ["archivedPlaylist"],
+    queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
     queryFn: getUserArchivesQuery,
   });
   const { data: searchResults } = useQuery({
-    queryKey: ["searchPlaylists", searchText],
+    queryKey: [PLAYLIST_SEARCH_RESULTS_KEY, searchText],
     queryFn: () => {
       if (!searchText || searchText.length < 2) {
         return Promise.resolve({ items: [] } as SpotifyPlaylistSearchResponse);

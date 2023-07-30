@@ -20,11 +20,12 @@ export async function POST(
     return NextResponse.redirect("/auth/signin");
   }
 
-  // await archivePlaylist(authCookie, params.playlistId);
+  const user = await supabase.auth.getUser();
   const { data, error } = await supabase
     .from("user_archives")
     .delete()
     .eq("playlist_id", params.playlistId)
-    .eq("user_id", session.data.session?.user.id);
+    .eq("user_id", user.data.user?.id)
+    .throwOnError();
   return NextResponse.json({ data, error });
 }

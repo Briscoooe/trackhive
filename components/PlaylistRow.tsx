@@ -26,6 +26,7 @@ import {
   unarchiveSpotifyPlaylistMutation,
 } from "@/store/mutations";
 import { isPlaylistOwnedBySpotify } from "@/lib/utils";
+import {PLAYLIST_TRACKS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
 
 export default function PlaylistRow({
   playlist,
@@ -44,7 +45,7 @@ export default function PlaylistRow({
     isFetching,
     error,
   } = useQuery({
-    queryKey: ["getPlaylistTracks", playlist.id, isOpen],
+    queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
     queryFn: () => {
       if (!isOpen) {
         return Promise.resolve({ items: [] } as SpotifyTrackObject[]);
@@ -55,12 +56,12 @@ export default function PlaylistRow({
 
   const handleArchiveMutation = useMutation({
     mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
-    mutationKey: ["archivedPlaylist", playlist.id],
+    mutationKey: [USER_ARCHIVED_PLAYLISTS_KEY, playlist.id],
   });
 
   const handleUnarchiveMutation = useMutation({
     mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
-    mutationKey: ["archivedPlaylist", playlist.id],
+    mutationKey: [USER_ARCHIVED_PLAYLISTS_KEY, playlist.id],
   });
 
   return (
