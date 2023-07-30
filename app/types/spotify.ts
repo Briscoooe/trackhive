@@ -27,6 +27,7 @@ export type SpotifySimplifiedPlaylistObject = {
     type: "user";
     uri: string;
     display_name: string | null;
+    is_spotify: boolean; // THIS IS A CUSTOM FIELD
   };
   public: boolean;
   snapshot_id: string;

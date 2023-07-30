@@ -31,3 +31,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 # DESIGN PRINCIPLES
 - all spotify interaction is handled server side
 - supabase - weird split happening here
+
+# known refactors
+- playlistRow
+- isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop

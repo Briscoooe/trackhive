@@ -30,7 +30,6 @@ import {
   archiveSpotifyPlaylistMutation,
   unarchiveSpotifyPlaylistMutation,
 } from "@/store/mutations";
-import { isPlaylistOwnedBySpotify } from "@/lib/utils";
 import {PLAYLIST_TRACKS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
 
 export default function PlaylistRow({
@@ -79,6 +78,8 @@ export default function PlaylistRow({
     }
   });
 
+  const playlistImage = playlist.images?.length > 0 ? playlist.images[0].url : "";
+
   return (
     <div
       className={
@@ -92,7 +93,7 @@ export default function PlaylistRow({
           }
         >
           <img
-            src={playlist.images[0].url}
+            src={playlistImage}
             alt={playlist.name}
             width={80}
             height={80}
@@ -106,7 +107,7 @@ export default function PlaylistRow({
               <span className={"text-md text-gray-500"}>
                 {playlist.owner.display_name}
               </span>
-              {isPlaylistOwnedBySpotify(playlist) && (
+              {playlist.owner.is_spotify && (
                 <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
               )}
             </div>

@@ -5,7 +5,7 @@ import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
 import { useQuery } from "@tanstack/react-query";
 import {
-  getUserArchivesQuery,
+  getDatabaseUserArchivesQuery,
   searchSpotifyPlaylistsQuery,
 } from "@/store/queries";
 import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/keys";
@@ -13,7 +13,7 @@ import {PLAYLIST_SEARCH_RESULTS_KEY, USER_ARCHIVED_PLAYLISTS_KEY} from "@/store/
 export default function PlaylistSearch() {
   const { data: userArchives } = useQuery({
     queryKey: [USER_ARCHIVED_PLAYLISTS_KEY],
-    queryFn: getUserArchivesQuery,
+    queryFn: getDatabaseUserArchivesQuery,
   });
   const [searchText, setSearchText] = useState<string>("");
   const { data: searchResults } = useQuery({

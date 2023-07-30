@@ -6,11 +6,24 @@ import {
   SpotifyTrackObject,
   SpotifyUserObject,
 } from "@/app/types/spotify";
+import {Simulate} from "react-dom/test-utils";
+import play = Simulate.play;
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
 export const DISCOVER_WEEKLY_NAME = "Discover Weekly";
 export const RELEASE_RADAR_NAME = "Release Radar";
+
+const _serializePlaylist = (
+  json: SpotifySimplifiedPlaylistObject
+): SpotifySimplifiedPlaylistObject => {
+  const { owner, ...rest } = json;
+  owner.is_spotify = owner.uri === SPOTIFY_OWNER_URI;
+  return {
+    ...rest,
+    owner,
+  };
+}
 
 const _searchSpotifyOwnedPlaylist = async (
   accessToken: string,
@@ -21,7 +34,11 @@ const _searchSpotifyOwnedPlaylist = async (
     return;
   }
   const { items } = playlists;
-  return items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
+  const result = items.find((playlist) => playlist.owner.uri === SPOTIFY_OWNER_URI);
+  if (!result) {
+    return;
+  }
+  return _serializePlaylist(result);
 };
 
 const _recursivelyGetPlaylistTracks = async (
@@ -105,7 +122,7 @@ export const getPlaylist = async (
       },
     }
   );
-  return response.json();
+  return _serializePlaylist(await response.json());
 };
 
 export const _getCurrentUser = async (
@@ -180,5 +197,6 @@ export const searchPlaylists = async (
     }
   );
   const { playlists } = await response.json();
+  playlists.items = playlists.items.map(_serializePlaylist);
   return playlists;
 };

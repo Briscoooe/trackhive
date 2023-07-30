@@ -42,7 +42,7 @@ export async function getSpotifyPlaylistQuery(
   return response.json();
 }
 
-export async function getUserArchivesQuery(): Promise<
+export async function getDatabaseUserArchivesQuery(): Promise<
   Database["public"]["Tables"]["user_archives"]["Row"][]
 > {
   const supabase = createClientComponentClient();
@@ -54,9 +54,9 @@ export async function getUserArchivesQuery(): Promise<
   return response.data as Database["public"]["Tables"]["user_archives"]["Row"][];
 }
 
-export async function getUserArchivePlaylistsQuery(): Promise<SpotifySimplifiedPlaylistObject[]>
+export async function getSpotifyUserAchivesQuery(): Promise<SpotifySimplifiedPlaylistObject[]>
 {
-  const archives = await getUserArchivesQuery();
+  const archives = await getDatabaseUserArchivesQuery();
   const playlistIds = archives.map((archive) => archive.playlist_id);
   const playlists = await Promise.all(
     playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
