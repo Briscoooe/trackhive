@@ -21,6 +21,23 @@ import {
 } from "@/lib/constants";
 import {CheckBadgeIcon} from "@heroicons/react/24/solid";
 
+function PlaylistSearchSuggestions({ searchText, setSearchText}: { searchText: string, setSearchText: (text: string) => void }) {
+  if (searchText) {
+    return null
+  }
+  return (
+    <div className={'flex flex-col items-center space-y-2'}>
+      {[SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME, SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME]
+        .map((playlistName:string) => (<Badge className={'cursor-pointer w-full text-sm whitespace-nowrap flex justify-between'} onClick={() => setSearchText(playlistName)}>
+            <span>{playlistName}</span>
+            <CheckBadgeIcon className={'h-4 w-4 ml-1 text-green-500'}/>
+          </Badge>
+        ))}
+    </div>
+  )
+
+}
+
 export default function PlaylistSearch() {
   const { data: userArchives } = useQuery({
     queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
@@ -50,16 +67,7 @@ export default function PlaylistSearch() {
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={"Search for a playlist"}
       />
-      {!searchText && (
-        <div className={'flex flex-row items-center gap-2 flex-wrap'}>
-          {[SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME, SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME]
-            .map((playlistName:string) => (<Badge className={'cursor-pointer w-full text-sm whitespace-nowrap flex justify-between'} onClick={() => setSearchText(playlistName)}>
-                <span>{playlistName}</span>
-                <CheckBadgeIcon className={'h-4 w-4 ml-1 text-green-500'}/>
-              </Badge>
-            ))}
-        </div>
-      )}
+      <PlaylistSearchSuggestions searchText={searchText} setSearchText={setSearchText}/>
       {searchResults &&
         searchResults.items.map((playlist, index) => (
           <PlaylistRow
