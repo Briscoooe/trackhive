@@ -3,13 +3,14 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 # MVP features
 
 - [x] view all users playlists
-- select playlist to archive on schedule
+- [x] select playlist to archive on schedule
 - save scheduling prefs in database
-- figure out acces token stuff
-- route for showing playlists being archived
+- [x] figure out acces token stuff
+- [x] route for showing playlists being archived
 - footer for about stuff
 - badges underneath search bar for disover weekly
 - [x] Figure out how to make everything server rendered
+- delete cookie thing
 
 # UI bits
 

@@ -5,7 +5,7 @@ import {
   getDiscoverWeeklyPlaylist,
   getReleaseRadarPlaylist,
   getPlaylistTracks,
-} from "@/app/lib/spotify";
+} from "@/app/lib/spotify-client";
 import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,

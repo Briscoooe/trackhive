@@ -1,5 +1,6 @@
 "use client";
 import {
+  SpotifyPlaylistSearchResponse,
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
 } from "@/app/types/spotify";
@@ -12,11 +13,17 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import {isPlaylistOwnedBySpotify} from "@/app/lib/spotify";
+import {isPlaylistOwnedBySpotify} from "@/app/lib/spotify-client";
 import { useEffect, useState } from "react";
 import TrackRow from "@/components/TrackRow";
 import TrackRowSkeleton from "@/components/TrackRowSkeleton";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/primitives/Button";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {
+  archivePlaylistMutation,
+  getPlaylistTracksQuery,
+  searchPlaylistsQuery
+} from "@/app/lib/api-client";
 
 export default function PlaylistRow({
   playlist,
@@ -24,43 +31,24 @@ export default function PlaylistRow({
   playlist: SpotifySimplifiedPlaylistObject | null;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [tracks, setTracks] = useState<SpotifyTrackObject[]>([]);
   if (!playlist) {
     return null;
   }
-
-  useEffect(() => {
-    const getTracks = async () => {
-      const response = await fetch(
-        `/api/spotify/playlists/${playlist.id}/tracks`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      setTracks(data);
-    };
-    if (isOpen && !tracks.length) {
-      getTracks();
-    }
-  }, [isOpen]);
-
-  const handleArchive = async () => {
-    const response = await fetch(
-      `/api/spotify/playlists/${playlist.id}/archive`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const { data: tracks, isLoading, isFetching, error } = useQuery({
+    queryKey: ["getPlaylistTracks", playlist.id, isOpen],
+    queryFn: () => {
+      if (!isOpen) {
+        return Promise.resolve({ items: [] } as SpotifyTrackObject[]);
       }
-    );
-    const data = await response.json();
-    console.log(data);
-  }
+      return getPlaylistTracksQuery(playlist.id);
+    },
+  });
+
+  const handleArchiveMutation = useMutation({
+    mutationFn: () => archivePlaylistMutation(playlist.id),
+    mutationKey: ["archivedPlaylist", playlist.id],
+  });
+
 
   return (
     <div
@@ -109,19 +97,19 @@ export default function PlaylistRow({
               }`}
             />
           </button>
-          <Button onClick={handleArchive} variant={"outline"} className={"mt-auto"}>
-            Archive
+          <Button onClick={handleArchiveMutation.mutate} variant={"outline"} className={"mt-auto"} disabled={handleArchiveMutation.isLoading}>
+            {handleArchiveMutation.isLoading ? "Archiving..." : "Archive"}
           </Button>
         </div>
       </div>
       {isOpen && (
         <div className={"space-y-2 border-t-1 mt-3 lg:mt-4 pt-3 lg:pt-4"}>
-          {tracks.length > 0 &&
-            tracks.map((track, index) => (
+          {tracks?.length > 0 &&
+            tracks?.map((track, index) => (
               <TrackRow key={track.id} index={index} track={track} />
             ))}
-          {!tracks.length &&
-            [...Array(10)].map((_, index) => <TrackRowSkeleton key={index} />)}
+          {isLoading &&
+            [...Array(playlist.tracks.total)].map((_, index) => <TrackRowSkeleton key={index} />)}
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/primitives/Button";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -10,7 +10,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
+} from "@/components/primitives/DropdownMenu";
 import { GearIcon } from "@radix-ui/react-icons";
 import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";

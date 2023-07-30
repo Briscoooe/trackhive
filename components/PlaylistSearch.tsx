@@ -1,28 +1,23 @@
 "use client";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/primitives/Input";
 import { useEffect, useState } from "react";
 import { SpotifyPlaylistSearchResponse } from "@/app/types/spotify";
 import PlaylistRow from "@/components/PlaylistRow";
+import {useQuery} from "@tanstack/react-query";
+import {searchPlaylistsQuery} from "@/app/lib/api-client";
 
 export default function PlaylistSearch() {
   const [searchText, setSearchText] = useState<string>("");
-  const [searchResponse, setSearchResponse] =
-    useState<SpotifyPlaylistSearchResponse | null>();
-  useEffect(() => {
-    async function search() {
-      const response = await fetch(`/api/spotify/search?q=${searchText}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      setSearchResponse(data);
-    }
-    if (searchText.length > 3) {
-      search();
-    }
-  }, [searchText]);
+  const { data, isLoading, isFetching, error } = useQuery({
+    queryKey: ["searchPlaylists", searchText],
+    queryFn: () => {
+      if (!searchText ||  searchText.length < 2) {
+        return Promise.resolve({ items: [] } as SpotifyPlaylistSearchResponse);
+      }
+      return searchPlaylistsQuery(searchText);
+    },
+  });
+
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       <Input
@@ -31,8 +26,8 @@ export default function PlaylistSearch() {
         onChange={(e) => setSearchText(e.target.value)}
         placeholder={"Search for a playlist"}
       />
-      {searchResponse &&
-        searchResponse.items.map((playlist, index) => (
+      {data &&
+        data.items.map((playlist, index) => (
           <PlaylistRow playlist={playlist} key={index} />
         ))}
     </div>

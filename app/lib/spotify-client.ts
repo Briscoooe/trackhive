@@ -175,8 +175,6 @@ export const archivePlaylist = async (
     me.id,
     `${currentPlaylist.name} - ${new Date().toLocaleDateString()}`
   );
-  console.log(newPlaylist)
-  console.log(currentPlaylistTracks.map(track => track.uri))
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
