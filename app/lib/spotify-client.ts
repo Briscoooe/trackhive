@@ -11,25 +11,6 @@ export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
 export const DISCOVER_WEEKLY_NAME = "Discover Weekly";
 export const RELEASE_RADAR_NAME = "Release Radar";
 
-export const searchPlaylists = async (
-  accessToken: string,
-  query: string
-): Promise<SpotifyPlaylistSearchResponse | null> => {
-  const response = await fetch(
-    `${SPOTIFY_API_BASE_URL}/search?${new URLSearchParams({
-      q: query,
-      type: "playlist",
-      limit: "50",
-    })}`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  const { playlists } = await response.json();
-  return playlists;
-};
 
 const _searchSpotifyOwnedPlaylist = async (
   accessToken: string,
@@ -112,7 +93,7 @@ const _addItemsToPlaylist = async (
   });
 }
 
-export const _getPlaylist = async (
+export const getPlaylist = async (
   accessToken: string,
   playlistId: string
 ): Promise<SpotifySimplifiedPlaylistObject> => {
@@ -167,7 +148,7 @@ export const archivePlaylist = async (
   accessToken: string,
   playlistId: string
 ): Promise<void> => {
-  const currentPlaylist = await _getPlaylist(accessToken, playlistId);
+  const currentPlaylist = await getPlaylist(accessToken, playlistId);
   const me = await _getCurrentUser(accessToken);
   const currentPlaylistTracks = await getPlaylistTracks(accessToken, playlistId);
   const newPlaylist = await _createPlaylist(
@@ -187,3 +168,23 @@ export const isPlaylistOwnedBySpotify = (
 ): boolean => {
   return playlist.owner.uri === SPOTIFY_OWNER_URI;
 }
+
+export const searchPlaylists = async (
+  accessToken: string,
+  query: string
+): Promise<SpotifyPlaylistSearchResponse | null> => {
+  const response = await fetch(
+    `${SPOTIFY_API_BASE_URL}/search?${new URLSearchParams({
+      q: query,
+      type: "playlist",
+      limit: "50",
+    })}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+  const { playlists } = await response.json();
+  return playlists;
+};

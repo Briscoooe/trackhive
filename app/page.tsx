@@ -11,7 +11,7 @@ export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
   const user = await supabase.auth.getUser();
   const archives = await supabase.from('user_archives').select('*').eq('user_id', user.data.user?.id);
-  const playlists: SpotifySimplifiedPlaylistObject[] = [];
+  // const playlists: SpotifySimplifiedPlaylistObject[] = [];
   const authCookie = cookies().get(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME)?.value;
   if (!authCookie) {
     return null;
@@ -22,6 +22,6 @@ export default async function Index() {
   //   playlists.push(playlistData);
   // }
   return <div className="w-full flex flex-col items-center">{
-    playlists?.map((archive: SpotifySimplifiedPlaylistObject) => <PlaylistRow playlist={archive} />)
+    // playlists?.map((archive: SpotifySimplifiedPlaylistObject) => <PlaylistRow playlist={archive} />)
   }</div>;
 }

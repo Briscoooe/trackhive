@@ -6,10 +6,11 @@ import {
 } from "@/app/types/spotify";
 import Image from "next/image";
 import {
+  ArchiveBoxIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   ClockIcon,
-  MusicalNoteIcon,
+  MusicalNoteIcon, TrashIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
@@ -22,13 +23,15 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import {
   archivePlaylistMutation,
   getPlaylistTracksQuery,
-  searchPlaylistsQuery
+  searchPlaylistsQuery, unarchivePlaylistMutation
 } from "@/app/lib/api-client";
 
 export default function PlaylistRow({
   playlist,
+  isArchived = false,
 }: {
   playlist: SpotifySimplifiedPlaylistObject | null;
+  isArchived?: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
@@ -46,6 +49,11 @@ export default function PlaylistRow({
 
   const handleArchiveMutation = useMutation({
     mutationFn: () => archivePlaylistMutation(playlist.id),
+    mutationKey: ["archivedPlaylist", playlist.id],
+  });
+
+  const handleUnarchiveMutation = useMutation({
+    mutationFn: () => unarchivePlaylistMutation(playlist.id),
     mutationKey: ["archivedPlaylist", playlist.id],
   });
 
@@ -89,17 +97,41 @@ export default function PlaylistRow({
             </div>
           </div>
         </div>
-        <div className={"flex flex-col items-end"}>
-          <button onClick={() => setIsOpen(!isOpen)}>
-            <ChevronDownIcon
-              className={`text-gray-500 transition h-5 w-5 ${
-                isOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-          <Button onClick={handleArchiveMutation.mutate} variant={"outline"} className={"mt-auto"} disabled={handleArchiveMutation.isLoading}>
-            {handleArchiveMutation.isLoading ? "Archiving..." : "Archive"}
-          </Button>
+        <div className={"flex flex-col items-end justify-end"}>
+          <div>
+            <button onClick={() => setIsOpen(!isOpen)}>
+              <ChevronDownIcon
+                className={`text-gray-500 transition h-5 w-5 ${
+                  isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+          <div className={'mt-6'}>
+            {isArchived ? (
+            <Button onClick={handleArchiveMutation.mutate} variant={"outline"} className={"mt-auto flex-1"} disabled={handleArchiveMutation.isLoading}>
+              {handleArchiveMutation.isLoading ? "Archiving..." : (
+                <>
+                  <ArchiveBoxIcon className={"text-gray-500 w-4 h-4 mr-1"} />
+                  <span className={"text-md text-gray-500"}>
+                    Archive
+                  </span>
+                </>
+              )}
+            </Button>
+              ) : (
+              <Button onClick={handleUnarchiveMutation.mutate} variant={"destructive"} className={"mt-auto flex-1"} disabled={handleArchiveMutation.isLoading}>
+                {handleArchiveMutation.isLoading ? "Unarchiving..." : (
+                  <>
+                    <TrashIcon className={"text-red-500 w-4 h-4 mr-1"} />
+                    <span className={"text-md text-gray-500"}>
+                    Unarchive
+                  </span>
+                  </>
+                )}
+              </Button>
+              )}
+          </div>
         </div>
       </div>
       {isOpen && (

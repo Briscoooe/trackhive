@@ -30,3 +30,13 @@ export async function archivePlaylistMutation(playlistId: string): Promise<void>
   });
   return data.json();
 }
+
+export async function unarchivePlaylistMutation(playlistId: string): Promise<void> {
+  const data = await fetch(`/api/spotify/playlists/${playlistId}/unarchive`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return data.json();
+}
