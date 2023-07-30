@@ -137,6 +137,7 @@ export const refreshAuthToken = async (
   const data = await res.json();
   return data.access_token;
 };
+
 export const getPlaylist = async (
   accessToken: string,
   playlistId: string
