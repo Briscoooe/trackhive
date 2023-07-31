@@ -27,6 +27,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - https://docs.upstash.com/qstash
   - deno
   - https://developers.cloudflare.com/workers/platform/limits/
+- move to remix.js
 
 # UI bits
 
@@ -53,13 +54,6 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 # known refactors
 
 - [x] playlistRow
-- isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
+- [x] isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
 - reduce returned fields by spotify
-  {
-  "crons": [
-  {
-  "path": "/api/internal/cron/archive",
-  "schedule": "19 30 * * *"
-  }
-  ]
-  }
+- store playlist snapshots in DB to avoid making dupe requests to spotify for discover weekly

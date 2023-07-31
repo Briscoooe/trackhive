@@ -35,7 +35,6 @@ export async function GET(request: NextRequest, { params:{ userId } }: { params:
     .from("auth_token")
     .update({ access_token: accessToken })
     .eq("user_id", user_id);
-  console.log('access token', accessToken)
   for (const playlist of userTrackedPlaylist.data) {
     const newPlaylist = await archivePlaylist(
       accessToken,
