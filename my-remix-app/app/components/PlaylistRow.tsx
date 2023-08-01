@@ -8,8 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import TrackRow from "~/components/TrackRow";
-import TrackRowSkeleton from "~/components/TrackRowSkeleton";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "~/components/ui/button";
 import {
@@ -17,11 +15,14 @@ import {
   unarchiveSpotifyPlaylistMutation
 } from "~/store/mutations";
 import {
-  PLAYLIST_TRACKS_KEY,
   USER_ARCHIVED_DATABASE_ROWS_KEY,
   USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
 } from "~/store/keys";
-import {getSpotifyPlaylistTracksQuery} from "~/store/queries";
+import {ActionArgs, redirect} from "@remix-run/node";
+import {archivePlaylist, refreshAuthToken} from "~/lib/spotify-client";
+import {createSupabaseServerClient} from "~/utils/supabase.server";
+import {Form, Link, useSearchParams} from "@remix-run/react";
+import {useParams} from "react-router";
 
 function PlaylistRowInformation({
   playlist,
@@ -64,43 +65,39 @@ function PlaylistRowInformation({
 function PlaylistRowActions({
   playlist,
   isArchived,
-  isOpen,
-  setIsOpen,
 }: {
   playlist: SpotifySimplifiedPlaylistObject;
   isArchived: boolean;
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
 }) {
-  const queryClient = useQueryClient();
-  const handleArchiveMutation = useMutation({
-    mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
-        exact: true,
-      });
-      queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
-        exact: true,
-      });
-    },
-  });
+  // const queryClient = useQueryClient();
+  // const handleArchiveMutation = useMutation({
+  //   mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
+  //       exact: true,
+  //     });
+  //     queryClient.invalidateQueries({
+  //       queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
+  //       exact: true,
+  //     });
+  //   },
+  // });
 
-  const handleUnarchiveMutation = useMutation({
-    mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
-        exact: true,
-        refetchType: "active",
-      });
-      queryClient.invalidateQueries({
-        queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
-        exact: true,
-      });
-    },
-  });
+  // const handleUnarchiveMutation = useMutation({
+  //   mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
+  //       exact: true,
+  //       refetchType: "active",
+  //     });
+  //     queryClient.invalidateQueries({
+  //       queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
+  //       exact: true,
+  //     });
+  //   },
+  // });
   return (
     <div
       className={
@@ -108,53 +105,32 @@ function PlaylistRowActions({
       }
     >
       <div>
-        <button onClick={() => setIsOpen(!isOpen)}>
-          <ChevronDownIcon
-            className={`text-gray-500 transition h-5 w-5 ${
-              isOpen ? "rotate-180" : ""
-            }`}
-          />
-        </button>
+        {/*<button onClick={() => setIsOpen(!isOpen)}>*/}
+        {/*  <ChevronDownIcon*/}
+        {/*    className={`text-gray-500 transition h-5 w-5 ${*/}
+        {/*      isOpen ? "rotate-180" : ""*/}
+        {/*    }`}*/}
+        {/*  />*/}
+        {/*</button>*/}
       </div>
-      <div className={"mt-0 sm:mt-6"}>
-        {!isArchived ? (
-          <Button
-            onClick={() => handleArchiveMutation.mutate()}
-            variant={"default"}
-            className={"mt-auto flex-1"}
-            disabled={handleArchiveMutation.isLoading}
-          >
-            {handleArchiveMutation.isLoading ? (
-              "Archiving..."
-            ) : (
-              <>
-                <ArchiveBoxIcon className={"w-4 h-4 mr-1"} />
-                <span className={"text-md "}>Archive</span>
-              </>
-            )}
-          </Button>
-        ) : (
-          <Button
-            onClick={() => handleUnarchiveMutation.mutate()}
-            variant={"secondary"}
-            className={"mt-auto flex-1"}
-            disabled={handleUnarchiveMutation.isLoading}
-          >
-            {handleUnarchiveMutation.isLoading ? (
-              "Unarchiving..."
-            ) : (
-              <>
-                <TrashIcon className={"text-red-500 w-4 h-4 mr-1"} />
-                Unarchive
-              </>
-            )}
-          </Button>
-        )}
-      </div>
+      <Form className={"mt-0 sm:mt-6"} method={'post'}>
+        <input type="hidden" name="playlistId" value={playlist.id} />
+        <Button
+          variant={"default"}
+          className={"mt-auto flex-1"}
+          type={'submit'}
+        >
+          <>
+            <ArchiveBoxIcon className={"w-4 h-4 mr-1"} />
+            <span className={"text-md "}>Archive</span>
+          </>
+        </Button>
+      </Form>
     </div>
   );
 }
 
+// export const loadear = async ()
 export default function PlaylistRow({
   playlist,
   isArchived = false,
@@ -162,8 +138,9 @@ export default function PlaylistRow({
   playlist: SpotifySimplifiedPlaylistObject | null;
   isArchived?: boolean;
 }) {
+  let [searchParams, setSearchParams] = useSearchParams();
   // const queryClient = useQueryClient();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
     return null;
   }
@@ -176,9 +153,13 @@ export default function PlaylistRow({
   //     return getSpotifyPlaylistTracksQuery(playlist.id);
   //   },
   // });
-
+  const searchParamsPlaylistId = searchParams.get("playlistId");
+  const isOpen = searchParamsPlaylistId === playlist.id;
   return (
-    <div
+    <Link
+      to={{
+        search: `?query=${searchParams.get('query')}&playlistId=${playlist.id}`
+      }}
       className={
         "w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
       }
@@ -192,23 +173,13 @@ export default function PlaylistRow({
         <PlaylistRowActions
           playlist={playlist}
           isArchived={isArchived}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
         />
       </div>
-      {/*{isOpen && (*/}
-      {/*  <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>*/}
-      {/*    {tracks &&*/}
-      {/*      tracks?.length > 0 &&*/}
-      {/*      tracks?.map((track, index) => (*/}
-      {/*        <TrackRow key={track.id} index={index} track={track} />*/}
-      {/*      ))}*/}
-      {/*    {isLoading &&*/}
-      {/*      [...Array(playlist.tracks.total)].map((_, index) => (*/}
-      {/*        <TrackRowSkeleton key={index} />*/}
-      {/*      ))}*/}
-      {/*  </div>*/}
-      {/*)}*/}
-    </div>
+      {isOpen && (
+        <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>
+          I am open
+        </div>
+      )}
+    </Link>
   );
 }

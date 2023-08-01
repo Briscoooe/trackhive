@@ -20,12 +20,8 @@ import {useSearchParams} from "next/navigation";
 import {createSupabaseClient} from "@supabase/auth-helpers-shared";
 import {createServerClient} from "@supabase/auth-helpers-remix";
 import {createSupabaseServerClient} from "~/utils/supabase.server";
-import {
-  archivePlaylist,
-  refreshAuthToken,
-  searchPlaylists
-} from "../lib/spotify-client";
 import {ActionArgs, redirect} from "@remix-run/node";
+import {archivePlaylist, refreshAuthToken, searchPlaylists} from "~/lib/spotify-client";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -84,11 +80,36 @@ export const action = async ({ request}: ActionArgs) => {
   const project = await archivePlaylist(token, formData.get("playlistId") as string);
   return redirect(`/`);
 }
-export default function Index() {
+export default function Search() {
+  // const { data: userArchives } = useQuery({
+  //   queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
+  //   queryFn: getDatabaseUser ArchivesQuery,
+  // });
+  // const [params] = useSearchParams()
+
+  // const searchText = params.get("query") || ""
+  const { results, query } = useLoaderData();
 
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
+      <h1>Search</h1>
+      <Form method="get">
+        <input type="text" name="query" defaultValue={query || ""} />
+        <button type="submit">Search</button>
+      </Form>
+      <PlaylistSearchSuggestions
+        onClick={(playlist) => {}}
+        // searchText={searchText}
+        // setSearchText={setSearchText}
+      />
       <Outlet/>
+      {results &&
+        results.items.map((playlist, index) => (
+          <PlaylistRow
+            playlist={playlist}
+            key={index}
+          />
+        ))}
     </div>
   );
 }
