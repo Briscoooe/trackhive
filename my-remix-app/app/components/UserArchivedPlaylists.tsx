@@ -1,27 +1,28 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
-import {
-  USER_ARCHIVED_DATABASE_ROWS_KEY,
-  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
-} from "store/keys";
-import { getSpotifyUserAchivesQuery } from "store/queries";
 import PlaylistRow from "~/components/PlaylistRow";
+import {getSpotifyUserAchivesQuery} from "~/store/queries";
+import {LoaderArgs} from "@remix-run/node";
+import {useLoaderData} from "@remix-run/react";
 
+export const loader = async ({ request }: LoaderArgs) => {
+  const archives = await getSpotifyUserAchivesQuery();
+  console.log("archives", archives)
+  return {
+    archives,
+  }
+}
 export default function UserArchivedPlaylists() {
-  const { data: archivedPlaylists } = useQuery({
-    queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
-    queryFn: getSpotifyUserAchivesQuery,
-  });
+  const archives = useLoaderData<typeof loader>();
+  console.log('archives', archives)
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
-      {archivedPlaylists &&
-        archivedPlaylists.map((archivedPlaylist, index) => (
-          <PlaylistRow
-            playlist={archivedPlaylist}
-            key={archivedPlaylist.id}
-            isArchived={true}
-          />
-        ))}
+      {/*{archives &&*/}
+      {/*  archives.map((archivedPlaylist, index) => (*/}
+      {/*    <PlaylistRow*/}
+      {/*      playlist={archivedPlaylist}*/}
+      {/*      key={archivedPlaylist.id}*/}
+      {/*      isArchived={true}*/}
+      {/*    />*/}
+      {/*  ))}*/}
     </div>
   );
 }

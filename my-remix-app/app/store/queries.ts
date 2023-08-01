@@ -1,11 +1,9 @@
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
   SpotifyPlaylistSearchResponse,
-  SpotifySimplifiedPlaylistObject,
-  SpotifyTrackObject,
-} from "@/app/types/spotify";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useEffect } from "react";
-import { Database } from "@/app/types/supabase";
+  SpotifySimplifiedPlaylistObject, SpotifyTrackObject
+} from "~/types/spotify";
+import {Database} from "~/types/supabase";
 
 export async function searchSpotifyPlaylistsQuery(
   searchText: string

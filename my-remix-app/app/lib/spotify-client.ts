@@ -1,12 +1,14 @@
 import {
-  SpotifyEpisodeObject,
   SpotifyPlaylistItemsResponse,
   SpotifyPlaylistSearchResponse,
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
   SpotifyUserObject,
 } from "app/types/spotify";
-import { Simulate } from "react-dom/test-utils";
+import {
+  SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME,
+  SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME
+} from "~/lib/constants";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";
@@ -228,7 +230,10 @@ export const searchPlaylists = async (
       },
     }
   );
-  const { playlists } = await response.json();
+  const res = await response.json();
+  console.log('res', res)
+  const { playlists } = res;
+  console.log(playlists)
   playlists.items = playlists.items.map(_serializePlaylist);
   return playlists;
 };

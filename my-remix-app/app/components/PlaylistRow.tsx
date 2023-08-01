@@ -1,4 +1,3 @@
-"use client";
 import { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
 import {
   ArchiveBoxIcon,
@@ -12,17 +11,17 @@ import { useState } from "react";
 import TrackRow from "~/components/TrackRow";
 import TrackRowSkeleton from "~/components/TrackRowSkeleton";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getSpotifyPlaylistTracksQuery } from "store/queries";
+import { Button } from "~/components/ui/button";
 import {
   archiveSpotifyPlaylistMutation,
-  unarchiveSpotifyPlaylistMutation,
-} from "store/mutations";
+  unarchiveSpotifyPlaylistMutation
+} from "~/store/mutations";
 import {
   PLAYLIST_TRACKS_KEY,
   USER_ARCHIVED_DATABASE_ROWS_KEY,
-  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
-} from "store/keys";
-import { Button } from "~/components/ui/button";
+  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
+} from "~/store/keys";
+import {getSpotifyPlaylistTracksQuery} from "~/store/queries";
 
 function PlaylistRowInformation({
   playlist,
@@ -163,20 +162,20 @@ export default function PlaylistRow({
   playlist: SpotifySimplifiedPlaylistObject | null;
   isArchived?: boolean;
 }) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
     return null;
   }
-  const { data: tracks, isLoading } = useQuery({
-    queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
-    queryFn: () => {
-      if (!isOpen) {
-        return Promise.resolve([]);
-      }
-      return getSpotifyPlaylistTracksQuery(playlist.id);
-    },
-  });
+  // const { data: tracks, isLoading } = useQuery({
+  //   queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
+  //   queryFn: () => {
+  //     if (!isOpen) {
+  //       return Promise.resolve([]);
+  //     }
+  //     return getSpotifyPlaylistTracksQuery(playlist.id);
+  //   },
+  // });
 
   return (
     <div
@@ -197,19 +196,19 @@ export default function PlaylistRow({
           setIsOpen={setIsOpen}
         />
       </div>
-      {isOpen && (
-        <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>
-          {tracks &&
-            tracks?.length > 0 &&
-            tracks?.map((track, index) => (
-              <TrackRow key={track.id} index={index} track={track} />
-            ))}
-          {isLoading &&
-            [...Array(playlist.tracks.total)].map((_, index) => (
-              <TrackRowSkeleton key={index} />
-            ))}
-        </div>
-      )}
+      {/*{isOpen && (*/}
+      {/*  <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>*/}
+      {/*    {tracks &&*/}
+      {/*      tracks?.length > 0 &&*/}
+      {/*      tracks?.map((track, index) => (*/}
+      {/*        <TrackRow key={track.id} index={index} track={track} />*/}
+      {/*      ))}*/}
+      {/*    {isLoading &&*/}
+      {/*      [...Array(playlist.tracks.total)].map((_, index) => (*/}
+      {/*        <TrackRowSkeleton key={index} />*/}
+      {/*      ))}*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 }
