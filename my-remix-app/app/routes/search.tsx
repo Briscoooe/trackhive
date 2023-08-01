@@ -26,6 +26,7 @@ import {
 import {ActionArgs, redirect} from "@remix-run/node";
 import {archivePlaylist, refreshAuthToken, searchPlaylists} from "~/lib/spotify-client";
 import {Button} from "~/components/ui/button";
+import {useNavigation} from "react-router";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -47,7 +48,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const supabase = createSupabaseServerClient({ request, response });
   const accessToken = await getCurrentUserAccessToken({ supabase });
   const results = await searchPlaylists(accessToken, query);
-  console.log('results', results);
   return { results, query };
 };
 
@@ -69,7 +69,13 @@ export default function Search() {
 
   // const searchText = params.get("query") || ""
   const { results, query } = useLoaderData();
+  const navigation = useNavigation();
 
+  const checkIfIsSpining = (playlist: SpotifySimplifiedPlaylistObject): boolean => {
+    const spinin = navigation.state === "loading" && navigation.location.pathname.includes(playlist.id)
+    console.log(spinin)
+    return spinin
+  }
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       <Form method="get" className={"flex w-full items-center space-x-2"}>
@@ -87,6 +93,7 @@ export default function Search() {
           <PlaylistRow
             playlist={playlist}
             key={index}
+            isArchived={checkIfIsSpining(playlist)}
           />
         ))}
     </div>

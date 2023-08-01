@@ -22,7 +22,6 @@ export const getCurrentUserAccessToken = async ({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log('use', user.id)
   // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
   // console.log('user auth key', userAuthKey)
   // const { decrypted_refresh_token } = userAuthKey.data;

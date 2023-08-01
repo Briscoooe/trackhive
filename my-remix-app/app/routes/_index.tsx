@@ -49,7 +49,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log('use', user.id)
   // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
   // console.log('user auth key', userAuthKey)
   // const { decrypted_refresh_token } = userAuthKey.data;
@@ -59,7 +58,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   // console.log('token access', userAuthKey)
   const token = await refreshAuthToken("AQCx63LCyp0FrXULF7nLioxUnhWPPIVdHPw4Veptl4CcM15EWgNGwRVlOVAQRQ2jFy30Mc3l4JeDZ8iHStbJMrXDhTtJQ3AkDHvxFqel85kqCJkFSQmbbOBqaH0BLrbe2wU")
   const results = await searchPlaylists(token, query);
-  console.log('results', results);
   return { results, query };
 };
 

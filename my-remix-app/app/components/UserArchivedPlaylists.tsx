@@ -11,7 +11,6 @@ export const loader = async ({ request }: LoaderArgs) => {
 }
 export default function UserArchivedPlaylists() {
   const archives = useLoaderData<typeof loader>();
-  console.log('archives', archives)
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       {/*{archives &&*/}

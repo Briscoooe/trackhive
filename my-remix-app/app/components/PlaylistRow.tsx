@@ -1,28 +1,8 @@
-import { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
-import {
-  ArchiveBoxIcon,
-  ChevronDownIcon,
-  MusicalNoteIcon,
-  TrashIcon,
-  UserIcon,
-} from "@heroicons/react/24/outline";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button } from "~/components/ui/button";
-import {
-  archiveSpotifyPlaylistMutation,
-  unarchiveSpotifyPlaylistMutation
-} from "~/store/mutations";
-import {
-  USER_ARCHIVED_DATABASE_ROWS_KEY,
-  USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY
-} from "~/store/keys";
-import {ActionArgs, redirect} from "@remix-run/node";
-import {archivePlaylist, refreshAuthToken} from "~/lib/spotify-client";
-import {createSupabaseServerClient} from "~/utils/supabase.server";
-import {Form, Link, useSearchParams} from "@remix-run/react";
-import {useParams} from "react-router";
+import {SpotifySimplifiedPlaylistObject} from "app/types/spotify";
+import {MusicalNoteIcon, UserIcon,} from "@heroicons/react/24/outline";
+import {CheckBadgeIcon} from "@heroicons/react/24/solid";
+import {Link, useSearchParams} from "@remix-run/react";
+import {PlaylistRowActions} from "~/components/PlaylistRowActions";
 
 function PlaylistRowInformation({
   playlist,
@@ -62,74 +42,6 @@ function PlaylistRowInformation({
   );
 }
 
-function PlaylistRowActions({
-  playlist,
-  isArchived,
-}: {
-  playlist: SpotifySimplifiedPlaylistObject;
-  isArchived: boolean;
-}) {
-  // const queryClient = useQueryClient();
-  // const handleArchiveMutation = useMutation({
-  //   mutationFn: () => archiveSpotifyPlaylistMutation(playlist.id),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
-  //       exact: true,
-  //     });
-  //     queryClient.invalidateQueries({
-  //       queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
-  //       exact: true,
-  //     });
-  //   },
-  // });
-
-  // const handleUnarchiveMutation = useMutation({
-  //   mutationFn: () => unarchiveSpotifyPlaylistMutation(playlist.id),
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
-  //       exact: true,
-  //       refetchType: "active",
-  //     });
-  //     queryClient.invalidateQueries({
-  //       queryKey: [USER_ARCHIVED_DATABASE_ROWS_KEY],
-  //       exact: true,
-  //     });
-  //   },
-  // });
-  return (
-    <div
-      className={
-        "flex flex-row sm:flex-col items-end justify-between w-full sm:w-auto sm:justify-end"
-      }
-    >
-      <div>
-        {/*<button onClick={() => setIsOpen(!isOpen)}>*/}
-        {/*  <ChevronDownIcon*/}
-        {/*    className={`text-gray-500 transition h-5 w-5 ${*/}
-        {/*      isOpen ? "rotate-180" : ""*/}
-        {/*    }`}*/}
-        {/*  />*/}
-        {/*</button>*/}
-      </div>
-      <Form className={"mt-0 sm:mt-6"} method={'post'}>
-        <input type="hidden" name="playlistId" value={playlist.id} />
-        <Button
-          variant={"default"}
-          className={"mt-auto flex-1"}
-          type={'submit'}
-        >
-          <>
-            <ArchiveBoxIcon className={"w-4 h-4 mr-1"} />
-            <span className={"text-md "}>Archive</span>
-          </>
-        </Button>
-      </Form>
-    </div>
-  );
-}
-
 // export const loadear = async ()
 export default function PlaylistRow({
   playlist,
@@ -138,6 +50,7 @@ export default function PlaylistRow({
   playlist: SpotifySimplifiedPlaylistObject | null;
   isArchived?: boolean;
 }) {
+
   let [searchParams, setSearchParams] = useSearchParams();
   // const queryClient = useQueryClient();
   // const [isOpen, setIsOpen] = useState(false);
@@ -162,7 +75,7 @@ export default function PlaylistRow({
         search: `query=${searchParams.get('query')}`
       }}
       className={
-        "w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
+        `w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${isArchived ? "bg-black" : ""}`
       }
     >
       <div
