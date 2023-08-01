@@ -1,4 +1,3 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type {LinksFunction, LoaderArgs} from "@remix-run/node";
 import {
   Links,
@@ -9,13 +8,16 @@ import {
   ScrollRestoration, useLoaderData, useRevalidator,
 } from "@remix-run/react";
 import {json} from "@remix-run/node";
-import {createBrowserClient, createServerClient} from "@supabase/auth-helpers-remix";
-import {Database} from "../../app/types/supabase";
+import {createBrowserClient,} from "@supabase/auth-helpers-remix";
 import {useEffect, useState} from "react";
 import {createSupabaseServerClient} from "~/utils/supabase.server";
+import NavBar from "./components/NavBar";
+
+import stylesheet from "~/tailwind.css";
+
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: stylesheet },
 ];
 export const loader = async ({ request }: LoaderArgs) => {
   const env = {
@@ -67,10 +69,15 @@ export default function App() {
         <Links />
       </head>
       <body>
-      <Outlet context={{ supabase, session }} />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+      <main className="min-h-screen bg-background flex flex-col items-center bg-gray-100">
+        <NavBar />
+        <div className="animate-in flex flex-col gap-14 opacity-0 max-w-2xl w-full px-3 py-4 text-foreground">
+          <Outlet context={{ supabase, session }} />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </div>
+      </main>
       </body>
     </html>
   );

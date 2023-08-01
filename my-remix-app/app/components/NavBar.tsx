@@ -1,16 +1,15 @@
-import HamburgerMenu from "@/components/HamburgerMenu";
-import Link from "next/link";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { UserIcon } from "@heroicons/react/24/outline";
-import { NavBarLink } from "@/components/NavBarLink";
+import { NavBarLink } from "~/components/NavBarLink";
+import HamburgerMenu from "~/components/HamburgerMenu";
+import {Link, useOutletContext} from "@remix-run/react";
+import {OutletContext} from "~/types";
 
-export default async function NavBar() {
-  const supabase = createServerComponentClient({ cookies });
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function NavBar() {
+  const { session } = useOutletContext<OutletContext>();
+  // const supabase = createServerComponentClient({ cookies });
+  //
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();i
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white">
       <div className="w-full max-w-2xl flex justify-between items-center p-3 text-sm text-foreground">
@@ -19,14 +18,13 @@ export default async function NavBar() {
           <NavBarLink href={"/app"}>App</NavBarLink>
         </div>
         <div>
-          {process.env.NEXT_PUBLIC_APP_URL}
-          {user ? (
+          {session ? (
             <div className="flex items-center gap-4">
-              <HamburgerMenu />
+              {/*<HamburgerMenu />*/}
             </div>
           ) : (
             <Link
-              href={"/login"}
+              to={"/login"}
               className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
             >
               Login

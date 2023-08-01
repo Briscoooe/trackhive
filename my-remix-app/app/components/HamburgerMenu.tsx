@@ -6,8 +6,8 @@ import { GearIcon } from "@radix-ui/react-icons";
 import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
-import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "@/app/constants";
-import { deleteCookie } from "@/lib/utils";
+import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "app/constants";
+import { deleteCookie } from "lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "~/components/ui/dropdown-menu";
 
 export default function HamburgerMenu() {
   const [userEmail, setUserEmail] = useState<string | undefined>(undefined);

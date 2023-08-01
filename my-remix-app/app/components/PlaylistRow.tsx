@@ -1,5 +1,5 @@
 "use client";
-import { SpotifySimplifiedPlaylistObject } from "@/app/types/spotify";
+import { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
 import {
   ArchiveBoxIcon,
   ChevronDownIcon,
@@ -9,20 +9,20 @@ import {
 } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import TrackRow from "@/components/TrackRow";
-import TrackRowSkeleton from "@/components/TrackRowSkeleton";
+import TrackRow from "~/components/TrackRow";
+import TrackRowSkeleton from "~/components/TrackRowSkeleton";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getSpotifyPlaylistTracksQuery } from "@/store/queries";
+import { getSpotifyPlaylistTracksQuery } from "store/queries";
 import {
   archiveSpotifyPlaylistMutation,
   unarchiveSpotifyPlaylistMutation,
-} from "@/store/mutations";
+} from "store/mutations";
 import {
   PLAYLIST_TRACKS_KEY,
   USER_ARCHIVED_DATABASE_ROWS_KEY,
   USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
-} from "@/store/keys";
-import { Button } from "@/components/ui/button";
+} from "store/keys";
+import { Button } from "~/components/ui/button";
 
 function PlaylistRowInformation({
   playlist,

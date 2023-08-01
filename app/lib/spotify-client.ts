@@ -5,13 +5,8 @@ import {
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
   SpotifyUserObject,
-} from "@/app/types/spotify";
+} from "app/types/spotify";
 import { Simulate } from "react-dom/test-utils";
-import play = Simulate.play;
-import {
-  SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME,
-  SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
-} from "@/lib/constants";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";

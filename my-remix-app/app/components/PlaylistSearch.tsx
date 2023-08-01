@@ -3,25 +3,25 @@ import { useEffect, useState } from "react";
 import {
   SpotifyPlaylistSearchResponse,
   SpotifySimplifiedPlaylistObject,
-} from "@/app/types/spotify";
-import PlaylistRow from "@/components/PlaylistRow";
+} from "app/types/spotify";
+import PlaylistRow from "~/components/PlaylistRow";
 import { useQuery } from "@tanstack/react-query";
 import {
   getDatabaseUserArchivesQuery,
   searchSpotifyPlaylistsQuery,
-} from "@/store/queries";
+} from "store/queries";
 import {
   PLAYLIST_SEARCH_RESULTS_KEY,
   USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY,
-} from "@/store/keys";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+} from "store/keys";
+import { Input } from "~/components/ui/input";
+import { Badge } from "~/components/ui/badge";
 import {
   SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME,
   SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME,
   SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
   SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME,
-} from "@/lib/constants";
+} from "lib/constants";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 
 function PlaylistSearchSuggestions({
