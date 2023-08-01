@@ -5,7 +5,6 @@ import {useLoaderData} from "@remix-run/react";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const archives = await getSpotifyUserAchivesQuery();
-  console.log("archives", archives)
   return {
     archives,
   }

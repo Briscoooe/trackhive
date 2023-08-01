@@ -1,6 +1,6 @@
 import {
   SpotifyPlaylistItemsResponse,
-  SpotifyPlaylistSearchResponse,
+  SpotifyPlaylistSearchResponse, SpotifyPlaylistTrackObject,
   SpotifySimplifiedPlaylistObject,
   SpotifyTrackObject,
   SpotifyUserObject,
@@ -56,7 +56,7 @@ const _recursivelyGetPlaylistTracks = async (
     url ||
     `${SPOTIFY_API_BASE_URL}/playlists/${playlistId}/tracks?${new URLSearchParams(
       {
-        fields: "items(track(name,uri,artists(name),album(name,images))),next",
+        fields: "items(added_at,track(name,uri,artists(name),album(name,images))),next",
         limit: "50",
       }
     )}`;
@@ -133,7 +133,6 @@ export const refreshAuthToken = async (
     }),
   });
   const data = await res.json();
-  console.log(data)
   return data.access_token;
 };
 
@@ -165,12 +164,12 @@ export const _getCurrentUser = async (
 export const getPlaylistTracks = async (
   accessToken: string,
   playlistId: string
-): Promise<SpotifyTrackObject[]> => {
+): Promise<SpotifyPlaylistTrackObject[]> => {
   const { items } = await _recursivelyGetPlaylistTracks(
     accessToken,
     playlistId
   );
-  return items.map(({ track }) => track as SpotifyTrackObject);
+  return items;
 };
 
 export const getDiscoverWeeklyPlaylist = async (
@@ -210,7 +209,7 @@ export const archivePlaylist = async (
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
-    currentPlaylistTracks.map((track) => track.uri)
+    currentPlaylistTracks.map((track) => track.track.uri)
   );
   return newPlaylist;
 };
@@ -232,9 +231,7 @@ export const searchPlaylists = async (
     }
   );
   const res = await response.json();
-  console.log('res', res)
   const { playlists } = res;
-  console.log(playlists)
   playlists.items = playlists.items.map(_serializePlaylist);
   return playlists;
 };

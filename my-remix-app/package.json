@@ -20,6 +20,7 @@
     "@supabase/supabase-js": "^2.31.0",
     "@tanstack/react-query": "^4.32.1",
     "@vercel/node": "^2.10.3",
+    "date-fns": "^2.30.0",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
