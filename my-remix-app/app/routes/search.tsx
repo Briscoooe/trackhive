@@ -19,9 +19,13 @@ import PlaylistRow from "~/components/PlaylistRow";
 import {useSearchParams} from "next/navigation";
 import {createSupabaseClient} from "@supabase/auth-helpers-shared";
 import {createServerClient} from "@supabase/auth-helpers-remix";
-import {createSupabaseServerClient} from "~/utils/supabase.server";
+import {
+  createSupabaseServerClient,
+  getCurrentUserAccessToken
+} from "~/utils/supabase.server";
 import {ActionArgs, redirect} from "@remix-run/node";
 import {archivePlaylist, refreshAuthToken, searchPlaylists} from "~/lib/spotify-client";
+import {Button} from "~/components/ui/button";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -41,20 +45,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response();
 
   const supabase = createSupabaseServerClient({ request, response });
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  console.log('use', user.id)
-  // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
-  // console.log('user auth key', userAuthKey)
-  // const { decrypted_refresh_token } = userAuthKey.data;
-
-  // console.log('token', userAuthKey)
-  // console.log('QUERy, ', query)
-  // console.log('token access', userAuthKey)
-  const token = await refreshAuthToken("AQCx63LCyp0FrXULF7nLioxUnhWPPIVdHPw4Veptl4CcM15EWgNGwRVlOVAQRQ2jFy30Mc3l4JeDZ8iHStbJMrXDhTtJQ3AkDHvxFqel85kqCJkFSQmbbOBqaH0BLrbe2wU")
-  const results = await searchPlaylists(token, query);
+  const accessToken = await getCurrentUserAccessToken({ supabase });
+  const results = await searchPlaylists(accessToken, query);
   console.log('results', results);
   return { results, query };
 };
@@ -64,20 +56,8 @@ export const action = async ({ request}: ActionArgs) => {
   const formData = await request.formData();
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  console.log('use', user.id)
-  // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
-  // console.log('user auth key', userAuthKey)
-  // const { decrypted_refresh_token } = userAuthKey.data;
-
-  // console.log('token', userAuthKey)
-  // console.log('QUERy, ', query)
-  // console.log('token access', userAuthKey)
-  const token = await refreshAuthToken("AQCx63LCyp0FrXULF7nLioxUnhWPPIVdHPw4Veptl4CcM15EWgNGwRVlOVAQRQ2jFy30Mc3l4JeDZ8iHStbJMrXDhTtJQ3AkDHvxFqel85kqCJkFSQmbbOBqaH0BLrbe2wU")
-  const project = await archivePlaylist(token, formData.get("playlistId") as string);
+  const accessToken = await getCurrentUserAccessToken({ supabase });
+  const project = await archivePlaylist(accessToken, formData.get("playlistId") as string);
   return redirect(`/`);
 }
 export default function Search() {
@@ -92,10 +72,9 @@ export default function Search() {
 
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
-      <h1>Search</h1>
-      <Form method="get">
-        <input type="text" name="query" defaultValue={query || ""} />
-        <button type="submit">Search</button>
+      <Form method="get" className={"flex w-full items-center space-x-2"}>
+        <Input type="text" name="query" defaultValue={query || ""} />
+        <Button type="submit">Search</Button>
       </Form>
       <PlaylistSearchSuggestions
         onClick={(playlist) => {}}

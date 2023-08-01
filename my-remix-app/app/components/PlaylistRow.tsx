@@ -158,7 +158,8 @@ export default function PlaylistRow({
   return (
     <Link
       to={{
-        search: `?query=${searchParams.get('query')}&playlistId=${playlist.id}`
+        pathname: playlist.id,
+        search: `query=${searchParams.get('query')}`
       }}
       className={
         "w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm"
@@ -175,11 +176,6 @@ export default function PlaylistRow({
           isArchived={isArchived}
         />
       </div>
-      {isOpen && (
-        <div className={"space-y-2 border-t-1 mt-3 sm:mt-4 pt-3 sm:pt-4"}>
-          I am open
-        </div>
-      )}
     </Link>
   );
 }
