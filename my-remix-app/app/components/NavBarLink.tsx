@@ -13,7 +13,7 @@ export function NavBarLink({
       to={href}
       className={({ isActive, isPending }) =>
         `hover:bg-slate-100 transition rounded-md px-4 py-2 ${
-          isPending ? "" : isActive ? "bg-slate-100 font-semibold" : ""
+          isActive ? "bg-slate-100 font-semibold" : ""
         }`
       }
     >

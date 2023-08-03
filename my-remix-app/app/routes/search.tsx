@@ -15,6 +15,7 @@ import { archivePlaylist, searchPlaylists } from "~/lib/spotify.server";
 import { Button } from "~/components/ui/button";
 import { useNavigation } from "react-router";
 import { handleArchiveUnarchivePlaylist } from "~/lib/rename-this.server";
+import {useTransition} from "react";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -85,11 +86,12 @@ export default function Search() {
     return userArchives.some((archive) => archive.playlist_id === playlist.id);
   };
   const resultsExist = results && results.items.length > 0;
+  const isSearching = navigation.state === "loading" && navigation.location.pathname === "/search";
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       <Form method="get" className={"flex w-full items-center space-x-2"}>
-        <Input type="text" name="query" defaultValue={query || ""} />
-        <Button type="submit">Search</Button>
+        <Input disabled={isSearching} type="text" name="query" defaultValue={query || ""} />
+        <Button disabled={isSearching} type="submit">Search</Button>
       </Form>
       {!resultsExist && (
         <PlaylistSearchSuggestions

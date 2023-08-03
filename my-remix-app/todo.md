@@ -21,6 +21,8 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - archived versions
   - archive mode
 - [x]delete cookie thing
+- remove post arvhive functionalityy from detail view?
+- loading states on buttons
 - rename - snapshotify?
 - skeleton for playlist row
 - find out best async/scheduled task framework for nextjs
