@@ -1,4 +1,5 @@
-import {createServerClient} from "@supabase/auth-helpers-remix";
+import { createServerClient } from "@supabase/auth-helpers-remix";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export const createSupabaseServerClient = ({
   request,
@@ -31,4 +32,26 @@ export const getCurrentUserAccessToken = async ({
   // console.log('token', userAuthKey)
   // console.log('QUERy, ', query)
   // console.log('token access', userAuthKey)
+};
+
+export const getUserArchives = async (
+  supabase: SupabaseClient,
+  userId: string
+) => {
+  const userArchives = await supabase
+    .from("user_tracked_playlist")
+    .select()
+    .eq("user_id", userId);
+  return userArchives.data;
+};
+
+export const createUserTrackedPlaylist = async (
+  supabase: SupabaseClient,
+  userId: string,
+  playlistId: string
+) => {
+  await supabase.from("user_tracked_playlist").insert({
+    playlist_id: playlistId,
+    user_id: playlistId,
+  });
 };

@@ -1,5 +1,5 @@
-import type {LinksFunction, LoaderArgs} from "@remix-run/node";
-import {json} from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -10,9 +10,9 @@ import {
   useLoaderData,
   useRevalidator,
 } from "@remix-run/react";
-import {createBrowserClient} from "@supabase/auth-helpers-remix";
-import {useEffect, useState} from "react";
-import {createSupabaseServerClient} from "~/lib/supabase.server";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
+import { useEffect, useState } from "react";
+import { createSupabaseServerClient } from "~/lib/supabase.server";
 import NavBar from "./components/NavBar";
 
 import stylesheet from "~/tailwind.css";

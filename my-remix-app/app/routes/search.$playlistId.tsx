@@ -1,4 +1,4 @@
-import {useNavigate, useNavigation} from "react-router";
+import { useNavigate, useNavigation } from "react-router";
 import {
   Dialog,
   DialogContent,
@@ -7,28 +7,40 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import {ActionArgs, LoaderArgs, redirect} from "@remix-run/node";
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
 import {
   createSupabaseServerClient,
+  createUserTrackedPlaylist,
   getCurrentUserAccessToken,
 } from "~/lib/supabase.server";
-import {archivePlaylist, getPlaylist, getPlaylistTracks,} from "~/lib/spotify.server";
-import {useLoaderData} from "@remix-run/react";
+import {
+  archivePlaylist,
+  getPlaylist,
+  getPlaylistTracks,
+} from "~/lib/spotify.server";
+import { useLoaderData } from "@remix-run/react";
 import TrackRow from "~/components/TrackRow";
-import {formatDistanceToNow} from "date-fns";
-import {ClockIcon} from "@heroicons/react/24/outline";
-import {ArchivePlaylistForm} from "~/components/ArchivePlaylistForm";
+import { formatDistanceToNow } from "date-fns";
+import { ClockIcon } from "@heroicons/react/24/outline";
+import { ArchivePlaylistForm } from "~/components/ArchivePlaylistForm";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const playlistId = params.playlistId;
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
-  const accessToken = await getCurrentUserAccessToken({ supabase });
-  if (!accessToken) {
+  const session = await supabase.auth.getSession();
+  if (!playlistId || !session || !session.data.session?.provider_token) {
     return redirect("/");
   }
-  const playlistTrackObjects = await getPlaylistTracks(accessToken, playlistId);
-  const playlist = await getPlaylist(accessToken, playlistId);
+
+  const playlistTrackObjects = await getPlaylistTracks(
+    session.data.session.provider_token,
+    playlistId
+  );
+  const playlist = await getPlaylist(
+    session.data.session.provider_token,
+    playlistId
+  );
   return {
     playlistId,
     playlist,
@@ -37,30 +49,28 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 };
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
+  const action = formData.get("action");
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
-  const accessToken = await getCurrentUserAccessToken({ supabase });
-  const {
-    data: {
-      user: { id: userId },
-    },
-  } = await supabase.auth.getUser();
-  if (!accessToken) {
+  const session = await supabase.auth.getSession();
+  if (!session || !session.data.session?.provider_token) {
     return redirect("/");
   }
   const playlistId = formData.get("playlistId") as string;
-  const { data, error } = await supabase.from("user_tracked_playlist").insert({
-    playlist_id: playlistId,
-    user_id: userId,
-  });
-  const project = await archivePlaylist(accessToken, playlistId);
-  return redirect(`/search`);
+  await createUserTrackedPlaylist(
+    supabase,
+    session.data.session.user.id,
+    playlistId
+  );
+  await archivePlaylist(
+    session.data.session.provider_token,
+    formData.get("playlistId") as string
+  );
+  return redirect(`/`);
 };
 
 export default function PlaylistId() {
-  const navigation = useNavigation();
-  const { playlistId, playlistTrackObjects, playlist } =
-    useLoaderData<typeof loader>();
+  const { playlistTrackObjects, playlist } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const lastUpdated = Math.max(
     ...playlistTrackObjects.map(

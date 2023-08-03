@@ -1,7 +1,7 @@
-import {SpotifySimplifiedPlaylistObject} from "~/types/spotify";
-import {Form} from "@remix-run/react";
-import {Button} from "~/components/ui/button";
-import {ArchiveBoxIcon, TrashIcon} from "@heroicons/react/24/outline";
+import { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
+import { Form } from "@remix-run/react";
+import { Button } from "~/components/ui/button";
+import { ArchiveBoxIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 export function ArchivePlaylistForm({
   playlist,

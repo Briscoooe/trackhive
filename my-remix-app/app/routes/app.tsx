@@ -18,6 +18,7 @@ export default async function Index() {
       {/*<PlaylistSearch />*/}
       {/*<PlaylistRow playlist={discoverWeekly} />*/}
       {/*<PlaylistRow playlist={releaseRadar} />*/}
+      helo
     </div>
   );
 }

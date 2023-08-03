@@ -1,8 +1,17 @@
-import {NavBarLink} from "~/components/NavBarLink";
+import { NavBarLink } from "~/components/NavBarLink";
 import HamburgerMenu from "~/components/HamburgerMenu";
-import {SpotifyUserObject} from "~/types/spotify";
-import {SupabaseClient} from "@supabase/supabase-js";
-import {Button} from "~/components/ui/button";
+import { SpotifyUserObject } from "~/types/spotify";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Button } from "~/components/ui/button";
+import { LoaderFunction } from "@remix-run/node";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const playlistIds = archives.map((archive) => archive.playlist_id);
+  const playlists = await Promise.all(
+    playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
+  );
+  return playlists;
+};
 
 export default function NavBar({
   user,
@@ -11,11 +20,6 @@ export default function NavBar({
   user?: SpotifyUserObject;
   supabase: SupabaseClient;
 }) {
-  // const supabase = createServerComponentClient({ cookies });
-  //
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();i
   const handleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "spotify",
