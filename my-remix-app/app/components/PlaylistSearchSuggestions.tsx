@@ -28,9 +28,10 @@ export function PlaylistSearchSuggestions({
           className={"w-full"}
         >
           <Badge
+            variant={'outline'}
             key={playlistName}
             className={
-              "cursor-pointer w-full text-sm whitespace-nowrap flex justify-between"
+              "cursor-pointer w-full py-1 text-sm whitespace-nowrap flex justify-between bg-gray-100 text-gray-600"
             }
             onClick={() => onClick(playlistName)}
           >
