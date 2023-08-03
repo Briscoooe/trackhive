@@ -171,24 +171,6 @@ export const getPlaylistTracks = async (
   return items;
 };
 
-export const getDiscoverWeeklyPlaylist = async (
-  accessToken: string
-): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(
-    accessToken,
-    SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME
-  );
-};
-
-export const getReleaseRadarPlaylist = async (
-  accessToken: string
-): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  return await _searchSpotifyOwnedPlaylist(
-    accessToken,
-    SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME
-  );
-};
-
 export const archivePlaylist = async (
   accessToken: string,
   playlistId: string

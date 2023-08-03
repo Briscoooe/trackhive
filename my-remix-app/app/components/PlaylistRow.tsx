@@ -2,7 +2,8 @@ import {SpotifySimplifiedPlaylistObject} from "app/types/spotify";
 import {MusicalNoteIcon, UserIcon,} from "@heroicons/react/24/outline";
 import {CheckBadgeIcon} from "@heroicons/react/24/solid";
 import {Link, useSearchParams} from "@remix-run/react";
-import {PlaylistRowActions} from "~/components/PlaylistRowActions";
+import {ArchivePlaylistForm} from "~/components/ArchivePlaylistForm";
+import {Button} from "~/components/ui/button";
 
 function PlaylistRowInformation({
   playlist,
@@ -45,10 +46,10 @@ function PlaylistRowInformation({
 // export const loadear = async ()
 export default function PlaylistRow({
   playlist,
-  isArchived = false,
+  isCurrentlyLoading = false,
 }: {
   playlist: SpotifySimplifiedPlaylistObject | null;
-  isArchived?: boolean;
+  isCurrentlyLoading?: boolean;
 }) {
 
   let [searchParams, setSearchParams] = useSearchParams();
@@ -69,13 +70,9 @@ export default function PlaylistRow({
   const searchParamsPlaylistId = searchParams.get("playlistId");
   const isOpen = searchParamsPlaylistId === playlist.id;
   return (
-    <Link
-      to={{
-        pathname: playlist.id,
-        search: `query=${searchParams.get('query')}`
-      }}
+    <div
       className={
-        `w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${isArchived ? "bg-black" : ""}`
+        `w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${isCurrentlyLoading ? "bg-black" : ""}`
       }
     >
       <div
@@ -84,11 +81,23 @@ export default function PlaylistRow({
         }
       >
         <PlaylistRowInformation playlist={playlist} />
-        <PlaylistRowActions
-          playlist={playlist}
-          isArchived={isArchived}
-        />
+        <div className={'flex flex-row sm:flex-col space-x-1 w-full sm:w-auto space-y-0 sm:space-x-0 sm:space-y-1'}>
+          <Button variant={'secondary'} className={'w-1/2 sm:w-auto'} disabled={isCurrentlyLoading}>
+            <Link to={{
+              pathname: playlist.id,
+              search: `query=${searchParams.get('query')}`
+            }}>
+              {isCurrentlyLoading ? "Loading..." : "View"}
+            </Link>
+          </Button>
+          <div className={'w-1/2 sm:w-auto'}>
+            <ArchivePlaylistForm
+              playlist={playlist}
+              buttonDisabled={isCurrentlyLoading}
+            />
+          </div>
+        </div>
       </div>
-    </Link>
+    </div>
   );
 }

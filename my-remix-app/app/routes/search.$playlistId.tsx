@@ -4,7 +4,7 @@ import {
   DialogContent, DialogDescription, DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "~/components/dialog";
+} from "~/components/ui/dialog";
 import {ActionArgs, LoaderArgs, redirect} from "@remix-run/node";
 import {getSpotifyUserAchivesQuery} from "~/store/queries";
 import {
@@ -16,13 +16,17 @@ import {useLoaderData, useTransition} from "@remix-run/react";
 import TrackRow from "~/components/TrackRow";
 import {formatDistanceToNow} from "date-fns";
 import {ClockIcon} from "@heroicons/react/24/outline";
-import {PlaylistRowActions} from "~/components/PlaylistRowActions";
+import {ArchivePlaylistForm} from "~/components/ArchivePlaylistForm";
+import {DialogPortal} from "@radix-ui/react-dialog";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const playlistId = params.playlistId;
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
   const accessToken = await getCurrentUserAccessToken({ supabase });
+  if (!accessToken) {
+    return redirect("/");
+  }
   const playlistTrackObjects = await getPlaylistTracks(accessToken, playlistId);
   const playlist = await getPlaylist(accessToken, playlistId)
   return {
@@ -36,6 +40,9 @@ export const action = async ({ request}: ActionArgs) => {
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
   const accessToken = await getCurrentUserAccessToken({ supabase });
+  if (!accessToken) {
+    return redirect("/");
+  }
   const project = await archivePlaylist(accessToken, formData.get("playlistId") as string);
   return redirect(`/search`);
 }
@@ -49,11 +56,10 @@ export default function PlaylistId() {
   lastUpdateEnglishString = lastUpdateEnglishString.charAt(0).toUpperCase() + lastUpdateEnglishString.slice(1)
   return (
     <>
-      {/*{JSON.stringify(navigation.state, null, 2)}*/}
       <Dialog open onOpenChange={() => {
         navigate(-1)
       }}>
-        <DialogContent className={'max-h-screen my-10 -mb-20'}>
+        <DialogContent className={'max-h-screen overflow-y-scroll'}>
           <DialogHeader>
             <DialogTitle className={'flex flex-col space-y-1'}>
               <span>{playlist.name}</span>
@@ -63,7 +69,7 @@ export default function PlaylistId() {
               </div>
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className={"space-y-2 mt-2 overflow-y-scroll"}>
+          <DialogDescription className={"space-y-2 mt-2 overflow-y-auto"}>
             {playlistTrackObjects &&
               playlistTrackObjects?.length > 0 &&
               playlistTrackObjects?.map((playlistTrackObject, index) => (
@@ -75,8 +81,9 @@ export default function PlaylistId() {
             {/*  ))}*/}
           </DialogDescription>
           <DialogFooter>
-            <PlaylistRowActions
+            <ArchivePlaylistForm
               playlist={playlist}
+              buttonDisabled={false}
             />
           </DialogFooter>
         </DialogContent>

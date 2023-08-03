@@ -29,16 +29,18 @@ export const loader = async ({ request }: LoaderArgs) => {
 
   const supabase = createSupabaseServerClient({ request, response });
 
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
+  const user = await supabase.auth.getUser();
 
-  return json({ env, session }, { headers: response.headers });
+  return json({ env, session,  user: user.data.user }, { headers: response.headers });
 };
 
 
 export default function App() {
-  const { env, session } = useLoaderData<typeof loader>()
+  const { env, session, user } = useLoaderData<typeof loader>()
   const serverAccessToken = session?.access_token
   const { revalidate } = useRevalidator()
   const [supabase] = useState(() =>
@@ -70,7 +72,7 @@ export default function App() {
       </head>
       <body>
       <main className="min-h-screen bg-background flex flex-col items-center bg-gray-100">
-        {/*<NavBar />*/}
+        <NavBar user={user}  supabase={supabase} />
         <div className="animate-in flex flex-col gap-14 opacity-0 max-w-2xl w-full px-3 py-4 text-foreground">
           <Outlet context={{ supabase, session }} />
           <ScrollRestoration />

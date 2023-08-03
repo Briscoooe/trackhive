@@ -21,7 +21,7 @@ export default async function Index() {
 
   return (
     <div className="w-full flex flex-col items-center space-y-2">
-      <PlaylistSearch />
+      {/*<PlaylistSearch />*/}
       {/*<PlaylistRow playlist={discoverWeekly} />*/}
       {/*<PlaylistRow playlist={releaseRadar} />*/}
     </div>

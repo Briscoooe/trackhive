@@ -1,13 +1,6 @@
-"use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
-import { GearIcon } from "@radix-ui/react-icons";
-import { ArrowLeftIcon, Bars4Icon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { Bars4Icon } from "@heroicons/react/24/outline";
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
-import { SPOTIFY_ACCESS_TOKEN_COOKIE_NAME } from "app/constants";
-import { deleteCookie } from "lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,25 +9,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import type {SpotifyUserObject} from "~/types/spotify";
+import {SupabaseClient} from "@supabase/supabase-js";
 
-export default function HamburgerMenu() {
-  const [userEmail, setUserEmail] = useState<string | undefined>(undefined);
-  const router = useRouter();
-
-  const supabase = createClientComponentClient();
-
+export default function HamburgerMenu({ user, supabase }: { user: SpotifyUserObject, supabase: SupabaseClient }) {
   const signOut = async () => {
-    deleteCookie(SPOTIFY_ACCESS_TOKEN_COOKIE_NAME);
     await supabase.auth.signOut();
-    router.refresh();
+    window.location.reload();
   };
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data) return;
-      setUserEmail(data.user?.email);
-    });
-  }, []);
 
   return (
     <DropdownMenu>
@@ -43,7 +25,7 @@ export default function HamburgerMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"bg-white"}>
         <DropdownMenuLabel className={"truncate font-medium"}>
-          {userEmail}
+          {user.email}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem

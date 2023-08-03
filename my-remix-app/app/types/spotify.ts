@@ -222,4 +222,5 @@ export type SpotifyPlaylistItemsResponse = {
 
 export type SpotifyUserObject = {
   id: string;
+  email: string;
 };

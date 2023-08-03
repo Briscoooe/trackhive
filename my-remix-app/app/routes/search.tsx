@@ -36,17 +36,21 @@ export const meta: V2_MetaFunction = () => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
+  const response = new Response();
   const url = new URL(request.url)
   const query = url.searchParams.get("query");
+  const supabase = createSupabaseServerClient({ request, response });
+  const accessToken = await getCurrentUserAccessToken({ supabase });
+
+  if (!accessToken) {
+    return redirect("/");
+  }
   if (!query) {
     return {
       playlists: [],
     };
   }
-  const response = new Response();
 
-  const supabase = createSupabaseServerClient({ request, response });
-  const accessToken = await getCurrentUserAccessToken({ supabase });
   const results = await searchPlaylists(accessToken, query);
   return { results, query };
 };
@@ -57,23 +61,18 @@ export const action = async ({ request}: ActionArgs) => {
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
   const accessToken = await getCurrentUserAccessToken({ supabase });
+  if (!accessToken) {
+    return redirect("/");
+  }
   const project = await archivePlaylist(accessToken, formData.get("playlistId") as string);
   return redirect(`/`);
 }
 export default function Search() {
-  // const { data: userArchives } = useQuery({
-  //   queryKey: [USER_ARCHIVED_SPOTIFY_PLAYLISTS_KEY],
-  //   queryFn: getDatabaseUser ArchivesQuery,
-  // });
-  // const [params] = useSearchParams()
-
-  // const searchText = params.get("query") || ""
   const { results, query } = useLoaderData();
   const navigation = useNavigation();
 
   const checkIfIsSpining = (playlist: SpotifySimplifiedPlaylistObject): boolean => {
     const spinin = navigation.state === "loading" && navigation.location.pathname.includes(playlist.id)
-    console.log(spinin)
     return spinin
   }
   return (
@@ -93,7 +92,7 @@ export default function Search() {
           <PlaylistRow
             playlist={playlist}
             key={index}
-            isArchived={checkIfIsSpining(playlist)}
+            isCurrentlyLoading={checkIfIsSpining(playlist)}
           />
         ))}
     </div>
