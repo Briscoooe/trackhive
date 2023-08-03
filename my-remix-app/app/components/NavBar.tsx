@@ -1,11 +1,16 @@
-import { NavBarLink } from "~/components/NavBarLink";
+import {NavBarLink} from "~/components/NavBarLink";
 import HamburgerMenu from "~/components/HamburgerMenu";
-import {Link} from "@remix-run/react";
 import {SpotifyUserObject} from "~/types/spotify";
 import {SupabaseClient} from "@supabase/supabase-js";
 import {Button} from "~/components/ui/button";
 
-export default function NavBar({ user, supabase}: { user?: SpotifyUserObject, supabase: SupabaseClient }) {
+export default function NavBar({
+  user,
+  supabase,
+}: {
+  user?: SpotifyUserObject;
+  supabase: SupabaseClient;
+}) {
   // const supabase = createServerComponentClient({ cookies });
   //
   // const {
@@ -13,13 +18,19 @@ export default function NavBar({ user, supabase}: { user?: SpotifyUserObject, su
   // } = await supabase.auth.getUser();i
   const handleLogin = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: 'spotify',
+      provider: "spotify",
       options: {
-        redirectTo: 'http://localhost:3000/auth/callback',
-        scopes: ['user-read-email', 'playlist-read-private', 'playlist-read-collaborative', 'playlist-modify-public', 'playlist-modify-private'].join(','),
+        redirectTo: "http://localhost:3000/auth/callback",
+        scopes: [
+          "user-read-email",
+          "playlist-read-private",
+          "playlist-read-collaborative",
+          "playlist-modify-public",
+          "playlist-modify-private",
+        ].join(","),
       },
-    })
-  }
+    });
+  };
 
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white">
@@ -35,7 +46,7 @@ export default function NavBar({ user, supabase}: { user?: SpotifyUserObject, su
             </div>
           ) : (
             <Button
-              variant={'outline'}
+              variant={"outline"}
               onClick={handleLogin}
               className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
             >

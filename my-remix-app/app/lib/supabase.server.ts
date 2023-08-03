@@ -1,10 +1,9 @@
-import { createServerClient } from "@supabase/auth-helpers-remix";
-import {refreshAuthToken} from "~/lib/spotify-client";
+import {createServerClient} from "@supabase/auth-helpers-remix";
 
 export const createSupabaseServerClient = ({
-                                           request,
-                                             response,
-                                           }: {
+  request,
+  response,
+}: {
   request: Request;
   response: Response;
 }) =>
@@ -18,13 +17,13 @@ export const getCurrentUserAccessToken = async ({
   supabase,
 }: {
   supabase: ReturnType<typeof createSupabaseServerClient>;
-}): Promise<string | undefined> => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
+}): Promise<string | undefined | null> => {
+  const session = await supabase.auth.getSession();
+  if (!session) {
     return;
   }
+  return session.data.session?.provider_token;
+
   // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
   // console.log('user auth key', userAuthKey)
   // const { decrypted_refresh_token } = userAuthKey.data;
@@ -32,5 +31,4 @@ export const getCurrentUserAccessToken = async ({
   // console.log('token', userAuthKey)
   // console.log('QUERy, ', query)
   // console.log('token access', userAuthKey)
-  return refreshAuthToken("AQCx63LCyp0FrXULF7nLioxUnhWPPIVdHPw4Veptl4CcM15EWgNGwRVlOVAQRQ2jFy30Mc3l4JeDZ8iHStbJMrXDhTtJQ3AkDHvxFqel85kqCJkFSQmbbOBqaH0BLrbe2wU")
-}
+};

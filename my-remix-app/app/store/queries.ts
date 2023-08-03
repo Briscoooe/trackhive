@@ -1,9 +1,8 @@
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import {
   SpotifyPlaylistSearchResponse,
-  SpotifySimplifiedPlaylistObject, SpotifyTrackObject
+  SpotifySimplifiedPlaylistObject,
+  SpotifyTrackObject,
 } from "~/types/spotify";
-import {Database} from "~/types/supabase";
 
 export async function searchSpotifyPlaylistsQuery(
   searchText: string
@@ -41,25 +40,24 @@ export async function getSpotifyPlaylistQuery(
   return response.json();
 }
 
-export async function getDatabaseUserArchivesQuery(): Promise<
-  Database["public"]["Tables"]["user_tracked_playlist"]["Row"][]
-> {
-  const supabase = createClientComponentClient();
-  const user = await supabase.auth.getUser();
-  const response = await supabase
-    .from("user_tracked_playlist")
-    .select()
-    .eq("user_id", user.data.user?.id);
-  return response.data as Database["public"]["Tables"]["user_tracked_playlist"]["Row"][];
-}
+// export async function getDatabaseUserArchivesQuery(supabase: SupabaseClient): Promise<
+//   Database["public"]["Tables"]["user_tracked_playlist"]["Row"][]
+// > {
+//   const user = await supabase.auth.getUser();
+//   const response = await supabase
+//     .from("user_tracked_playlist")
+//     .select()
+//     .eq("user_id", user.data.user?.id);
+//   return response.data as Database["public"]["Tables"]["user_tracked_playlist"]["Row"][];
+// }
 
-export async function getSpotifyUserAchivesQuery(): Promise<
-  SpotifySimplifiedPlaylistObject[]
-> {
-  const archives = await getDatabaseUserArchivesQuery();
-  const playlistIds = archives.map((archive) => archive.playlist_id);
-  const playlists = await Promise.all(
-    playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
-  );
-  return playlists;
-}
+// export async function getSpotifyUserAchivesQuery(supabase: SupabaseClient): Promise<
+//   SpotifySimplifiedPlaylistObject[]
+// > {
+//   const archives = await getDatabaseUserArchivesQuery(supabase);
+//   const playlistIds = archives.map((archive) => archive.playlist_id);
+//   const playlists = await Promise.all(
+//     playlistIds.map((playlistId) => getSpotifyPlaylistQuery(playlistId))
+//   );
+//   return playlists;
+// }

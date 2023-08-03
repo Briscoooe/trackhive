@@ -1,9 +1,3 @@
-import { redirect } from "next/navigation";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import PlaylistSearch from "~/components/PlaylistSearch";
-
-
 export default async function Index() {
   // const supabase = createServerComponentClient({ cookies });
   // const {

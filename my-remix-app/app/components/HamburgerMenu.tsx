@@ -1,6 +1,5 @@
-
-import { Bars4Icon } from "@heroicons/react/24/outline";
-import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import {Bars4Icon} from "@heroicons/react/24/outline";
+import {ArrowLeftOnRectangleIcon} from "@heroicons/react/24/solid";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +11,13 @@ import {
 import type {SpotifyUserObject} from "~/types/spotify";
 import {SupabaseClient} from "@supabase/supabase-js";
 
-export default function HamburgerMenu({ user, supabase }: { user: SpotifyUserObject, supabase: SupabaseClient }) {
+export default function HamburgerMenu({
+  user,
+  supabase,
+}: {
+  user: SpotifyUserObject;
+  supabase: SupabaseClient;
+}) {
   const signOut = async () => {
     await supabase.auth.signOut();
     window.location.reload();
