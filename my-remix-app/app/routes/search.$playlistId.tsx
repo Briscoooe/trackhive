@@ -1,10 +1,15 @@
-import {ActionArgs, LoaderArgs, redirect} from "@remix-run/node";
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node";
 import {
   createSupabaseServerClient,
-  createUserTrackedPlaylist, deleteUserTrackedPlaylist,
+  createUserTrackedPlaylist,
+  deleteUserTrackedPlaylist,
 } from "~/lib/supabase.server";
-import {archivePlaylist, getPlaylist, getPlaylistTracks,} from "~/lib/spotify.server";
-import {useLoaderData} from "@remix-run/react";
+import {
+  archivePlaylist,
+  getPlaylist,
+  getPlaylistTracks,
+} from "~/lib/spotify.server";
+import { useLoaderData } from "@remix-run/react";
 import PlaylistDetail from "~/components/PlaylistDetail";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
@@ -40,7 +45,7 @@ export const action = async ({ request }: ActionArgs) => {
     return redirect("/");
   }
   const playlistId = formData.get("playlistId") as string;
-  if (action === 'archive') {
+  if (action === "archive") {
     await createUserTrackedPlaylist(
       supabase,
       session.data.session.user.id,

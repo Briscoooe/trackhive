@@ -1,8 +1,8 @@
-import {NavBarLink} from "~/components/NavBarLink";
+import { NavBarLink } from "~/components/NavBarLink";
 import HamburgerMenu from "~/components/HamburgerMenu";
-import {SpotifyUserObject} from "~/types/spotify";
-import {SupabaseClient} from "@supabase/supabase-js";
-import {Button} from "~/components/ui/button";
+import { SpotifyUserObject } from "~/types/spotify";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Button } from "~/components/ui/button";
 
 export default function NavBar({
   user,

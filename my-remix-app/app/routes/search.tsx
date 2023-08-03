@@ -1,18 +1,18 @@
-import type {LoaderFunction, V2_MetaFunction} from "@remix-run/node";
-import {ActionArgs, redirect} from "@remix-run/node";
-import {Form, Outlet, useLoaderData} from "@remix-run/react";
-import {SpotifySimplifiedPlaylistObject} from "~/types/spotify";
-import {Input} from "~/components/ui/input";
-import {PlaylistSearchSuggestions} from "~/components/PlaylistSearchSuggestions";
+import type { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { ActionArgs, redirect } from "@remix-run/node";
+import { Form, Outlet, useLoaderData } from "@remix-run/react";
+import { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
+import { Input } from "~/components/ui/input";
+import { PlaylistSearchSuggestions } from "~/components/PlaylistSearchSuggestions";
 import PlaylistRow from "~/components/PlaylistRow";
 import {
   createSupabaseServerClient,
   createUserTrackedPlaylist,
   getUserArchives,
 } from "~/lib/supabase.server";
-import {archivePlaylist, searchPlaylists} from "~/lib/spotify.server";
-import {Button} from "~/components/ui/button";
-import {useNavigation} from "react-router";
+import { archivePlaylist, searchPlaylists } from "~/lib/spotify.server";
+import { Button } from "~/components/ui/button";
+import { useNavigation } from "react-router";
 
 export const meta: V2_MetaFunction = () => {
   return [

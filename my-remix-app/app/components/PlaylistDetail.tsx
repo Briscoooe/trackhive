@@ -1,27 +1,31 @@
-import {ArchivePlaylistForm} from "~/components/ArchivePlaylistForm";
-import {useNavigate} from "react-router";
-import {formatDistanceToNow} from "date-fns";
+import { ArchivePlaylistForm } from "~/components/ArchivePlaylistForm";
+import { useNavigate } from "react-router";
+import { formatDistanceToNow } from "date-fns";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
+  DialogTitle,
 } from "~/components/ui/dialog";
 import TrackRow from "~/components/TrackRow";
 import {
   SpotifyPlaylistTrackObject,
-  SpotifySimplifiedPlaylistObject
+  SpotifySimplifiedPlaylistObject,
 } from "~/types/spotify";
-import {ClockIcon} from "@heroicons/react/24/outline";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
-export default function PlaylistDetail({ playlist, tracks}:{ playlist: SpotifySimplifiedPlaylistObject, tracks: SpotifyPlaylistTrackObject[] }) {
+export default function PlaylistDetail({
+  playlist,
+  tracks,
+}: {
+  playlist: SpotifySimplifiedPlaylistObject;
+  tracks: SpotifyPlaylistTrackObject[];
+}) {
   const navigate = useNavigate();
   const lastUpdated = Math.max(
-    ...tracks.map(
-      (track) => new Date(track.added_at).getTime() / 1000
-    )
+    ...tracks.map((track) => new Date(track.added_at).getTime() / 1000)
   );
   let lastUpdateEnglishString = formatDistanceToNow(
     new Date(lastUpdated * 1000),

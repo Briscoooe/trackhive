@@ -1,5 +1,5 @@
-import {createServerClient} from "@supabase/auth-helpers-remix";
-import {SupabaseClient} from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/auth-helpers-remix";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 export const createSupabaseServerClient = ({
   request,
@@ -66,4 +66,4 @@ export const deleteUserTrackedPlaylist = async (
     .delete()
     .eq("playlist_id", playlistId)
     .eq("user_id", userId);
-}
+};
