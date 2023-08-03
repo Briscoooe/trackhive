@@ -182,7 +182,7 @@ export const archivePlaylist = async (
   const newPlaylist = await _createPlaylist(
     accessToken,
     me.id,
-    `${currentPlaylist.name} - ${dateFormatYYYYMMDD} (Archived)`
+    `[Trackhive] ${currentPlaylist.name} - ${dateFormatYYYYMMDD}`
   );
   await _addItemsToPlaylist(
     accessToken,

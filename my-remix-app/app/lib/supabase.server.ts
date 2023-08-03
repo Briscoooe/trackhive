@@ -55,3 +55,15 @@ export const createUserTrackedPlaylist = async (
     user_id: playlistId,
   });
 };
+
+export const deleteUserTrackedPlaylist = async (
+  supabase: SupabaseClient,
+  userId: string,
+  playlistId: string
+) => {
+  await supabase
+    .from("user_tracked_playlist")
+    .delete()
+    .eq("playlist_id", playlistId)
+    .eq("user_id", userId);
+}

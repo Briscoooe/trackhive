@@ -1,7 +1,7 @@
 import {ActionArgs, LoaderArgs, redirect} from "@remix-run/node";
 import {
   createSupabaseServerClient,
-  createUserTrackedPlaylist,
+  createUserTrackedPlaylist, deleteUserTrackedPlaylist,
 } from "~/lib/supabase.server";
 import {archivePlaylist, getPlaylist, getPlaylistTracks,} from "~/lib/spotify.server";
 import {useLoaderData} from "@remix-run/react";
@@ -40,16 +40,24 @@ export const action = async ({ request }: ActionArgs) => {
     return redirect("/");
   }
   const playlistId = formData.get("playlistId") as string;
-  await createUserTrackedPlaylist(
-    supabase,
-    session.data.session.user.id,
-    playlistId
-  );
-  await archivePlaylist(
-    session.data.session.provider_token,
-    formData.get("playlistId") as string
-  );
-  return redirect(`/`);
+  if (action === 'archive') {
+    await createUserTrackedPlaylist(
+      supabase,
+      session.data.session.user.id,
+      playlistId
+    );
+    await archivePlaylist(
+      session.data.session.provider_token,
+      formData.get("playlistId") as string
+    );
+  } else {
+    await deleteUserTrackedPlaylist(
+      supabase,
+      session.data.session.user.id,
+      playlistId
+    );
+  }
+  return redirect(request.url);
 };
 
 export default function SearchPlaylistId() {
