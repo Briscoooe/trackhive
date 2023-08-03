@@ -4,9 +4,9 @@ import {
   SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
   SPOTIFY_PLAYLIST_TODAYS_TOP_HITS_NAME,
 } from "~/lib/constants";
-import { Badge } from "~/components/ui/badge";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { Form } from "@remix-run/react";
+import {Badge} from "~/components/ui/badge";
+import {CheckBadgeIcon} from "@heroicons/react/24/solid";
+import {Form} from "@remix-run/react";
 
 export function PlaylistSearchSuggestions({
   onClick,

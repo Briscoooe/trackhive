@@ -1,6 +1,6 @@
-import type { LoaderArgs } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
-import { createSupabaseServerClient } from "~/lib/supabase.server";
+import type {LoaderArgs} from "@remix-run/node";
+import {redirect} from "@remix-run/node";
+import {createSupabaseServerClient} from "~/lib/supabase.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();

@@ -1,12 +1,5 @@
-import type { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
-import { ActionArgs, redirect } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
-import { createSupabaseServerClient } from "~/lib/supabase.server";
-import {
-  archivePlaylist,
-  refreshAuthToken,
-  searchPlaylists,
-} from "../lib/spotify.server";
+import type {V2_MetaFunction} from "@remix-run/node";
+import {Outlet} from "@remix-run/react";
 
 export const meta: V2_MetaFunction = () => {
   return [

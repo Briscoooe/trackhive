@@ -1,12 +1,11 @@
-"use client";
-import { SpotifyTrackObject } from "app/types/spotify";
+import {SpotifyEpisodeObject, SpotifyTrackObject} from "app/types/spotify";
 
 export default function TrackRow({
   index,
   track,
 }: {
   index: number;
-  track: SpotifyTrackObject;
+  track: SpotifyTrackObject | SpotifyEpisodeObject;
 }) {
   const imgUrl = track.album.images.length ? track.album.images[0].url : "";
   return (

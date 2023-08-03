@@ -1,9 +1,9 @@
-import { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
-import { MusicalNoteIcon, UserIcon } from "@heroicons/react/24/outline";
-import { CheckBadgeIcon } from "@heroicons/react/24/solid";
-import { Link, useSearchParams } from "@remix-run/react";
-import { ArchivePlaylistForm } from "~/components/ArchivePlaylistForm";
-import { Button } from "~/components/ui/button";
+import {SpotifySimplifiedPlaylistObject} from "app/types/spotify";
+import {MusicalNoteIcon, UserIcon} from "@heroicons/react/24/outline";
+import {CheckBadgeIcon} from "@heroicons/react/24/solid";
+import {Link, useSearchParams} from "@remix-run/react";
+import {ArchivePlaylistForm} from "~/components/ArchivePlaylistForm";
+import {Button} from "~/components/ui/button";
 
 function PlaylistRowInformation({
   playlist,
