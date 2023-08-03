@@ -84,19 +84,22 @@ export default function Search() {
   ): boolean => {
     return userArchives.some((archive) => archive.playlist_id === playlist.id);
   };
+  const resultsExist = results && results.items.length > 0;
   return (
     <div className={"flex flex-col space-y-2 w-full"}>
       <Form method="get" className={"flex w-full items-center space-x-2"}>
         <Input type="text" name="query" defaultValue={query || ""} />
         <Button type="submit">Search</Button>
       </Form>
-      <PlaylistSearchSuggestions
-        onClick={(playlist) => {}}
-        // searchText={searchText}
-        // setSearchText={setSearchText}
-      />
+      {!resultsExist && (
+        <PlaylistSearchSuggestions
+          onClick={(playlist) => {}}
+          // searchText={searchText}
+          // setSearchText={setSearchText}
+        />
+      )}
       <Outlet />
-      {results &&
+      {resultsExist &&
         results.items.map((playlist, index) => (
           <PlaylistRow
             playlist={playlist}

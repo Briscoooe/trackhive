@@ -54,22 +54,10 @@ export default function PlaylistRow({
   isArchived?: boolean;
 }) {
   let [searchParams, setSearchParams] = useSearchParams();
-  // const queryClient = useQueryClient();
-  // const [isOpen, setIsOpen] = useState(false);
   if (!playlist) {
     return null;
   }
-  // const { data: tracks, isLoading } = useQuery({
-  //   queryKey: [PLAYLIST_TRACKS_KEY, playlist.id, isOpen],
-  //   queryFn: () => {
-  //     if (!isOpen) {
-  //       return Promise.resolve([]);
-  //     }
-  //     return getSpotifyPlaylistTracksQuery(playlist.id);
-  //   },
-  // });
   const searchParamsPlaylistId = searchParams.get("playlistId");
-  const isOpen = searchParamsPlaylistId === playlist.id;
   return (
     <div
       className={`w-full border-1 animate-in border-slate-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-slate-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${
@@ -94,6 +82,7 @@ export default function PlaylistRow({
           >
             <Link
               to={{
+                const isOpen = searchParamsPlaylistId === playlist.id;
                 pathname: playlist.id,
                 search: `query=${searchParams.get("query")}`,
               }}
