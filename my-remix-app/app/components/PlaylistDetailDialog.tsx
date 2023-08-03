@@ -16,7 +16,7 @@ import {
 } from "~/types/spotify";
 import { ClockIcon } from "@heroicons/react/24/outline";
 
-export default function PlaylistDetail({
+export default function PlaylistDetailDialog({
   playlist,
   tracks,
 }: {

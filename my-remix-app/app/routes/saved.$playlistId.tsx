@@ -10,7 +10,7 @@ import {
   getPlaylistTracks,
 } from "~/lib/spotify.server";
 import { useLoaderData } from "@remix-run/react";
-import PlaylistDetail from "~/components/PlaylistDetail";
+import PlaylistDetailDialog from "~/components/PlaylistDetailDialog";
 import { handleArchiveUnarchivePlaylist } from "~/lib/rename-this.server";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
@@ -57,5 +57,5 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function SavedPlaylistId() {
   const { playlistTrackObjects, playlist } = useLoaderData<typeof loader>();
-  return <PlaylistDetail playlist={playlist} tracks={playlistTrackObjects} />;
+  return <PlaylistDetailDialog playlist={playlist} tracks={playlistTrackObjects} />;
 }
