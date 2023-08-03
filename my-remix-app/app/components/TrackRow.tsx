@@ -16,16 +16,16 @@ export default function TrackRow({
       }
     >
       <div className={"flex flex-row items-center space-x-3"}>
-        <span className={"text-gray-500 text-sm text-right w-auto"}>
+        <span className={"text-slate-500 text-sm text-right w-auto"}>
           {index + 1}
         </span>
         <img src={imgUrl} alt={track.name} width={40} height={40} />
         <div className={"flex flex-col"}>
-          <span className={"text-md text-gray-800 leading-6 truncate"}>
+          <span className={"text-md text-slate-800 leading-6 truncate"}>
             {track.name}
           </span>
           <div className={"flex flex-row items-center space-x-1"}>
-            <span className={"text-md text-gray-500"}>
+            <span className={"text-md text-slate-500"}>
               {track.artists.map((artist, index) => (
                 <span key={artist.id}>
                   {artist.name}

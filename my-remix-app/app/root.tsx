@@ -76,7 +76,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <main className="min-h-screen bg-background flex flex-col items-center bg-gray-50">
+        <main className="min-h-screen bg-background flex flex-col items-center bg-slate-50">
           <NavBar user={user} supabase={supabase} />
           <div className="animate-in flex flex-col gap-14 opacity-0 max-w-2xl w-full px-3 py-4 text-foreground">
             <Outlet context={{ supabase, session }} />

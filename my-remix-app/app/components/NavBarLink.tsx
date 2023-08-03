@@ -12,8 +12,8 @@ export function NavBarLink({
     <NavLink
       to={href}
       className={({ isActive, isPending }) =>
-        `hover:bg-gray-100 transition rounded-md px-4 py-2 ${
-          isPending ? "" : isActive ? "bg-gray-100" : ""
+        `hover:bg-slate-100 transition rounded-md px-4 py-2 ${
+          isPending ? "" : isActive ? "bg-slate-100" : ""
         }`
       }
     >

@@ -20,12 +20,12 @@ function PlaylistRowInformation({
     >
       <img src={playlistImage} alt={playlist.name} width={80} height={80} />
       <div className={"flex flex-col space-y-1"}>
-        <span className={"text-xl text-gray-700 leading-6 truncate"}>
+        <span className={"text-xl text-slate-700 leading-6 truncate"}>
           {playlist.name}
         </span>
         <div className={"flex flex-row items-center space-x-1"}>
-          <UserIcon className={"text-gray-500 w-4 h-4"} />
-          <span className={"text-md text-gray-500"}>
+          <UserIcon className={"text-slate-500 w-4 h-4"} />
+          <span className={"text-md text-slate-500"}>
             {playlist.owner.display_name}
           </span>
           {playlist.owner.is_spotify && (
@@ -33,8 +33,8 @@ function PlaylistRowInformation({
           )}
         </div>
         <div className={"flex flex-row items-center space-x-1"}>
-          <MusicalNoteIcon className={"text-gray-500 h-4 w-4"} />
-          <span className={"text-md text-gray-500"}>
+          <MusicalNoteIcon className={"text-slate-500 h-4 w-4"} />
+          <span className={"text-md text-slate-500"}>
             {playlist.tracks?.total}
           </span>
         </div>
@@ -72,7 +72,7 @@ export default function PlaylistRow({
   const isOpen = searchParamsPlaylistId === playlist.id;
   return (
     <div
-      className={`w-full border-1 animate-in border-gray-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-gray-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${
+      className={`w-full border-1 animate-in border-slate-300 bg-white flex flex-col rounded-lg px-4 py-2 hover:bg-slate-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${
         isCurrentlyLoading ? "bg-black" : ""
       }`}
     >

@@ -69,8 +69,8 @@ export default function Saved() {
         ))
       ) : (
         <div className="text-center w-full bg-white rounded-md p-4 shadow-sm">
-          <FaceFrownIcon className="w-12 h-12 mx-auto text-gray-500" />
-          <h1 className="text-lg font-medium text-gray-600">No saved playlists</h1>
+          <FaceFrownIcon className="w-12 h-12 mx-auto text-slate-500" />
+          <h1 className="text-lg font-medium text-slate-600">No saved playlists</h1>
           <Button className={"w-full mt-2"}>
             <MagnifyingGlassIcon className="w-4 h-4 mr-2" />
             <Link to="/search">Search</Link>

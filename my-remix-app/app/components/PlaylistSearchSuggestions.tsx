@@ -31,7 +31,7 @@ export function PlaylistSearchSuggestions({
             variant={'outline'}
             key={playlistName}
             className={
-              "cursor-pointer w-full py-1 text-sm whitespace-nowrap flex justify-between bg-gray-100 text-gray-600"
+              "cursor-pointer w-full py-1 text-sm whitespace-nowrap flex justify-between bg-slate-100 text-slate-600"
             }
             onClick={() => onClick(playlistName)}
           >

@@ -47,8 +47,8 @@ export default function PlaylistDetail({
             <DialogTitle className={"flex flex-col space-y-1"}>
               <span>{playlist.name}</span>
               <div className={"flex flex-row items-center space-x-1"}>
-                <ClockIcon className={"w-3 h-3 mt-0.5 text-gray-500"} />
-                <span className={"text-sm text-gray-500"}>
+                <ClockIcon className={"w-3 h-3 mt-0.5 text-slate-500"} />
+                <span className={"text-sm text-slate-500"}>
                   {lastUpdateEnglishString}
                 </span>
               </div>
