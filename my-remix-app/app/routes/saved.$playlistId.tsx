@@ -11,6 +11,7 @@ import {
 } from "~/lib/spotify.server";
 import { useLoaderData } from "@remix-run/react";
 import PlaylistDetail from "~/components/PlaylistDetail";
+import { handleArchiveUnarchivePlaylist } from "~/lib/rename-this.server";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
   const playlistId = params.playlistId;
@@ -45,23 +46,12 @@ export const action = async ({ request }: ActionArgs) => {
     return redirect("/");
   }
   const playlistId = formData.get("playlistId") as string;
-  if (action === "archive") {
-    await createUserTrackedPlaylist(
-      supabase,
-      session.data.session.user.id,
-      playlistId
-    );
-    await archivePlaylist(
-      session.data.session.provider_token,
-      formData.get("playlistId") as string
-    );
-  } else {
-    await deleteUserTrackedPlaylist(
-      supabase,
-      session.data.session.user.id,
-      playlistId
-    );
-  }
+  await handleArchiveUnarchivePlaylist(
+    supabase,
+    session,
+    playlistId,
+    action as "archive" | "unarchive"
+  );
   return redirect(request.url);
 };
 

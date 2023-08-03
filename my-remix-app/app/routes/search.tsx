@@ -8,11 +8,13 @@ import PlaylistRow from "~/components/PlaylistRow";
 import {
   createSupabaseServerClient,
   createUserTrackedPlaylist,
-  getUserArchives,
+  deleteUserTrackedPlaylist,
+  getAllUserTrackedPlaylists,
 } from "~/lib/supabase.server";
 import { archivePlaylist, searchPlaylists } from "~/lib/spotify.server";
 import { Button } from "~/components/ui/button";
 import { useNavigation } from "react-router";
+import { handleArchiveUnarchivePlaylist } from "~/lib/rename-this.server";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -40,7 +42,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     session.data.session.provider_token,
     query
   );
-  const userArchives = await getUserArchives(
+  const userArchives = await getAllUserTrackedPlaylists(
     supabase,
     session.data.session.user.id
   );
@@ -57,16 +59,13 @@ export const action = async ({ request }: ActionArgs) => {
     return redirect("/");
   }
   const playlistId = formData.get("playlistId") as string;
-  await createUserTrackedPlaylist(
+  await handleArchiveUnarchivePlaylist(
     supabase,
-    session.data.session.user.id,
-    playlistId
+    session,
+    playlistId,
+    action as "archive" | "unarchive"
   );
-  await archivePlaylist(
-    session.data.session.provider_token,
-    formData.get("playlistId") as string
-  );
-  return redirect(`/`);
+  return redirect(request.url);
 };
 export default function Search() {
   const { results, query, userArchives } = useLoaderData<typeof loader>();

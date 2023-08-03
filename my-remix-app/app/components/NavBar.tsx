@@ -26,14 +26,17 @@ export default function NavBar({
       },
     });
   };
-
   return (
     <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white">
       <div className="w-full max-w-2xl flex justify-between items-center p-3 text-sm text-foreground">
         <div className={"space-x-1 flex flex-row items-center"}>
           <NavBarLink href={"/"}>Home</NavBarLink>
-          <NavBarLink href={"/saved"}>Saved</NavBarLink>
-          <NavBarLink href={"/search"}>Search</NavBarLink>
+          {user && (
+            <>
+              <NavBarLink href={"/saved"}>Saved</NavBarLink>
+              <NavBarLink href={"/search"}>Search</NavBarLink>
+            </>
+          )}
         </div>
         <div>
           {user ? (

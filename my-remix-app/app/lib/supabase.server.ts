@@ -14,27 +14,7 @@ export const createSupabaseServerClient = ({
     { request, response }
   );
 
-export const getCurrentUserAccessToken = async ({
-  supabase,
-}: {
-  supabase: ReturnType<typeof createSupabaseServerClient>;
-}): Promise<string | undefined | null> => {
-  const session = await supabase.auth.getSession();
-  if (!session) {
-    return;
-  }
-  return session.data.session?.provider_token;
-
-  // const userAuthKey = await supabase.from("decrypted_auth_token").select().eq("user_id", user?.id).single();
-  // console.log('user auth key', userAuthKey)
-  // const { decrypted_refresh_token } = userAuthKey.data;
-
-  // console.log('token', userAuthKey)
-  // console.log('QUERy, ', query)
-  // console.log('token access', userAuthKey)
-};
-
-export const getUserArchives = async (
+export const getAllUserTrackedPlaylists = async (
   supabase: SupabaseClient,
   userId: string
 ) => {
@@ -50,10 +30,15 @@ export const createUserTrackedPlaylist = async (
   userId: string,
   playlistId: string
 ) => {
-  await supabase.from("user_tracked_playlist").insert({
+  const { data, error } = await supabase.from("user_tracked_playlist").insert({
     playlist_id: playlistId,
-    user_id: playlistId,
+    user_id: userId,
   });
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+  return data;
 };
 
 export const deleteUserTrackedPlaylist = async (
@@ -61,9 +46,13 @@ export const deleteUserTrackedPlaylist = async (
   userId: string,
   playlistId: string
 ) => {
-  await supabase
+  const { data, error } = await supabase
     .from("user_tracked_playlist")
     .delete()
     .eq("playlist_id", playlistId)
     .eq("user_id", userId);
+  if (error) {
+    throw error;
+  }
+  return data;
 };
