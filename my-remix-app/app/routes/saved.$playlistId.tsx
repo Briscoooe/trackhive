@@ -69,7 +69,7 @@ export const action = async ({ request }: ActionArgs) => {
   return redirect(`/`);
 };
 
-export default function SearchPlaylistId() {
+export default function SavedPlaylistId() {
   const { playlistTrackObjects, playlist } = useLoaderData<typeof loader>();
   const navigate = useNavigate();
   const lastUpdated = Math.max(
