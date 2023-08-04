@@ -1,11 +1,9 @@
-import { ArchivePlaylistForm } from "~/components/ArchivePlaylistForm";
 import { useNavigate } from "react-router";
 import { formatDistanceToNow } from "date-fns";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
@@ -69,9 +67,6 @@ export default function PlaylistDetailDialog({
             {/*    <TrackRowSkeleton key={index} />*/}
             {/*  ))}*/}
           </DialogDescription>
-          <DialogFooter>
-            <ArchivePlaylistForm playlist={playlist} buttonDisabled={false} />
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

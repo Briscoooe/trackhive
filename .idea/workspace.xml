@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d54c5665-18e5-4b29-8feb-82a04d7b32c7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/app/api/internal/cron/archive/[userId]/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/internal/cron/archive/[userId]/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/archive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/archive/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/tracks/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/tracks/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/unarchive/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/spotify/playlists/[playlistId]/unarchive/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/api/metafile.js.json" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/api/metafile.js.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/api/metafile.server.json" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/api/metafile.server.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/app/lib/spotify.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/app/lib/spotify.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/app/lib/supabase.server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/app/lib/supabase.server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/app/routes/saved.$playlistId.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/app/routes/saved.$playlistId.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/app/routes/saved.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/app/routes/saved.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my-remix-app/app/routes/search.$playlistId.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/my-remix-app/app/routes/search.$playlistId.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.md" beforeDir="false" afterPath="$PROJECT_DIR$/todo.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2TEwXVIL26FqlUAQaddcsobzmml" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/brianbriscoe/Code/trackhive/my-remix-app/app/routes/search",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Users/brianbriscoe/Code/trackhive/my-remix-app/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/my-remix-app/app/routes/search" />
+      <recent name="$PROJECT_DIR$/my-remix-app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/my-remix-app/app/types" />
+      <recent name="$PROJECT_DIR$/my-remix-app/app/lib" />
+      <recent name="$PROJECT_DIR$/my-remix-app/app/components/ui" />
+      <recent name="$PROJECT_DIR$/my-remix-app/app/components" />
+      <recent name="$PROJECT_DIR$/my-remix-app/app/routes" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="$PROJECT_DIR$/my-remix-app/app/components/PlaylistRowActions.tsx" />
+      <recent name="$PROJECT_DIR$/my-remix-app/app/components/PlaylistSearchSuggestions.tsx" />
+      <recent name="$PROJECT_DIR$/components/NavBarLink.tsx" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.lint" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d54c5665-18e5-4b29-8feb-82a04d7b32c7" name="Changes" comment="" />
+      <created>1690621587632</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690621587632</updated>
+      <workItem from="1690621588784" duration="87241000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/my-remix-app/app/components/PlaylistRow.tsx</url>
+          <line>172</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/my-remix-app/app/components/ui/dialog.tsx</url>
+          <line>26</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

@@ -15,11 +15,14 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - [ ] snapshot - create new playlist with new tracks
 - [x] https://supabase.com/docs/guides/database/column-encryption IMPORTANT
 - [x] https://supabase.com/docs/guides/database/vault
+- fix styling in full page modal
 - show information on archived playlists in tab
   - archived since
   - archived versions
   - archive mode
-- delete cookie thing
+- [x]delete cookie thing
+- remove post arvhive functionalityy from detail view?
+- loading states on buttons
 - rename - snapshotify?
 - skeleton for playlist row
 - find out best async/scheduled task framework for nextjs
@@ -27,7 +30,8 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - https://docs.upstash.com/qstash
   - deno
   - https://developers.cloudflare.com/workers/platform/limits/
-- move to remix.js
+- [x] move to remix.js
+
 
 # UI bits
 
@@ -41,15 +45,13 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://developer.spotify.com/documentation/web-api/reference/create-playlist
 - https://developer.spotify.com/documentation/web-api/reference/add-tracks-to-playlist
 - https://supabase.com/docs/guides/api/rest/generating-types
-- https://nextjs.org/docs/getting-started/react-essentials#client-components
-- https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
-- https://makerkit.dev/blog/saas/supabase-react-query
 - https://vercel.com/docs/cron-jobs
+- https://blog.logrocket.com/remix-supabase-real-time-chat-app/
 
 # DESIGN PRINCIPLES
 
-- all spotify interaction is handled server side
-- supabase - weird split happening here
+- [x]all spotify interaction is handled server side
+- [x]supabase - weird split happening here
 
 # known refactors
 
@@ -57,3 +59,4 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
 - reduce returned fields by spotify
 - store playlist snapshots in DB to avoid making dupe requests to spotify for discover weekly
+- dont fetch all songs in playlist at once, use next cursor
