@@ -23,7 +23,7 @@ export function PlaylistRowInformation({
         height={90}
       />
       <div className={"flex flex-col justify-between space-y-1"}>
-        <span className={"text-xl text-slate-700 leading-6 truncate"}>
+        <span className={"text-xl text-slate-700 leading-6 truncate font-medium"}>
           {playlist.name}
         </span>
         <div className={"flex flex-row items-center space-x-1"}>

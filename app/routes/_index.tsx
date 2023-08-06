@@ -26,6 +26,9 @@ export default function Index() {
         they update, or Endless Playlist, which continuously adds new songs to
         the same playlist over time.
       </LandingPageSection>
+      <LandingPageSection title="Is it free?">
+        Yes, and always will be. It costs me $0 to run TrackHive, so I'm happy to offer it for free.
+      </LandingPageSection>
       <LandingPageSection title="Who made this?">
         TrackHive is made by{" "}
         <NativeLinkTag href={"https://twitter.com/brianbriscoe_"}>

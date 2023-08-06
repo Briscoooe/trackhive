@@ -46,7 +46,7 @@ export default function PlaylistDetailDialog({
             <div className={"flex flex-row items-center space-x-1"}>
               <ClockIcon className={"w-3 h-3 mt-0.5 text-slate-500"} />
               <span className={"text-sm text-slate-500 font-normal"}>
-                {lastUpdateEnglishString}
+                Last updated <span className={'font-semibold'}>{lastUpdateEnglishString}</span>
               </span>
             </div>
           </DialogTitle>

@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog"
 import {Form} from "@remix-run/react";
+import {buttonVariants} from "~/components/ui/button";
 
 export default function DeleteAccountDialogForm({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (isOpen: boolean) => void }) {
   return (
@@ -23,7 +24,7 @@ export default function DeleteAccountDialogForm({ isOpen, setIsOpen }: { isOpen:
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <Form action="/auth/delete-account" method="POST">
-            <AlertDialogAction className={'w-full sm:w-auto'} type={'submit'}>Yes, delete</AlertDialogAction>
+            <AlertDialogAction className={'w-full sm:w-auto ' + buttonVariants({ variant: 'destructive'})} type={'submit'}>Yes, delete</AlertDialogAction>
           </Form>
         </AlertDialogFooter>
       </AlertDialogContent>
