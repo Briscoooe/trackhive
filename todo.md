@@ -35,8 +35,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - deno
   - https://developers.cloudflare.com/workers/platform/limits/
   - https://temporal.io/ 
-- [ ] speed improvements
+- [x] speed improvements
 - [ ] spinners for everything
+- [ ] clean up code
 
 # UI bits
 
