@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { NavLink } from "@remix-run/react";
 
 export function NavBarLink({

@@ -1,4 +1,4 @@
-import { UserTrackedPlaylist } from "~/types/supabase";
+import type { UserTrackedPlaylist } from "~/types/supabase";
 import { ARCHIVE_MODE_ENDLESS, ARCHIVE_MODE_SNAPSHOT } from "~/lib/constants";
 import { CheckIcon } from "@heroicons/react/24/outline";
 

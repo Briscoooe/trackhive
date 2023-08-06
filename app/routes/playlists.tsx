@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Form, Outlet, useLoaderData } from "@remix-run/react";
-import { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
+import type { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
 import { Input } from "~/components/ui/input";
 import PlaylistRow from "~/components/PlaylistRow";
 import {
@@ -12,7 +12,7 @@ import { getSuggestedPlaylists, searchPlaylists } from "~/lib/spotify.server";
 import { Button } from "~/components/ui/button";
 import { useNavigation } from "react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { UserTrackedPlaylist } from "~/types/supabase";
+import type { UserTrackedPlaylist } from "~/types/supabase";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response();

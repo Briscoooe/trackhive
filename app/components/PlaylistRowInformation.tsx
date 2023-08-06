@@ -1,4 +1,4 @@
-import { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
+import type { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
 import { MusicalNoteIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { CheckBadgeIcon } from "@heroicons/react/24/solid";
 

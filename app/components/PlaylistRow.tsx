@@ -1,9 +1,9 @@
-import { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
+import type { SpotifySimplifiedPlaylistObject } from "app/types/spotify";
 import { Link, useSearchParams } from "@remix-run/react";
 import { ArchivePlaylistForm } from "~/components/ArchivePlaylistForm";
 import { buttonVariants } from "~/components/ui/button";
 import { PlaylistRowInformation } from "~/components/PlaylistRowInformation";
-import { UserTrackedPlaylist } from "~/types/supabase";
+import type { UserTrackedPlaylist } from "~/types/supabase";
 import { UserTrackedPlaylistInformation } from "~/components/UserTrackedPlaylistInformation";
 
 export default function PlaylistRow({

@@ -1,4 +1,5 @@
-import { LoaderArgs, redirect } from "@remix-run/node";
+import type { LoaderArgs} from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { createSupabaseServerClient } from "~/lib/supabase.server";
 import { getPlaylist, getPlaylistTracks } from "~/lib/spotify.server";
 import { useLoaderData } from "@remix-run/react";

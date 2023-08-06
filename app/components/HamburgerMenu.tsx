@@ -1,5 +1,4 @@
-import {Bars4Icon, ExclamationTriangleIcon} from "@heroicons/react/24/outline";
-import {ArrowLeftOnRectangleIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import {Bars4Icon, ExclamationTriangleIcon,ArrowLeftOnRectangleIcon, UserCircleIcon} from "@heroicons/react/24/outline";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import type { SpotifyUserObject } from "~/types/spotify";
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import DeleteAccountDialogForm from "~/components/DeleteAccountDialogForm";
 import {AlertDialogTrigger} from "~/components/ui/alert-dialog";
 import {useState} from "react";

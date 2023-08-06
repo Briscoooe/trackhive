@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/auth-helpers-remix";
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 export const createSupabaseServerClient = ({
   request,

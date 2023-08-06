@@ -1,4 +1,4 @@
-import { SpotifyTrackObject } from "app/types/spotify";
+import type { SpotifyTrackObject } from "app/types/spotify";
 
 export default function TrackRow({
   index,

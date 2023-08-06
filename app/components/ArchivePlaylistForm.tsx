@@ -1,4 +1,4 @@
-import { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
+import type { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
 import { Form } from "@remix-run/react";
 import { Button } from "~/components/ui/button";
 import { BookmarkIcon, BookmarkSlashIcon } from "@heroicons/react/24/outline";
@@ -21,7 +21,7 @@ import {
 import { Label } from "~/components/ui/label";
 import { ARCHIVE_MODE_ENDLESS, ARCHIVE_MODE_SNAPSHOT } from "~/lib/constants";
 import { useState } from "react";
-import { UserTrackedPlaylist } from "~/types/supabase";
+import type { UserTrackedPlaylist } from "~/types/supabase";
 
 const daysOfWeek = [
   { value: "1", label: "Monday" },

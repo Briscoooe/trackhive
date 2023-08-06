@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 import TrackRow from "~/components/TrackRow";
-import {
+import type {
   SpotifyPlaylistTrackObject,
   SpotifySimplifiedPlaylistObject,
 } from "~/types/spotify";
