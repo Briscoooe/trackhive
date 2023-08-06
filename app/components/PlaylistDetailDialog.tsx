@@ -33,42 +33,40 @@ export default function PlaylistDetailDialog({
     lastUpdateEnglishString.charAt(0).toUpperCase() +
     lastUpdateEnglishString.slice(1);
   return (
-    <>
-      <Dialog
-        open
-        onOpenChange={() => {
-          navigate(-1);
-        }}
-      >
-        <DialogContent className={"max-h-screen overflow-y-scroll"}>
-          <DialogHeader className={"border-b-1 border-slate-100 pb-2"}>
-            <DialogTitle className={"flex flex-col space-y-1 text-left -mt-2"}>
-              <span>{playlist.name}</span>
-              <div className={"flex flex-row items-center space-x-1"}>
-                <ClockIcon className={"w-3 h-3 mt-0.5 text-slate-500"} />
-                <span className={"text-sm text-slate-500 font-normal"}>
-                  {lastUpdateEnglishString}
-                </span>
-              </div>
-            </DialogTitle>
-          </DialogHeader>
-          <DialogDescription className={"space-y-2 overflow-y-auto"}>
-            {tracks &&
-              tracks?.length > 0 &&
-              tracks?.map((playlistTrackObject, index) => (
-                <TrackRow
-                  key={playlistTrackObject.track.id}
-                  index={index}
-                  track={playlistTrackObject.track}
-                />
-              ))}
-            {/*{isLoading &&*/}
-            {/*  [...Array(playlist.tracks.total)].map((_, index) => (*/}
-            {/*    <TrackRowSkeleton key={index} />*/}
-            {/*  ))}*/}
-          </DialogDescription>
-        </DialogContent>
-      </Dialog>
-    </>
+    <Dialog
+      open
+      onOpenChange={() => {
+        navigate(-1);
+      }}
+    >
+      <DialogContent className={"max-h-screen overflow-y-scroll"}>
+        <DialogHeader className={"border-b-1 border-slate-100 pb-2"}>
+          <DialogTitle className={"flex flex-col space-y-1 text-left -mt-2"}>
+            <span>{playlist.name}</span>
+            <div className={"flex flex-row items-center space-x-1"}>
+              <ClockIcon className={"w-3 h-3 mt-0.5 text-slate-500"} />
+              <span className={"text-sm text-slate-500 font-normal"}>
+                {lastUpdateEnglishString}
+              </span>
+            </div>
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription className={"space-y-2 overflow-y-auto"}>
+          {tracks &&
+            tracks?.length > 0 &&
+            tracks?.map((playlistTrackObject, index) => (
+              <TrackRow
+                key={playlistTrackObject.track.id}
+                index={index}
+                track={playlistTrackObject.track}
+              />
+            ))}
+          {/*{isLoading &&*/}
+          {/*  [...Array(playlist.tracks.total)].map((_, index) => (*/}
+          {/*    <TrackRowSkeleton key={index} />*/}
+          {/*  ))}*/}
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
   );
 }

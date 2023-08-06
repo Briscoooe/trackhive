@@ -14,6 +14,15 @@ export const createSupabaseServerClient = ({
     { request, response }
   );
 
+export const createSupabaseAdminServerClient = ({ request, response, }: { request: Request; response: Response; }) =>
+  createServerClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { request, response }
+  );
+
+
+
 export const getAllUserTrackedPlaylists = async (
   supabase: SupabaseClient,
   userId: string
@@ -59,3 +68,30 @@ export const deleteUserTrackedPlaylist = async (
   }
   return data;
 };
+
+export const deleteAllUserData = async (
+  supabase: SupabaseClient,
+  userId: string
+) => {
+  let { data, error } = await supabase
+    .from("auth_token")
+    .delete()
+    .eq("user_id", userId);
+  if (error) {
+    throw error;
+  }
+  ({ data, error } = await supabase
+    .from("user_tracked_playlist")
+    .delete()
+    .eq("user_id", userId));
+  if (error) {
+    throw error;
+  }
+  ({ data, error } = await supabase
+    .from("user_tracked_playlist_snapshot")
+    .delete()
+    .eq("user_id", userId));
+  if (error) {
+    throw error;
+  }
+}
