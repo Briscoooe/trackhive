@@ -27,6 +27,30 @@ export const createSupabaseAdminServerClient = ({
     { request, response },
   );
 
+export const adminUpsertAuthToken = async (
+  supabase: SupabaseClient,
+  userId: string,
+  providerToken: string,
+  providerRefreshToken: string,
+) => {
+  const { data, error } = await supabase
+    .from("auth_token")
+    .upsert(
+      {
+        user_id: userId,
+        provider_token: providerToken,
+        provider_refresh_token: providerRefreshToken,
+      },
+      { onConflict: "user_id" },
+    )
+    .select();
+  console.log("data", data);
+  console.log("error", error);
+  if (error) {
+    throw error;
+  }
+  return data;
+};
 export const getAllUserTrackedPlaylists = async (
   supabase: SupabaseClient,
   userId: string,

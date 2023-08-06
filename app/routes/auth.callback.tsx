@@ -1,6 +1,10 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { createSupabaseServerClient } from "~/lib/supabase.server";
+import {
+  createSupabaseAdminServerClient,
+  createSupabaseServerClient,
+  adminUpsertAuthToken,
+} from "~/lib/supabase.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();
@@ -9,7 +13,25 @@ export const loader = async ({ request }: LoaderArgs) => {
 
   if (code) {
     const supabaseClient = createSupabaseServerClient({ request, response });
-    await supabaseClient.auth.exchangeCodeForSession(code);
+    const { data, error } = await supabaseClient.auth.exchangeCodeForSession(
+      code,
+    );
+    if (
+      !data.session ||
+      !data.session.provider_token ||
+      !data.session.provider_refresh_token
+    ) {
+      return redirect("/", {
+        headers: response.headers,
+      });
+    }
+    const adminClient = createSupabaseAdminServerClient({ request, response });
+    await adminUpsertAuthToken(
+      adminClient,
+      data.user.id,
+      data.session.provider_token,
+      data.session.provider_refresh_token,
+    );
   }
 
   return redirect("/playlists", {
