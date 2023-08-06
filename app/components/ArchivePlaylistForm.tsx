@@ -1,6 +1,6 @@
 import type { SpotifySimplifiedPlaylistObject } from "~/types/spotify";
 import { Form } from "@remix-run/react";
-import { Button } from "~/components/ui/button";
+import { Button, buttonVariants } from "~/components/ui/button";
 import { BookmarkIcon, BookmarkSlashIcon } from "@heroicons/react/24/outline";
 import { useNavigation } from "react-router";
 import {
@@ -60,87 +60,80 @@ export function ArchivePlaylistForm({
     <div className={"w-full sm:w-auto"}>
       {!isArchived ? (
         <Dialog>
-          <DialogTrigger className={"w-full"}>
-            <Button
-              value={"archive"}
-              variant={"default"}
-              className={"mt-auto w-full flex-1"}
-              disabled={buttonDisabled}
-            >
-              <>
-                <BookmarkIcon className={"mr-1 h-4 w-4"} />
-                <span className={"text-md"}>Start tracking</span>
-              </>
-            </Button>
+          <DialogTrigger
+            value={"archive"}
+            variant={"default"}
+            disabled={buttonDisabled}
+            className={
+              "mt-auto w-full flex-1 " + buttonVariants({ variant: "default" })
+            }
+          >
+            <BookmarkIcon className={"mr-1 h-4 w-4"} />
+            <span className={"text-md"}>Start tracking</span>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle className={"text-left"}>
                 Start tracking {playlist.name}
               </DialogTitle>
-              <DialogDescription>
-                <Form
-                  className={"mt-2 flex flex-col space-y-4 text-left"}
-                  method={"post"}
-                  action={`/playlists/${playlist.id}/archive`}
-                >
-                  <input type="hidden" name="playlistId" value={playlist.id} />
-                  <div className={"flex flex-col space-y-2"}>
-                    <Label htmlFor="dayOfWeek">Check for updates every</Label>
-                    <Select
-                      name={"dayOfWeek"}
-                      value={dayOfWeek}
-                      onValueChange={setDayOfWeek}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue
-                          id={"dayOfWeek"}
-                          placeholder="Day of week"
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {daysOfWeek.map((day) => (
-                          <SelectItem key={day.value} value={day.value}>
-                            {day.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className={"flex flex-col space-y-2"}>
-                    <Label htmlFor="archiveMode">Save tracks as </Label>
-                    <Select
-                      name={"archiveMode"}
-                      value={archiveMode}
-                      onValueChange={setArchiveMode}
-                    >
-                      <SelectTrigger className="whitespace-nowrap">
-                        <SelectValue
-                          className={"whitespace-nowrap"}
-                          id={"archiveMode"}
-                          placeholder="Snapshot"
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {archiveModes.map((mode) => (
-                          <SelectItem key={mode.value} value={mode.value}>
-                            {mode.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Button
-                    variant={"default"}
-                    className={"text-md mt-auto w-full flex-1"}
-                    disabled={buttonDisabled}
-                    type={"submit"}
-                  >
-                    Start tracking
-                  </Button>
-                </Form>
-              </DialogDescription>
             </DialogHeader>
+            <Form
+              className={"flex flex-col space-y-4 text-left"}
+              method={"post"}
+              action={`/playlists/${playlist.id}/archive`}
+            >
+              <input type="hidden" name="playlistId" value={playlist.id} />
+              <div className={"flex flex-col space-y-2"}>
+                <Label htmlFor="dayOfWeek">Check for updates every</Label>
+                <Select
+                  name={"dayOfWeek"}
+                  value={dayOfWeek}
+                  onValueChange={setDayOfWeek}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue id={"dayOfWeek"} placeholder="Day of week" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {daysOfWeek.map((day) => (
+                      <SelectItem key={day.value} value={day.value}>
+                        {day.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className={"flex flex-col space-y-2"}>
+                <Label htmlFor="archiveMode">Save tracks as </Label>
+                <Select
+                  name={"archiveMode"}
+                  value={archiveMode}
+                  onValueChange={setArchiveMode}
+                >
+                  <SelectTrigger className="whitespace-nowrap">
+                    <SelectValue
+                      className={"whitespace-nowrap"}
+                      id={"archiveMode"}
+                      placeholder="Snapshot"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {archiveModes.map((mode) => (
+                      <SelectItem key={mode.value} value={mode.value}>
+                        {mode.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button
+                variant={"default"}
+                className={"text-md mt-auto w-full flex-1"}
+                disabled={buttonDisabled}
+                type={"submit"}
+              >
+                Start tracking
+              </Button>
+            </Form>
           </DialogContent>
         </Dialog>
       ) : (
