@@ -12,7 +12,7 @@ export function PlaylistRowInformation({
   return (
     <div
       className={
-        "flex flex-row items-start justify-start space-x-2 overflow-x-hidden h-full"
+        "flex h-full flex-row items-start justify-start space-x-2 overflow-x-hidden"
       }
     >
       <img
@@ -23,20 +23,22 @@ export function PlaylistRowInformation({
         height={90}
       />
       <div className={"flex flex-col justify-between space-y-1"}>
-        <span className={"text-xl text-slate-700 leading-6 truncate font-medium"}>
+        <span
+          className={"truncate text-xl font-medium leading-6 text-slate-700"}
+        >
           {playlist.name}
         </span>
         <div className={"flex flex-row items-center space-x-1"}>
-          <UserCircleIcon className={"text-slate-500 w-4 h-4"} />
+          <UserCircleIcon className={"h-4 w-4 text-slate-500"} />
           <span className={"text-md text-slate-500"}>
             {playlist.owner.display_name}
           </span>
           {playlist.owner.is_spotify && (
-            <CheckBadgeIcon className={"text-green-500 w-4 h-4"} />
+            <CheckBadgeIcon className={"h-4 w-4 text-green-500"} />
           )}
         </div>
         <div className={"flex flex-row items-center space-x-1"}>
-          <MusicalNoteIcon className={"text-slate-500 h-4 w-4"} />
+          <MusicalNoteIcon className={"h-4 w-4 text-slate-500"} />
           <span className={"text-md text-slate-500"}>
             {playlist.tracks?.total} tracks
           </span>

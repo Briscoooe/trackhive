@@ -21,7 +21,7 @@ export const action = async ({ request }: LoaderArgs) => {
     session.data.session.user.id,
     playlistId,
     archiveMode,
-    dayOfWeek
+    dayOfWeek,
   );
   const referrer = request.headers.get("referer");
   return redirect(referrer);

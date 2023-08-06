@@ -9,10 +9,10 @@ export function LandingPageSection({
 }) {
   return (
     <>
-      <h2 className="mb-4 text-2xl tracking-tight font-bold text-slate-900">
+      <h2 className="mb-4 text-2xl font-bold tracking-tight text-slate-900">
         {title}
       </h2>
-      <p className="mb-4 text-md font-normal text-gray-500 lg:text-lg">
+      <p className="text-md mb-4 font-normal text-gray-500 lg:text-lg">
         {children}
       </p>
     </>

@@ -64,11 +64,11 @@ export function ArchivePlaylistForm({
             <Button
               value={"archive"}
               variant={"default"}
-              className={"mt-auto flex-1 w-full"}
+              className={"mt-auto w-full flex-1"}
               disabled={buttonDisabled}
             >
               <>
-                <BookmarkIcon className={"w-4 h-4 mr-1"} />
+                <BookmarkIcon className={"mr-1 h-4 w-4"} />
                 <span className={"text-md"}>Start tracking</span>
               </>
             </Button>
@@ -80,7 +80,7 @@ export function ArchivePlaylistForm({
               </DialogTitle>
               <DialogDescription>
                 <Form
-                  className={"text-left flex flex-col space-y-4 mt-2"}
+                  className={"mt-2 flex flex-col space-y-4 text-left"}
                   method={"post"}
                   action={`/playlists/${playlist.id}/archive`}
                 >
@@ -132,7 +132,7 @@ export function ArchivePlaylistForm({
                   </div>
                   <Button
                     variant={"default"}
-                    className={"mt-auto flex-1 w-full text-md"}
+                    className={"text-md mt-auto w-full flex-1"}
                     disabled={buttonDisabled}
                     type={"submit"}
                   >
@@ -148,12 +148,12 @@ export function ArchivePlaylistForm({
           <input type="hidden" name="playlistId" value={playlist.id} />
           <Button
             variant={"outline"}
-            className={"mt-auto flex-1 w-full"}
+            className={"mt-auto w-full flex-1"}
             type={"submit"}
             disabled={buttonDisabled}
           >
             <>
-              <BookmarkSlashIcon className={"w-4 h-4 text-red-500 mr-1"} />
+              <BookmarkSlashIcon className={"mr-1 h-4 w-4 text-red-500"} />
               <span className={"text-md "}>Stop tracking</span>
             </>
           </Button>

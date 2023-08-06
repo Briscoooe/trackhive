@@ -26,10 +26,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
   const userTrackedPlaylists = await getAllUserTrackedPlaylists(
     supabase,
-    session.data.session.user.id
+    session.data.session.user.id,
   );
   const suggested = await getSuggestedPlaylists(
-    session.data.session.provider_token
+    session.data.session.provider_token,
   );
   let results;
   if (query) {
@@ -50,7 +50,7 @@ export default function Playlists() {
   const navigation = useNavigation();
 
   const checkIfIsLoading = (
-    playlist: SpotifySimplifiedPlaylistObject
+    playlist: SpotifySimplifiedPlaylistObject,
   ): boolean => {
     return (
       (navigation.state === "loading" &&
@@ -59,10 +59,10 @@ export default function Playlists() {
     );
   };
   const getUserTrackedPlaylist = (
-    playlist: SpotifySimplifiedPlaylistObject
+    playlist: SpotifySimplifiedPlaylistObject,
   ): UserTrackedPlaylist | undefined => {
     return userTrackedPlaylists.find(
-      (userTrackedPlaylist) => userTrackedPlaylist.playlist_id === playlist.id
+      (userTrackedPlaylist) => userTrackedPlaylist.playlist_id === playlist.id,
     );
   };
   const resultsExist = results && results.items.length > 0;
@@ -82,7 +82,7 @@ export default function Playlists() {
         </TabsList>
         <TabsContent
           value="popular"
-          className={"flex flex-col space-y-2 w-full"}
+          className={"flex w-full flex-col space-y-2"}
         >
           {suggested.map((playlist, index) => (
             <PlaylistRow
@@ -95,7 +95,7 @@ export default function Playlists() {
         </TabsContent>
         <TabsContent
           value="search"
-          className={"flex flex-col space-y-2 w-full"}
+          className={"flex w-full flex-col space-y-2"}
         >
           <Form method="get" className={"flex w-full items-center space-x-2"}>
             <Input

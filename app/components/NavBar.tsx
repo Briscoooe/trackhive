@@ -29,9 +29,9 @@ export default function NavBar({
     });
   };
   return (
-    <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-white">
-      <div className="w-full max-w-2xl flex justify-between items-center p-3 text-sm text-foreground">
-        <div className={"space-x-1 flex flex-row items-center"}>
+    <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10 bg-white">
+      <div className="flex w-full max-w-2xl items-center justify-between p-3 text-sm text-foreground">
+        <div className={"flex flex-row items-center space-x-1"}>
           <NavBarLink href={"/"}>Home</NavBarLink>
           {user && (
             <>
@@ -48,7 +48,7 @@ export default function NavBar({
           ) : (
             <Button
               onClick={handleLogin}
-              className="py-2 px-4 rounded-md no-underline bg-spotify-green text-white hover:bg-spotify-green-darker"
+              className="rounded-md bg-spotify-green px-4 py-2 text-white no-underline hover:bg-spotify-green-darker"
             >
               Login
             </Button>

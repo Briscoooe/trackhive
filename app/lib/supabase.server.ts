@@ -11,21 +11,25 @@ export const createSupabaseServerClient = ({
   createServerClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_PUBLIC_KEY!,
-    { request, response }
+    { request, response },
   );
 
-export const createSupabaseAdminServerClient = ({ request, response, }: { request: Request; response: Response; }) =>
+export const createSupabaseAdminServerClient = ({
+  request,
+  response,
+}: {
+  request: Request;
+  response: Response;
+}) =>
   createServerClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { request, response }
+    { request, response },
   );
-
-
 
 export const getAllUserTrackedPlaylists = async (
   supabase: SupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   const userTrackedPlaylists = await supabase
     .from("user_tracked_playlist")
@@ -39,7 +43,7 @@ export const createUserTrackedPlaylist = async (
   userId: string,
   playlistId: string,
   archiveMode: string,
-  dayOfWeek: string
+  dayOfWeek: string,
 ) => {
   const { data, error } = await supabase.from("user_tracked_playlist").insert({
     playlist_id: playlistId,
@@ -56,7 +60,7 @@ export const createUserTrackedPlaylist = async (
 export const deleteUserTrackedPlaylist = async (
   supabase: SupabaseClient,
   userId: string,
-  playlistId: string
+  playlistId: string,
 ) => {
   const { data, error } = await supabase
     .from("user_tracked_playlist")
@@ -71,7 +75,7 @@ export const deleteUserTrackedPlaylist = async (
 
 export const deleteAllUserData = async (
   supabase: SupabaseClient,
-  userId: string
+  userId: string,
 ) => {
   let { data, error } = await supabase
     .from("auth_token")
@@ -94,4 +98,4 @@ export const deleteAllUserData = async (
   if (error) {
     throw error;
   }
-}
+};

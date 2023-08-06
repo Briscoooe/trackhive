@@ -16,7 +16,7 @@ const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";
 export const SPOTIFY_OWNER_URI = "spotify:user:spotify";
 
 const _serializePlaylist = (
-  json: SpotifySimplifiedPlaylistObject
+  json: SpotifySimplifiedPlaylistObject,
 ): SpotifySimplifiedPlaylistObject => {
   const { owner, ...rest } = json;
   const newOwner = {
@@ -32,7 +32,7 @@ const _serializePlaylist = (
 const _recursivelyGetPlaylistTracks = async (
   accessToken: string,
   playlistId: string,
-  url: string = ""
+  url: string = "",
 ): Promise<SpotifyPlaylistItemsResponse> => {
   const endpoint =
     url ||
@@ -41,7 +41,7 @@ const _recursivelyGetPlaylistTracks = async (
         fields:
           "items(added_at,track(id,name,uri,artists(name),album(name,images))),next",
         limit: "50",
-      }
+      },
     )}`;
 
   const response = await fetch(endpoint, {
@@ -56,7 +56,7 @@ const _recursivelyGetPlaylistTracks = async (
     const nextData = await _recursivelyGetPlaylistTracks(
       accessToken,
       playlistId,
-      data.next
+      data.next,
     );
     data.items = [...data.items, ...nextData.items];
   }
@@ -66,7 +66,7 @@ const _recursivelyGetPlaylistTracks = async (
 const _createPlaylist = async (
   accessToken: string,
   userId: string,
-  name: string
+  name: string,
 ): Promise<SpotifySimplifiedPlaylistObject> => {
   const response = await fetch(
     `${SPOTIFY_API_BASE_URL}/users/${userId}/playlists`,
@@ -78,7 +78,7 @@ const _createPlaylist = async (
       body: JSON.stringify({
         name,
       }),
-    }
+    },
   );
   return response.json();
 };
@@ -86,7 +86,7 @@ const _createPlaylist = async (
 const _addItemsToPlaylist = async (
   accessToken: string,
   playlistId: string,
-  uris: string[]
+  uris: string[],
 ): Promise<void> => {
   await fetch(`${SPOTIFY_API_BASE_URL}/playlists/${playlistId}/tracks`, {
     method: "POST",
@@ -100,13 +100,13 @@ const _addItemsToPlaylist = async (
 };
 
 export const refreshAuthToken = async (
-  refreshToken: string
+  refreshToken: string,
 ): Promise<string | undefined> => {
   const res = await fetch(`${SPOTIFY_AUTH_BASE_URL}/token`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${Buffer.from(
-        `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
+        `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`,
       ).toString("base64")}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -121,7 +121,7 @@ export const refreshAuthToken = async (
 
 export const getPlaylist = async (
   accessToken: string,
-  playlistId: string
+  playlistId: string,
 ): Promise<SpotifySimplifiedPlaylistObject> => {
   const response = await fetch(
     `${SPOTIFY_API_BASE_URL}/playlists/${playlistId}`,
@@ -129,13 +129,13 @@ export const getPlaylist = async (
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
   return _serializePlaylist(await response.json());
 };
 
 export const _getCurrentUser = async (
-  accessToken: string
+  accessToken: string,
 ): Promise<SpotifyUserObject> => {
   const response = await fetch(`${SPOTIFY_API_BASE_URL}/me`, {
     headers: {
@@ -146,39 +146,39 @@ export const _getCurrentUser = async (
 };
 export const getPlaylistTracks = async (
   accessToken: string,
-  playlistId: string
+  playlistId: string,
 ): Promise<SpotifyPlaylistTrackObject[]> => {
   const { items } = await _recursivelyGetPlaylistTracks(
     accessToken,
-    playlistId
+    playlistId,
   );
   // Filter out podcasts
   // @ts-ignore
   return items.filter(
-    (item: SpotifyPlaylistTrackObject) => item.track && item.track.album
+    (item: SpotifyPlaylistTrackObject) => item.track && item.track.album,
   );
 };
 
 export const archivePlaylist = async (
   accessToken: string,
-  playlistId: string
+  playlistId: string,
 ): Promise<SpotifySimplifiedPlaylistObject> => {
   const currentPlaylist = await getPlaylist(accessToken, playlistId);
   const me = await _getCurrentUser(accessToken);
   const currentPlaylistTracks = await getPlaylistTracks(
     accessToken,
-    playlistId
+    playlistId,
   );
   const dateFormatYYYYMMDD = new Date().toISOString().split("T")[0];
   const newPlaylist = await _createPlaylist(
     accessToken,
     me.id,
-    `[Trackhive] ${currentPlaylist.name} - ${dateFormatYYYYMMDD}`
+    `[Trackhive] ${currentPlaylist.name} - ${dateFormatYYYYMMDD}`,
   );
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
-    currentPlaylistTracks.map((track) => track.track.uri)
+    currentPlaylistTracks.map((track) => track.track.uri),
   );
   return newPlaylist;
 };
@@ -186,7 +186,7 @@ export const archivePlaylist = async (
 export const searchPlaylists = async (
   accessToken: string,
   query: string,
-  limit: number = 10
+  limit: number = 10,
 ): Promise<SpotifyPlaylistSearchResponse | null> => {
   if (!query) {
     return null;
@@ -201,7 +201,7 @@ export const searchPlaylists = async (
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
   const res = await response.json();
   const { playlists } = res;
@@ -210,7 +210,7 @@ export const searchPlaylists = async (
 };
 
 export const getSuggestedPlaylists = async (
-  accessToken: string
+  accessToken: string,
 ): Promise<SpotifySimplifiedPlaylistObject[] | null> => {
   const responses = await Promise.all([
     searchPlaylists(accessToken, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, 1),

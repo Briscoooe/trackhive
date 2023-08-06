@@ -1,4 +1,9 @@
-import {Bars4Icon, ExclamationTriangleIcon,ArrowLeftOnRectangleIcon, UserCircleIcon} from "@heroicons/react/24/outline";
+import {
+  Bars4Icon,
+  ExclamationTriangleIcon,
+  ArrowLeftOnRectangleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +15,8 @@ import {
 import type { SpotifyUserObject } from "~/types/spotify";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import DeleteAccountDialogForm from "~/components/DeleteAccountDialogForm";
-import {AlertDialogTrigger} from "~/components/ui/alert-dialog";
-import {useState} from "react";
+import { AlertDialogTrigger } from "~/components/ui/alert-dialog";
+import { useState } from "react";
 
 export default function HamburgerMenu({
   user,
@@ -29,29 +34,37 @@ export default function HamburgerMenu({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={"p-4 bg-slate-100 rounded-md"}>
-          <Bars4Icon className="w-4 h-4 text-slate-600" />
+        <DropdownMenuTrigger className={"rounded-md bg-slate-100 p-4"}>
+          <Bars4Icon className="h-4 w-4 text-slate-600" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className={"bg-white"}>
-          <DropdownMenuLabel className={"truncate font-medium flex flex-row items-center"}>
-            <UserCircleIcon className="w-4 h-4 text-slate-500 mr-2 " />
+          <DropdownMenuLabel
+            className={"flex flex-row items-center truncate font-medium"}
+          >
+            <UserCircleIcon className="mr-2 h-4 w-4 text-slate-500 " />
             {user.email}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className={"hover:bg-slate-50 transition cursor-pointer"} onClick={() => setDeleteDialogIsOpen(true)}>
-            <ExclamationTriangleIcon className="w-4 h-4 text-red-600 mr-2 text-slate-800" />
+          <DropdownMenuItem
+            className={"cursor-pointer transition hover:bg-slate-50"}
+            onClick={() => setDeleteDialogIsOpen(true)}
+          >
+            <ExclamationTriangleIcon className="mr-2 h-4 w-4 text-red-600" />
             Delete account
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={signOut}
-            className={"hover:bg-slate-50 transition cursor-pointer"}
+            className={"cursor-pointer transition hover:bg-slate-50"}
           >
-            <ArrowLeftOnRectangleIcon className="w-4 h-4 text-slate-500 mr-2 " />
+            <ArrowLeftOnRectangleIcon className="mr-2 h-4 w-4 text-slate-500 " />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <DeleteAccountDialogForm isOpen={deleteDialogIsOpen} setIsOpen={setDeleteDialogIsOpen} />
+      <DeleteAccountDialogForm
+        isOpen={deleteDialogIsOpen}
+        setIsOpen={setDeleteDialogIsOpen}
+      />
     </>
   );
 }

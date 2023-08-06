@@ -3,7 +3,7 @@ import { redirect } from "@remix-run/node";
 import {
   createSupabaseAdminServerClient,
   createSupabaseServerClient,
-  deleteAllUserData
+  deleteAllUserData,
 } from "~/lib/supabase.server";
 
 export const action = async ({ request }: LoaderArgs) => {
@@ -15,9 +15,12 @@ export const action = async ({ request }: LoaderArgs) => {
     return redirect("/");
   }
 
-  const adminClient = await createSupabaseAdminServerClient({ request, response })
-  await deleteAllUserData(adminClient, session.data.session.user.id)
-  await adminClient.auth.admin.deleteUser(session.data.session.user.id)
+  const adminClient = await createSupabaseAdminServerClient({
+    request,
+    response,
+  });
+  await deleteAllUserData(adminClient, session.data.session.user.id);
+  await adminClient.auth.admin.deleteUser(session.data.session.user.id);
 
   return redirect("/");
 };

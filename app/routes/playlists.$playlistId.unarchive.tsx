@@ -17,7 +17,7 @@ export const action = async ({ request }: LoaderArgs) => {
   await deleteUserTrackedPlaylist(
     supabase,
     session.data.session.user.id,
-    playlistId
+    playlistId,
   );
   const referrer = request.headers.get("referer");
   return redirect(referrer);

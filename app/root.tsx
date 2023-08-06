@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderArgs , V2_MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
   Links,
@@ -46,7 +50,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 
   return json(
     { env, session, user: user.data.user },
-    { headers: response.headers }
+    { headers: response.headers },
   );
 };
 
@@ -55,7 +59,7 @@ export default function App() {
   const serverAccessToken = session?.access_token;
   const { revalidate } = useRevalidator();
   const [supabase] = useState(() =>
-    createBrowserClient(env.SUPABASE_URL, env.SUPABASE_PUBLIC_KEY)
+    createBrowserClient(env.SUPABASE_URL, env.SUPABASE_PUBLIC_KEY),
   );
 
   useEffect(() => {
@@ -84,14 +88,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col min-h-screen">
-        <main className="flex-grow bg-background flex flex-col items-center bg-slate-50">
+      <body className="flex min-h-screen flex-col">
+        <main className="flex flex-grow flex-col items-center bg-background bg-slate-50">
           <NavBar
             redirectUrl={env.SUPABASE_REDIRECT_URL}
             user={user}
             supabase={supabase}
           />
-          <div className="animate-in flex flex-col gap-14 opacity-0 max-w-2xl w-full px-3 py-4 text-foreground">
+          <div className="flex w-full max-w-2xl flex-col gap-14 px-3 py-4 text-foreground opacity-0 animate-in">
             <Outlet context={{ supabase, session }} />
             <ScrollRestoration />
             <Scripts />

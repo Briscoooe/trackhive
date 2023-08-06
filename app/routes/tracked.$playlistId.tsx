@@ -1,4 +1,4 @@
-import type { LoaderArgs} from "@remix-run/node";
+import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { createSupabaseServerClient } from "~/lib/supabase.server";
 import { getPlaylist, getPlaylistTracks } from "~/lib/spotify.server";
@@ -16,11 +16,11 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 
   const playlistTrackObjects = await getPlaylistTracks(
     session.data.session.provider_token,
-    playlistId
+    playlistId,
   );
   const playlist = await getPlaylist(
     session.data.session.provider_token,
-    playlistId
+    playlistId,
   );
   return {
     playlistId,

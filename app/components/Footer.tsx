@@ -2,8 +2,8 @@ import { NativeLinkTag } from "~/components/NativeLinkTag";
 
 export default function Footer() {
   return (
-    <footer className="p-4 sm:p-6 w-full flex items-center justify-center border-t-2 border-slate-100">
-      <div className={"max-w-2xl w-full text-slate-500 text-sm"}>
+    <footer className="flex w-full items-center justify-center border-t-2 border-slate-100 p-4 sm:p-6">
+      <div className={"w-full max-w-2xl text-sm text-slate-500"}>
         Made by{" "}
         <NativeLinkTag href={"https://twitter.com/brianbriscoe_"}>
           Brian Briscoe

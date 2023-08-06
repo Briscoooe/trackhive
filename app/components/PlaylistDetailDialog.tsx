@@ -23,11 +23,11 @@ export default function PlaylistDetailDialog({
 }) {
   const navigate = useNavigate();
   const lastUpdated = Math.max(
-    ...tracks.map((track) => new Date(track.added_at).getTime() / 1000)
+    ...tracks.map((track) => new Date(track.added_at).getTime() / 1000),
   );
   let lastUpdateEnglishString = formatDistanceToNow(
     new Date(lastUpdated * 1000),
-    { addSuffix: true }
+    { addSuffix: true },
   );
   lastUpdateEnglishString =
     lastUpdateEnglishString.charAt(0).toUpperCase() +
@@ -41,12 +41,15 @@ export default function PlaylistDetailDialog({
     >
       <DialogContent className={"max-h-screen overflow-y-scroll"}>
         <DialogHeader className={"border-b-1 border-slate-100 pb-2"}>
-          <DialogTitle className={"flex flex-col space-y-1 text-left -mt-2"}>
+          <DialogTitle className={"-mt-2 flex flex-col space-y-1 text-left"}>
             <span>{playlist.name}</span>
             <div className={"flex flex-row items-center space-x-1"}>
-              <ClockIcon className={"w-3 h-3 mt-0.5 text-slate-500"} />
-              <span className={"text-sm text-slate-500 font-normal"}>
-                Last updated <span className={'font-semibold'}>{lastUpdateEnglishString}</span>
+              <ClockIcon className={"mt-0.5 h-3 w-3 text-slate-500"} />
+              <span className={"text-sm font-normal text-slate-500"}>
+                Last updated{" "}
+                <span className={"font-semibold"}>
+                  {lastUpdateEnglishString}
+                </span>
               </span>
             </div>
           </DialogTitle>
@@ -61,10 +64,6 @@ export default function PlaylistDetailDialog({
                 track={playlistTrackObject.track}
               />
             ))}
-          {/*{isLoading &&*/}
-          {/*  [...Array(playlist.tracks.total)].map((_, index) => (*/}
-          {/*    <TrackRowSkeleton key={index} />*/}
-          {/*  ))}*/}
         </DialogDescription>
       </DialogContent>
     </Dialog>

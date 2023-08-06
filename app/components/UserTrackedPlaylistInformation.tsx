@@ -21,7 +21,7 @@ export function UserTrackedPlaylistInformation({
     return null;
   }
   const getUserTrackedPlaylistString = (
-    userTrackedPlaylist: UserTrackedPlaylist
+    userTrackedPlaylist: UserTrackedPlaylist,
   ) => {
     if (userTrackedPlaylist.archive_mode.toString() === ARCHIVE_MODE_SNAPSHOT) {
       return (
@@ -49,10 +49,10 @@ export function UserTrackedPlaylistInformation({
   return (
     <span
       className={
-        "text-sm text-slate-600 flex flex-row items-center border-y-1 border-slate-100 py-2 w-full"
+        "flex w-full flex-row items-center border-y-1 border-slate-100 py-2 text-sm text-slate-600"
       }
     >
-      <CheckIcon className={"inline-block mr-1 w-4 h-4 text-slate-500"} />
+      <CheckIcon className={"mr-1 inline-block h-4 w-4 text-slate-500"} />
       {getUserTrackedPlaylistString(userTrackedPlaylist)}
     </span>
   );

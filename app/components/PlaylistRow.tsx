@@ -21,18 +21,18 @@ export default function PlaylistRow({
   }
   return (
     <div
-      className={`w-full border-1 animate-in border-slate-200 bg-white space-y-2 flex flex-col rounded-xl p-4 hover:bg-slate-50 transition hover:cursor-pointer overflow-x-hidden shadow-sm ${
+      className={`flex w-full flex-col space-y-2 overflow-x-hidden rounded-xl border-1 border-slate-200 bg-white p-4 shadow-sm transition animate-in hover:cursor-pointer hover:bg-slate-50 ${
         buttonDisabled ? "" : ""
       }`}
     >
       <div
         className={
-          "flex flex-col sm:flex-row items-start justify-between space-y-4 space-x-0 sm:space-x-4 sm:space-y-0 h-full"
+          "flex h-full flex-col items-start justify-between space-x-0 space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
         }
       >
         <PlaylistRowInformation playlist={playlist} />
         <div
-          className={userTrackedPlaylist ? "flex sm:hidden w-full" : "hidden"}
+          className={userTrackedPlaylist ? "flex w-full sm:hidden" : "hidden"}
         >
           <UserTrackedPlaylistInformation
             userTrackedPlaylist={userTrackedPlaylist}
@@ -40,7 +40,7 @@ export default function PlaylistRow({
         </div>
         <div
           className={
-            "flex flex-row sm:flex-col space-x-1 w-full sm:w-auto space-y-0 sm:space-x-0 sm:space-y-1 justify-start"
+            "flex w-full flex-row justify-start space-x-1 space-y-0 sm:w-auto sm:flex-col sm:space-x-0 sm:space-y-1"
           }
         >
           <Link
@@ -56,7 +56,7 @@ export default function PlaylistRow({
           >
             {buttonDisabled ? "Loading..." : "Detail"}
           </Link>
-          <div className={"w-1/2 sm:w-auto h-min"}>
+          <div className={"h-min w-1/2 sm:w-auto"}>
             <ArchivePlaylistForm
               playlist={playlist}
               buttonDisabled={buttonDisabled}

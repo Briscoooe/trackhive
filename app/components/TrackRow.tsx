@@ -16,12 +16,12 @@ export default function TrackRow({
       }
     >
       <div className={"flex flex-row items-center space-x-3"}>
-        <span className={"text-slate-500 text-sm text-right w-auto"}>
+        <span className={"w-auto text-right text-sm text-slate-500"}>
           {index + 1}
         </span>
         <img src={imgUrl} alt={track.name} width={40} height={40} />
         <div className={"flex flex-col"}>
-          <span className={"text-md text-slate-800 leading-6 truncate"}>
+          <span className={"text-md truncate leading-6 text-slate-800"}>
             {track.name}
           </span>
           <div className={"flex flex-row items-center space-x-1"}>
