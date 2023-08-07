@@ -22,7 +22,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   } catch (error) {
     return json({
       body: request.body,
-      headers: request.headers,
+      headers: Object.fromEntries(request.headers.entries()),
       error: error.message,
       isValid,
     });
