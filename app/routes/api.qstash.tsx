@@ -12,16 +12,20 @@ export const action = async ({ request }: ActionArgs) => {
   await verifySignature(request);
   const body = await request.json();
   const { userId, playlistId } = body;
-  console.log({ userId, playlistId });
   const adminClient = createSupabaseAdminServerClient({ request, response });
   const decryptedAuthToken = await adminGetDecryptedAuthTokenByUserId(
     adminClient,
     userId,
   );
-  const accessToken = await refreshAuthToken(
-    decryptedAuthToken.provider_refresh_token!,
-  );
-  console.log({ accessToken });
-  await archivePlaylist(accessToken, playlistId);
+  try {
+    const accessToken = await refreshAuthToken(
+      decryptedAuthToken.decrypted_provider_refresh_token.split("\n").join("")!,
+    );
+    console.log("access token", accessToken);
+    await archivePlaylist(accessToken, playlistId);
+  } catch (e) {
+    console.log("error", e);
+    throw new Response(null, { status: 400 });
+  }
   return json({ success: true });
 };

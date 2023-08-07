@@ -60,7 +60,6 @@ const _recursivelyGetPlaylistTracks = async (
     );
     data.items = [...data.items, ...nextData.items];
   }
-  console.log("dataaaaaaa", data);
   return data;
 };
 
@@ -117,6 +116,9 @@ export const refreshAuthToken = async (
     }),
   });
   const data = await res.json();
+  if (!res.ok || !data.access_token) {
+    throw new Error("Failed to refresh auth token");
+  }
   return data.access_token;
 };
 
