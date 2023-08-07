@@ -16,7 +16,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   let isValid = false;
   try {
     isValid = await r.verify({
-      signature: request.headers.get("Upstash-Signature")!,
+      signature: request.headers.get("upstash-signature")!,
       body,
     });
   } catch (error) {
