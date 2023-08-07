@@ -9,9 +9,10 @@ import { archivePlaylist, refreshAuthToken } from "~/lib/spotify.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const response = new Response();
+  const clonedRequest = request.clone();
   await verifySignature(request);
-  const body = await request.json();
-  const { userId, playlistId, archiveMode } = body;
+  const body = await clonedRequest.json();
+  const { userId, playlistId } = body;
   const adminClient = createSupabaseAdminServerClient({ request, response });
   const decryptedAuthToken = await adminGetDecryptedAuthTokenByUserId(
     adminClient,
