@@ -11,8 +11,16 @@ const r = new Receiver({
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();
   const url = new URL(request.url);
+  const body = await request.text();
+
+  const isValid = r.verify({
+    signature: request.headers.get("Upstash-Signature")!,
+    body,
+  });
+
   return json({
     body: JSON.stringify(request.body),
     headers: JSON.stringify(Object.fromEntries(request.headers.entries())),
+    isValid,
   });
 };
