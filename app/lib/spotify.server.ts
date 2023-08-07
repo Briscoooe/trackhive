@@ -60,6 +60,7 @@ const _recursivelyGetPlaylistTracks = async (
     );
     data.items = [...data.items, ...nextData.items];
   }
+  console.log("dataaaaaaa", data);
   return data;
 };
 
