@@ -21,6 +21,7 @@ export const action = async ({ request }: ActionArgs) => {
       body,
     });
   } catch (error) {
+    console.log("ERROR", error.message);
     return json({
       body: request.body,
       headers: Object.fromEntries(request.headers.entries()),
@@ -28,6 +29,8 @@ export const action = async ({ request }: ActionArgs) => {
       isValid,
     });
   }
+
+  console.log("IS VALID", isValid);
 
   return json({
     body: request.body,
