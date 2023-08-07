@@ -15,6 +15,8 @@ export const action = async ({ request }: ActionArgs) => {
 
   let isValid = false;
   console.log("HEAERS", Object.fromEntries(request.headers.entries()));
+  console.log("BODYTEXT", body);
+  console.log("BODY", request.body);
   try {
     isValid = await r.verify({
       signature: request.headers.get("upstash-signature")!,
