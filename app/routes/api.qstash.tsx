@@ -13,14 +13,24 @@ export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const body = await request.text();
 
-  const isValid = r.verify({
-    signature: request.headers.get("Upstash-Signature")!,
-    body,
-  });
+  let isValid = false;
+  try {
+    isValid = await r.verify({
+      signature: request.headers.get("Upstash-Signature")!,
+      body,
+    });
+  } catch (error) {
+    return json({
+      body: request.body,
+      headers: request.headers,
+      error: error.message,
+      isValid,
+    });
+  }
 
   return json({
     body: request.body,
-    headers: Object.fromEntries(request.headers.entries()),
+    headers: request.headers,
     isValid,
   });
 };
