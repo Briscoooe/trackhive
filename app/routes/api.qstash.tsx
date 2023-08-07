@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, ActionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import * as process from "process";
 import { Receiver } from "@upstash/qstash";
@@ -8,7 +8,7 @@ const r = new Receiver({
   nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY,
 });
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const action = async ({ request }: ActionArgs) => {
   const response = new Response();
   const url = new URL(request.url);
   const body = await request.text();

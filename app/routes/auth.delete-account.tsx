@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { ActionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   createSupabaseAdminServerClient,
@@ -6,7 +6,7 @@ import {
   deleteAllUserData,
 } from "~/lib/supabase.server";
 
-export const action = async ({ request }: LoaderArgs) => {
+export const action = async ({ request }: ActionArgs) => {
   const response = new Response();
 
   const supabase = createSupabaseServerClient({ request, response });
