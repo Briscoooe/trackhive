@@ -14,6 +14,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   const body = await request.text();
 
   let isValid = false;
+  console.log("HEAERS", Object.fromEntries(request.headers.entries()));
   try {
     isValid = await r.verify({
       signature: request.headers.get("upstash-signature")!,
