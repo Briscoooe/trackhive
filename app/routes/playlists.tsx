@@ -6,7 +6,7 @@ import { Input } from "~/components/ui/input";
 import PlaylistRow from "~/components/PlaylistRow";
 import {
   createSupabaseServerClient,
-  getAllUserTrackedPlaylists,
+  getAllUserTrackedPlaylistsByUserId,
 } from "~/lib/supabase.server";
 import { getSuggestedPlaylists, searchPlaylists } from "~/lib/spotify.server";
 import { Button } from "~/components/ui/button";
@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (!session || !session.data.session?.provider_token) {
     return redirect("/");
   }
-  const userTrackedPlaylists = await getAllUserTrackedPlaylists(
+  const userTrackedPlaylists = await getAllUserTrackedPlaylistsByUserId(
     supabase,
     session.data.session.user.id,
   );

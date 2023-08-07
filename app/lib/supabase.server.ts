@@ -51,7 +51,22 @@ export const adminUpsertAuthToken = async (
   }
   return data;
 };
-export const getAllUserTrackedPlaylists = async (
+export const adminGetAllTrackedPlaylistsForToday = async (
+  supabase: SupabaseClient,
+) => {
+  const date = new Date();
+  const dayOfWeek = ((date.getDay() + 6) % 7) + 1;
+  console.log("dayOfWeek", dayOfWeek);
+  const { data, error } = await supabase
+    .from("user_tracked_playlist")
+    .select()
+    .eq("day_of_week", dayOfWeek);
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+export const getAllUserTrackedPlaylistsByUserId = async (
   supabase: SupabaseClient,
   userId: string,
 ) => {

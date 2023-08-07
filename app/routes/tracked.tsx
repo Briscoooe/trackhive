@@ -2,7 +2,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   createSupabaseServerClient,
-  getAllUserTrackedPlaylists,
+  getAllUserTrackedPlaylistsByUserId,
 } from "~/lib/supabase.server";
 import { getPlaylist } from "~/lib/spotify.server";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
@@ -20,7 +20,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   if (!session || !session.data.session?.provider_token) {
     return redirect("/");
   }
-  const userTrackedPlaylists = await getAllUserTrackedPlaylists(
+  const userTrackedPlaylists = await getAllUserTrackedPlaylistsByUserId(
     supabase,
     session.data.session.user.id,
   );

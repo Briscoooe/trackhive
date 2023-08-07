@@ -1,5 +1,4 @@
 import { Receiver } from "@upstash/qstash";
-import process from "process";
 
 export const verifySignature = async (request: Request) => {
   const r = new Receiver({
