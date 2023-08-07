@@ -19,8 +19,8 @@ export const loader = async ({ request }: LoaderArgs) => {
   });
 
   return json({
-    body: JSON.stringify(request.body),
-    headers: JSON.stringify(Object.fromEntries(request.headers.entries())),
+    body: request.body,
+    headers: Object.fromEntries(request.headers.entries()),
     isValid,
   });
 };
