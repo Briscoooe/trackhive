@@ -1,9 +1,9 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
+  adminUpsertAuthToken,
   createSupabaseAdminServerClient,
   createSupabaseServerClient,
-  adminUpsertAuthToken,
 } from "~/lib/supabase.server";
 
 export const loader = async ({ request }: LoaderArgs) => {

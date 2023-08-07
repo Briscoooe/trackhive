@@ -140,3 +140,5 @@ export type UserTrackedPlaylist =
 export type UserTrackedPlaylistSnapshot =
   Database["public"]["Tables"]["user_tracked_playlist_snapshot"]["Row"];
 export type AuthToken = Database["public"]["Tables"]["auth_token"]["Row"];
+export type DecryptedAuthToken =
+  Database["public"]["Views"]["decrypted_auth_token"]["Row"];

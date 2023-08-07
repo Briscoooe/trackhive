@@ -1,7 +1,7 @@
 import {
+  ArrowLeftOnRectangleIcon,
   Bars4Icon,
   ExclamationTriangleIcon,
-  ArrowLeftOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -15,7 +15,6 @@ import {
 import type { SpotifyUserObject } from "~/types/spotify";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import DeleteAccountDialogForm from "~/components/DeleteAccountDialogForm";
-import { AlertDialogTrigger } from "~/components/ui/alert-dialog";
 import { useState } from "react";
 
 export default function HamburgerMenu({

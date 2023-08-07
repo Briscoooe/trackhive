@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/auth-helpers-remix";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { DecryptedAuthToken } from "~/types/supabase";
 
 export const createSupabaseServerClient = ({
   request,
@@ -48,6 +49,23 @@ export const adminUpsertAuthToken = async (
   console.log("error", error);
   if (error) {
     throw error;
+  }
+  return data;
+};
+export const adminGetDecryptedAuthTokenByUserId = async (
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<DecryptedAuthToken> => {
+  const { data, error } = await supabase
+    .from("decrypted_auth_token")
+    .select()
+    .eq("user_id", userId)
+    .single();
+  if (error) {
+    throw error;
+  }
+  if (!data) {
+    throw new Error("No auth token found for user");
   }
   return data;
 };

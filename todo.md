@@ -35,9 +35,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - deno
   - https://developers.cloudflare.com/workers/platform/limits/
   - ideally - handle each archive request one request at time in a big job queue. 10s timeout wont matter
-  - use qstash to 
+  - use qstash to
   - ~~Vercel~~ times out at 10s
-  - ~~https://temporal.io/~~ - not GA 
+  - ~~https://temporal.io/~~ - not GA
 - [x] speed improvements
 - [ ] spinners for everything
 - [ ] clean up code
