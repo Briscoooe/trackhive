@@ -10,7 +10,6 @@ export function NavBarLink({
 }) {
   return (
     <NavLink
-      prefetch={"render"}
       to={href}
       className={({ isActive, isPending }) =>
         `rounded-md px-4 py-2 transition hover:bg-slate-100 ${
