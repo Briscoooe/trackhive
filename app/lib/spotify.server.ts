@@ -21,7 +21,7 @@ const _serializePlaylist = (
   const { owner, ...rest } = json;
   const newOwner = {
     ...owner,
-    is_spotify: owner.uri === SPOTIFY_OWNER_URI,
+    is_spotify: owner ? owner.uri === SPOTIFY_OWNER_URI : false,
   };
   return {
     ...rest,
