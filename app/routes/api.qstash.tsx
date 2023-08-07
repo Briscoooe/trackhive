@@ -3,40 +3,34 @@ import { json, redirect } from "@remix-run/node";
 import * as process from "process";
 import { Receiver } from "@upstash/qstash";
 
-const r = new Receiver({
-  currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY,
-  nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY,
-});
-
 export const action = async ({ request }: ActionArgs) => {
-  const response = new Response();
-  const url = new URL(request.url);
+  const r = new Receiver({
+    currentSigningKey: process.env.QSTASH_CURRENT_SIGNING_KEY,
+    nextSigningKey: process.env.QSTASH_NEXT_SIGNING_KEY,
+  });
   const body = await request.text();
+  const upstashSignature = request.headers.get("upstash-signature");
+  if (!upstashSignature) {
+    throw new Response(null, {
+      status: 400,
+      statusText: "Missing Upstash signature",
+    });
+  }
 
   let isValid = false;
-  console.log("HEAERS", Object.fromEntries(request.headers.entries()));
-  console.log("BODYTEXT", body);
-  console.log("BODY", request.body);
   try {
     isValid = await r.verify({
       signature: request.headers.get("upstash-signature")!,
       body,
     });
   } catch (error) {
-    console.log("ERROR", error.message);
-    return json({
-      body: request.body,
-      headers: Object.fromEntries(request.headers.entries()),
-      error: error.message,
-      isValid,
+    throw new Response(null, {
+      status: 400,
+      statusText: "Invalid Upstash signature",
     });
   }
 
-  console.log("IS VALID", isValid);
-
   return json({
-    body: request.body,
-    headers: request.headers,
     isValid,
   });
 };
