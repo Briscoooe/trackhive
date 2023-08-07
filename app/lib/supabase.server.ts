@@ -45,8 +45,6 @@ export const adminUpsertAuthToken = async (
       { onConflict: "user_id" },
     )
     .select();
-  console.log("data", data);
-  console.log("error", error);
   if (error) {
     throw error;
   }
@@ -74,7 +72,6 @@ export const adminGetAllTrackedPlaylistsForToday = async (
 ) => {
   const date = new Date();
   const dayOfWeek = ((date.getDay() + 6) % 7) + 1;
-  console.log("dayOfWeek", dayOfWeek);
   const { data, error } = await supabase
     .from("user_tracked_playlist")
     .select()

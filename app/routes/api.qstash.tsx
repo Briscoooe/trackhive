@@ -21,7 +21,6 @@ export const action = async ({ request }: ActionArgs) => {
     const accessToken = await refreshAuthToken(
       decryptedAuthToken.decrypted_provider_refresh_token.split("\n").join("")!,
     );
-    console.log("access token", accessToken);
     await archivePlaylist(accessToken, playlistId);
   } catch (e) {
     console.log("error", e);

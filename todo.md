@@ -29,7 +29,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] offer differnt archive options (e.g. append vs snapshot)
   - [x] append - add new tracks to playlist
   - [x] snapshot - create new playlist with new tracks
-- find out best async/scheduled task framework for remix
+- [x] find out best async/scheduled task framework for remix
   - https://quirrel.dev/
   - https://docs.upstash.com/qstash (500 messages per day) (pay as you go ($1 per 100K messages))
   - deno
@@ -39,6 +39,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
   - ~~Vercel~~ times out at 10s
   - ~~https://temporal.io/~~ - not GA
 - [x] speed improvements
+- [ ] implement playlist diffing
+- [ ] implement forever mode
+- [ ] fix remix vercel errors ⚠️ REMIX FUTURE CHANGE: The `@remix-run/vercel` runtime adapter has been deprecated in favor of out of the box Vercel functionality and will be removed in Remix v2. Please update your code by removing `@remix-run/vercel` & `@vercel/node` from your `package.json`, removing your `server.js`/`server.ts` file, and removing the `server` & `serverBuildPath` options from your `remix.config.js`.
 - [ ] spinners for everything
 - [ ] clean up code
 
