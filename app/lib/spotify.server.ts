@@ -206,6 +206,10 @@ export const searchPlaylists = async (
       },
     },
   );
+  console.log("searchPlaylists", response);
+  if (!response.ok) {
+    return null;
+  }
   const res = await response.json();
   const { playlists } = res;
   playlists.items = playlists.items.map(_serializePlaylist);
