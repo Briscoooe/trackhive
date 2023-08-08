@@ -3,8 +3,8 @@ import { NativeLinkTag } from "~/components/NativeLinkTag";
 
 export default function Index() {
   return (
-    <div>
-      <h1 className="mb-6 text-center text-4xl font-bold leading-none tracking-tight text-gray-900 sm:mb-4 sm:text-left md:text-4xl lg:text-5xl">
+    <div className={"flex flex-col space-y-4"}>
+      <h1 className="text-center text-4xl font-bold leading-none tracking-tight text-gray-900 sm:mb-4 sm:text-left md:text-4xl lg:text-5xl">
         Keep your Spotify playlists intact
       </h1>
 

@@ -34,21 +34,24 @@ export const adminUpsertAuthToken = async (
   providerToken: string,
   providerRefreshToken: string,
 ) => {
-  const { data, error } = await supabase
+  const { error: deleteError } = await supabase
     .from("auth_token")
-    .upsert(
-      {
-        user_id: userId,
-        provider_token: providerToken,
-        provider_refresh_token: providerRefreshToken,
-      },
-      { onConflict: "user_id" },
-    )
-    .select();
-  if (error) {
-    throw error;
+    .delete()
+    .eq("user_id", userId);
+  if (deleteError) {
+    throw deleteerror;
   }
-  return data;
+  const { data: insertData, error: insertError } = await supabase
+    .from("auth_token")
+    .insert({
+      user_id: userId,
+      provider_token: providerToken,
+      provider_refresh_token: providerRefreshToken,
+    });
+  if (insertError) {
+    throw insertError;
+  }
+  return insertData;
 };
 export const adminGetDecryptedAuthTokenByUserId = async (
   supabase: SupabaseClient,
