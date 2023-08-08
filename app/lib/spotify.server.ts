@@ -206,7 +206,9 @@ export const searchPlaylists = async (
       },
     },
   );
-  console.log("searchPlaylists", response);
+  console.log("searchPlaylists status", response.status);
+  console.log("searchPlaylists ok", response.ok);
+  console.log("searchPlaylists statusText", response.statusText);
   if (!response.ok) {
     return null;
   }
