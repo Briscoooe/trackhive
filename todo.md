@@ -44,7 +44,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] fix remix vercel errors ⚠️ REMIX FUTURE CHANGE: The `@remix-run/vercel` runtime adapter has been deprecated in favor of out of the box Vercel functionality and will be removed in Remix v2. Please update your code by removing `@remix-run/vercel` & `@vercel/node` from your `package.json`, removing your `server.js`/`server.ts` file, and removing the `server` & `serverBuildPath` options from your `remix.config.js`.
 - [ ] spinners for everything
 - [ ] clean up code
-- auto reuth if token expires
+- [ ] auto reuth if token expires
+- [ ] error boundary
+- [ ] link to Spotidy settings page
 
 # UI bits
 
