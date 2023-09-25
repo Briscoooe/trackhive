@@ -21,6 +21,7 @@ import NavBar from "./components/NavBar";
 
 import stylesheet from "~/tailwind.css";
 import Footer from "~/components/Footer";
+import { ErrorBoundary } from "~/components/ErrorBoundary";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -100,6 +101,7 @@ export default function App() {
             <ScrollRestoration />
             <Scripts />
             <LiveReload />
+            <ErrorBoundary />
           </div>
         </main>
         <Footer />

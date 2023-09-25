@@ -34,12 +34,16 @@ export const adminUpsertAuthToken = async (
   providerToken: string,
   providerRefreshToken: string,
 ) => {
+  console.log(
+    "supabase.server.ts: adminUpsertAuthToken: upserting userId",
+    userId,
+  );
   const { error: deleteError } = await supabase
     .from("auth_token")
     .delete()
     .eq("user_id", userId);
   if (deleteError) {
-    throw deleteerror;
+    throw deleteError;
   }
   const { data: insertData, error: insertError } = await supabase
     .from("auth_token")
@@ -51,12 +55,21 @@ export const adminUpsertAuthToken = async (
   if (insertError) {
     throw insertError;
   }
+  console.log(
+    "supabase.server.ts: adminUpsertAuthToken: upserted done userId",
+    userId,
+  );
   return insertData;
 };
+
 export const adminGetDecryptedAuthTokenByUserId = async (
   supabase: SupabaseClient,
   userId: string,
 ): Promise<DecryptedAuthToken> => {
+  console.log(
+    "supabase.server.ts: adminGetDecryptedAuthTokenByUserId: getting userId",
+    userId,
+  );
   const { data, error } = await supabase
     .from("decrypted_auth_token")
     .select()
@@ -68,11 +81,19 @@ export const adminGetDecryptedAuthTokenByUserId = async (
   if (!data) {
     throw new Error("No auth token found for user");
   }
+  console.log(
+    "supabase.server.ts: adminGetDecryptedAuthTokenByUserId: got userId",
+    userId,
+  );
   return data;
 };
+
 export const adminGetAllTrackedPlaylistsForToday = async (
   supabase: SupabaseClient,
 ) => {
+  console.log(
+    "supabase.server.ts: adminGetAllTrackedPlaylistsForToday getting",
+  );
   const date = new Date();
   const dayOfWeek = ((date.getDay() + 6) % 7) + 1;
   const { data, error } = await supabase
@@ -82,16 +103,27 @@ export const adminGetAllTrackedPlaylistsForToday = async (
   if (error) {
     throw error;
   }
+  console.log(
+    `supabase.server.ts: adminGetAllTrackedPlaylistsForToday got ${data?.length} playlists`,
+  );
   return data;
 };
+
 export const getAllUserTrackedPlaylistsByUserId = async (
   supabase: SupabaseClient,
   userId: string,
 ) => {
+  console.log(
+    "supabase.server.ts: getAllUserTrackedPlaylistsByUserId getting for userId",
+    userId,
+  );
   const userTrackedPlaylists = await supabase
     .from("user_tracked_playlist")
     .select()
     .eq("user_id", userId);
+  console.log(
+    `supabase.server.ts: getAllUserTrackedPlaylistsByUserId got ${userTrackedPlaylists.data?.length}`,
+  );
   return userTrackedPlaylists.data;
 };
 
@@ -102,6 +134,16 @@ export const createUserTrackedPlaylist = async (
   archiveMode: string,
   dayOfWeek: string,
 ) => {
+  console.log(
+    `supabase.server.ts: createUserTrackedPlaylist for userId`,
+    userId,
+    "playlistId",
+    playlistId,
+    "archiveMode",
+    archiveMode,
+    "dayOfWeek",
+    dayOfWeek,
+  );
   const { data, error } = await supabase.from("user_tracked_playlist").insert({
     playlist_id: playlistId,
     user_id: userId,
@@ -111,6 +153,7 @@ export const createUserTrackedPlaylist = async (
   if (error) {
     throw error;
   }
+  console.log(`supabase.server.ts: createUserTrackedPlaylist done`);
   return data;
 };
 
@@ -119,6 +162,12 @@ export const deleteUserTrackedPlaylist = async (
   userId: string,
   playlistId: string,
 ) => {
+  console.log(
+    `supabase.server.ts: deleteUserTrackedPlaylist for userId`,
+    userId,
+    "playlistId",
+    playlistId,
+  );
   const { data, error } = await supabase
     .from("user_tracked_playlist")
     .delete()
@@ -127,6 +176,7 @@ export const deleteUserTrackedPlaylist = async (
   if (error) {
     throw error;
   }
+  console.log(`supabase.server.ts: deleteUserTrackedPlaylist done`);
   return data;
 };
 
@@ -134,6 +184,8 @@ export const deleteAllUserData = async (
   supabase: SupabaseClient,
   userId: string,
 ) => {
+  console.log(`supabase.server.ts: deleteAllUserData for userId`, userId);
+  console.log(`supabase.server.ts: deleteAllUserData deleting auth_token`);
   let { data, error } = await supabase
     .from("auth_token")
     .delete()
@@ -141,6 +193,9 @@ export const deleteAllUserData = async (
   if (error) {
     throw error;
   }
+  console.log(
+    `supabase.server.ts: deleteAllUserData deleting decrypted_auth_token`,
+  );
   ({ data, error } = await supabase
     .from("user_tracked_playlist")
     .delete()
@@ -148,6 +203,11 @@ export const deleteAllUserData = async (
   if (error) {
     throw error;
   }
+
+  console.log(
+    `supabase.server.ts: deleteAllUserData deleting user_tracked_playlist_snapshot`,
+  );
+
   ({ data, error } = await supabase
     .from("user_tracked_playlist_snapshot")
     .delete()

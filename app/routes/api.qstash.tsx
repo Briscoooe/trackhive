@@ -1,6 +1,6 @@
 import type { ActionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { verifySignature } from "~/lib/qstash.server";
+import { verifySignature } from "~/lib/qstash-queue.server";
 import {
   adminGetDecryptedAuthTokenByUserId,
   createSupabaseAdminServerClient,

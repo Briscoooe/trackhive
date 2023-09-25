@@ -13,6 +13,7 @@ import { Button } from "~/components/ui/button";
 import { useNavigation } from "react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import type { UserTrackedPlaylist } from "~/types/supabase";
+import { requireSupabaseSession } from "~/utils/permissions.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const response = new Response();
@@ -20,20 +21,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   const query = url.searchParams.get("query");
   const selectedTab = url.searchParams.get("tab");
   const supabase = createSupabaseServerClient({ request, response });
-  const session = await supabase.auth.getSession();
-  if (!session || !session.data.session?.provider_token) {
-    return redirect("/");
-  }
+  const { user, provider_token } = await requireSupabaseSession(supabase);
   const userTrackedPlaylists = await getAllUserTrackedPlaylistsByUserId(
     supabase,
-    session.data.session.user.id,
+    user.id,
   );
-  const suggested = await getSuggestedPlaylists(
-    session.data.session.provider_token,
-  );
+  const suggested = await getSuggestedPlaylists(provider_token);
   let results;
   if (query) {
-    results = await searchPlaylists(session.data.session.provider_token, query);
+    results = await searchPlaylists(provider_token, query);
   }
   return {
     suggested,

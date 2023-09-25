@@ -12,25 +12,21 @@ import {
   FaceFrownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import { requireSupabaseSession } from "~/utils/permissions.server";
 
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
-  const session = await supabase.auth.getSession();
-  if (!session || !session.data.session?.provider_token) {
-    return redirect("/");
-  }
+  const { user, provider_token } = await requireSupabaseSession(supabase);
   const userTrackedPlaylists = await getAllUserTrackedPlaylistsByUserId(
     supabase,
-    session.data.session.user.id,
+    user.id,
   );
   const playlistIds = userTrackedPlaylists?.map(
     (archive) => archive.playlist_id,
   );
   const playlists = await Promise.all(
-    playlistIds.map((playlistId) =>
-      getPlaylist(session.data.session.provider_token, playlistId),
-    ),
+    playlistIds.map((playlistId) => getPlaylist(provider_token, playlistId)),
   );
   return {
     playlists,

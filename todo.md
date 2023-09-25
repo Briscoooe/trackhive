@@ -44,9 +44,15 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [x] fix remix vercel errors ⚠️ REMIX FUTURE CHANGE: The `@remix-run/vercel` runtime adapter has been deprecated in favor of out of the box Vercel functionality and will be removed in Remix v2. Please update your code by removing `@remix-run/vercel` & `@vercel/node` from your `package.json`, removing your `server.js`/`server.ts` file, and removing the `server` & `serverBuildPath` options from your `remix.config.js`.
 - [ ] spinners for everything
 - [ ] clean up code
-- [ ] auto reuth if token expires
+- [x] auto reuth if token expires
 - [ ] error boundary
 - [ ] link to Spotidy settings page
+- Spotify API extension request stuff
+  - [x] Is metadata attributed with the Spotify logo and a link back to the applicable artist, album, track, or playlist Spotify service?
+    - If you display any Spotify Content you must clearly attribute the content as being supplied and made available by Spotify, by using the Spotify Marks. Our Branding Guidelines include some examples of what you should and shouldn’t do.
+    - Metadata, cover art and Audio Preview Clips must be accompanied by a link back to the applicable album, content or playlist on the Spotify Service.
+    - You must not offer metadata, cover art, and/or Audio Preview Clips as a standalone service or product. 
+  - 
 
 # UI bits
 
@@ -59,7 +65,9 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - https://vercel.com/docs/cron-jobs
 - https://remix.run/docs/en/main/hooks/use-action-data
 - https://reactrouter.com/en/main/hooks/use-fetcher
--
+
+# general
+- submit to spotify + supabase showcase
 
 # DESIGN PRINCIPLES
 
@@ -70,6 +78,6 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 
 - [x] playlistRow
 - [x] isPlaylistspotifyOWned - not a clean split client v server. maybe make its own prop
-- reduce returned fields by spotify
+- reduce returned fields by spotify - serializer?
 - store playlist snapshots in DB to avoid making dupe requests to spotify for discover weekly
 - dont fetch all songs in playlist at once, use next cursor

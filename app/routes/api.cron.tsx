@@ -4,7 +4,7 @@ import {
   adminGetAllTrackedPlaylistsForToday,
   createSupabaseAdminServerClient,
 } from "~/lib/supabase.server";
-import { verifySignature } from "~/lib/qstash.server";
+import { verifySignature } from "~/lib/qstash-queue.server";
 import { Client } from "@upstash/qstash";
 
 export const action = async ({ request }: LoaderArgs) => {

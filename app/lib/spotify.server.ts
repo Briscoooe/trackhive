@@ -10,6 +10,12 @@ import {
   SPOTIFY_PLAYLIST_RAP_CAVIAR_NAME,
   SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME,
 } from "~/lib/constants";
+import {
+  getCachedPlaylist,
+  getCachedPlaylistTracks,
+  setCachedPlaylist,
+  setCachedPlaylistTracks,
+} from "~/lib/qstash-cache.server";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 const SPOTIFY_AUTH_BASE_URL = "https://accounts.spotify.com/api";
@@ -102,6 +108,7 @@ const _addItemsToPlaylist = async (
 export const refreshAuthToken = async (
   refreshToken: string,
 ): Promise<string> => {
+  console.log("spotify.server.ts: refreshAuthToken: refreshing");
   const res = await fetch(`${SPOTIFY_AUTH_BASE_URL}/token`, {
     method: "POST",
     headers: {
@@ -119,6 +126,7 @@ export const refreshAuthToken = async (
   if (!res.ok || !data.access_token) {
     throw new Error("Failed to refresh auth token");
   }
+  console.log("spotify.server.ts: refreshAuthToken: refreshed");
   return data.access_token;
 };
 
@@ -126,6 +134,11 @@ export const getPlaylist = async (
   accessToken: string,
   playlistId: string,
 ): Promise<SpotifySimplifiedPlaylistObject> => {
+  console.log("spotify.server.ts: getPlaylist: fetching", playlistId);
+  const cachedPlaylist = await getCachedPlaylist(playlistId);
+  if (cachedPlaylist) {
+    return cachedPlaylist;
+  }
   const response = await fetch(
     `${SPOTIFY_API_BASE_URL}/playlists/${playlistId}`,
     {
@@ -134,7 +147,10 @@ export const getPlaylist = async (
       },
     },
   );
-  return _serializePlaylist(await response.json());
+  const serialized = _serializePlaylist(await response.json());
+  await setCachedPlaylist(playlistId, serialized);
+  console.log("spotify.server.ts: getPlaylist: fetched", serialized.name);
+  return serialized;
 };
 
 export const _getCurrentUser = async (
@@ -147,19 +163,28 @@ export const _getCurrentUser = async (
   });
   return response.json();
 };
+
 export const getPlaylistTracks = async (
   accessToken: string,
   playlistId: string,
 ): Promise<SpotifyPlaylistTrackObject[]> => {
+  console.log("spotify.server.ts: getPlaylistTracks: fetching");
+  const cachedResults = await getCachedPlaylistTracks(playlistId);
+  if (cachedResults) {
+    return cachedResults;
+  }
   const { items } = await _recursivelyGetPlaylistTracks(
     accessToken,
     playlistId,
   );
   // Filter out podcasts
   // @ts-ignore
-  return items.filter(
+  const tracks = items.filter(
     (item: SpotifyPlaylistTrackObject) => item.track && item.track.album,
   );
+  await setCachedPlaylistTracks(playlistId, tracks);
+  console.log("spotify.server.ts: getPlaylistTracks: fetched");
+  return tracks;
 };
 
 export const archivePlaylist = async (
@@ -167,22 +192,30 @@ export const archivePlaylist = async (
   playlistId: string,
 ): Promise<SpotifySimplifiedPlaylistObject> => {
   const currentPlaylist = await getPlaylist(accessToken, playlistId);
+  console.log("spotify.server.ts: archivePlaylist: getting current user");
   const me = await _getCurrentUser(accessToken);
+  console.log(
+    "spotify.server.ts: archivePlaylist: getting playlist tracks",
+    playlistId,
+  );
   const currentPlaylistTracks = await getPlaylistTracks(
     accessToken,
     playlistId,
   );
   const dateFormatYYYYMMDD = new Date().toISOString().split("T")[0];
+  console.log("spotify.server.ts: archivePlaylist: creating new playlist");
   const newPlaylist = await _createPlaylist(
     accessToken,
     me.id,
     `[Trackhive] ${currentPlaylist.name} - ${dateFormatYYYYMMDD}`,
   );
+  console.log("spotify.server.ts: archivePlaylist: adding tracks to playlist");
   await _addItemsToPlaylist(
     accessToken,
     newPlaylist.id,
     currentPlaylistTracks.map((track) => track.track.uri),
   );
+  console.log("spotify.server.ts: archivePlaylist: done");
   return newPlaylist;
 };
 
@@ -194,6 +227,7 @@ export const searchPlaylists = async (
   if (!query) {
     return null;
   }
+  console.log("spotify.server.ts: searchPlaylists: fetching", query);
   const response = await fetch(
     `${SPOTIFY_API_BASE_URL}/search?${new URLSearchParams({
       q: query,
@@ -206,21 +240,22 @@ export const searchPlaylists = async (
       },
     },
   );
-  console.log("searchPlaylists status", response.status);
-  console.log("searchPlaylists ok", response.ok);
-  console.log("searchPlaylists statusText", response.statusText);
   if (!response.ok) {
     return null;
   }
   const res = await response.json();
   const { playlists } = res;
   playlists.items = playlists.items.map(_serializePlaylist);
+  console.log(
+    `spotify.server.ts: searchPlaylists: fetched ${playlists.items.length} playlist(s)`,
+  );
   return playlists;
 };
 
 export const getSuggestedPlaylists = async (
   accessToken: string,
 ): Promise<SpotifySimplifiedPlaylistObject[] | null> => {
+  console.log("spotify.server.ts: getSuggestedPlaylists: fetching");
   const responses = await Promise.all([
     searchPlaylists(accessToken, SPOTIFY_PLAYLIST_DISCOVER_WEEKLY_NAME, 1),
     searchPlaylists(accessToken, SPOTIFY_PLAYLIST_RELEASE_RADAR_NAME, 1),
@@ -233,5 +268,8 @@ export const getSuggestedPlaylists = async (
       playlists.push(response.items[0]);
     }
   }
+  console.log(
+    `spotify.server.ts: getSuggestedPlaylists: fetched ${playlists.length} playlist(s)`,
+  );
   return playlists;
 };
