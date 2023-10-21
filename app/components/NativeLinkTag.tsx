@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export function NativeLinkTag({
   href,
   children,
@@ -6,7 +8,7 @@ export function NativeLinkTag({
   children: ReactNode;
 }) {
   return (
-    <a className={"font-medium underline"} href={href}>
+    <a className={"font-medium underline"} href={href} rel="noreferrer">
       {children}
     </a>
   );
