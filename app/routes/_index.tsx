@@ -30,6 +30,13 @@ export default function Index() {
         Yes, and always will be. It costs me $0 to run TrackHive, so I'm happy
         to offer it for free.
       </LandingPageSection>
+      <LandingPageSection title="How do I delete my account?">
+        Visit the{" "}
+        <NativeLinkTag href={"https://www.spotify.com/account/apps/"}>
+          Manage Apps
+        </NativeLinkTag>{" "}
+        page in your Spotify account to completely disconnect TrackHive.
+      </LandingPageSection>
       <LandingPageSection title="Who made this?">
         TrackHive is made by{" "}
         <NativeLinkTag href={"https://twitter.com/brianbriscoe_"}>

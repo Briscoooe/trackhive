@@ -46,7 +46,7 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - [ ] clean up code
 - [x] auto reuth if token expires
 - [ ] error boundary
-- [ ] link to Spotidy settings page
+- [x] link to Spotidy settings page
 - Spotify API extension request stuff
   - [x] Is metadata attributed with the Spotify logo and a link back to the applicable artist, album, track, or playlist Spotify service?
     - If you display any Spotify Content you must clearly attribute the content as being supplied and made available by Spotify, by using the Spotify Marks. Our Branding Guidelines include some examples of what you should and shouldn’t do.
