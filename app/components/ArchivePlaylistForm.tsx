@@ -51,7 +51,6 @@ export function ArchivePlaylistForm({
   buttonDisabled: boolean;
   userTrackedPlaylist?: UserTrackedPlaylist | null;
 }) {
-  const navigation = useNavigation();
   const [dayOfWeek, setDayOfWeek] = useState(daysOfWeek[0].value);
   const [archiveMode, setArchiveMode] = useState(archiveModes[0].value);
   const isArchived = !!userTrackedPlaylist;

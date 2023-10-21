@@ -13,10 +13,9 @@ export const loader = async ({ params, request }: LoaderArgs) => {
   }
   const response = new Response();
   const supabase = createSupabaseServerClient({ request, response });
-  const session = await requireSupabaseSession(supabase);
-
+  const { user, provider_token } = await requireSupabaseSession(supabase);
   const playlistTrackObjects = await getPlaylistTracks(
-    session.provider_token,
+    provider_token,
     playlistId,
   );
   const playlist = await getPlaylist(provider_token, playlistId);

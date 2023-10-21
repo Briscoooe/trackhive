@@ -5,22 +5,20 @@ import {
   createSupabaseServerClient,
   deleteAllUserData,
 } from "~/lib/supabase.server";
+import { requireSupabaseSession } from "~/utils/permissions.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const response = new Response();
 
   const supabase = createSupabaseServerClient({ request, response });
-  const session = await supabase.auth.getSession();
-  if (!session || !session.data.session?.user) {
-    return redirect("/");
-  }
+  const { user } = await requireSupabaseSession(supabase);
 
   const adminClient = await createSupabaseAdminServerClient({
     request,
     response,
   });
-  await deleteAllUserData(adminClient, session.data.session.user.id);
-  await adminClient.auth.admin.deleteUser(session.data.session.user.id);
+  await deleteAllUserData(adminClient, user.id);
+  await adminClient.auth.admin.deleteUser(user.id);
 
   return redirect("/");
 };
