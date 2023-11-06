@@ -50,8 +50,8 @@ https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs#create-an
 - Spotify API extension request stuff
   - [x] Is metadata attributed with the Spotify logo and a link back to the applicable artist, album, track, or playlist Spotify service?
     - If you display any Spotify Content you must clearly attribute the content as being supplied and made available by Spotify, by using the Spotify Marks. Our Branding Guidelines include some examples of what you should and shouldn’t do.
-    - Metadata, cover art and Audio Preview Clips must be accompanied by a link back to the applicable album, content or playlist on the Spotify Service.
-    - You must not offer metadata, cover art, and/or Audio Preview Clips as a standalone service or product. 
+    - [x] Metadata, cover art and Audio Preview Clips must be accompanied by a link back to the applicable album, content or playlist on the Spotify Service.
+    - [x] You must not offer metadata, cover art, and/or Audio Preview Clips as a standalone service or product. 
   - 
 
 # UI bits

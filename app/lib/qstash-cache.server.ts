@@ -15,18 +15,19 @@ const redis = new Redis(
 export const getCachedPlaylistTracks = async (
   playlistId: string,
 ): Promise<SpotifyPlaylistTrackObject[] | undefined> => {
-  try {
-    const cached = await redis.get(
-      `${PLAYLIST_TRACKS_CACHE_KEY}:${playlistId}`,
-    );
-    if (cached) {
-      console.log("qstash-cache.server.ts: getCachedPlaylistTracks: cache hit");
-      return cached as SpotifyPlaylistTrackObject[];
-    }
-    console.log("qstash-cache.server.ts: getCachedPlaylistTracks: cache miss");
-  } catch (e) {
-    console.log("qstash-cache.server.ts: getCachedPlaylistTracks: error", e);
-  }
+  // try {
+  //   const cached = await redis.get(
+  //     `${PLAYLIST_TRACKS_CACHE_KEY}:${playlistId}`,
+  //   );
+  //   if (cached) {
+  //     console.log("qstash-cache.server.ts: getCachedPlaylistTracks: cache hit");
+  //     return cached as SpotifyPlaylistTrackObject[];
+  //   }
+  //   console.log("qstash-cache.server.ts: getCachedPlaylistTracks: cache miss");
+  // } catch (e) {
+  //   console.log("qstash-cache.server.ts: getCachedPlaylistTracks: error", e);
+  // }
+  return undefined;
 };
 
 export const setCachedPlaylistTracks = async (
@@ -43,16 +44,16 @@ export const setCachedPlaylistTracks = async (
 export const getCachedPlaylist = async (
   playlistId: string,
 ): Promise<SpotifySimplifiedPlaylistObject | undefined> => {
-  try {
-    const cached = await redis.get(`${PLAYLIST_CACHE_KEY}:${playlistId}`);
-    if (cached) {
-      console.log("qstash-cache.server.ts: getCachedPlaylist: cache hit");
-      return cached as SpotifySimplifiedPlaylistObject;
-    }
-    console.log("qstash-cache.server.ts: getCachedPlaylist: cache miss");
-  } catch (e) {
-    console.log("qstash-cache.server.ts: getCachedPlaylist: error", e);
-  }
+  // try {
+  //   const cached = await redis.get(`${PLAYLIST_CACHE_KEY}:${playlistId}`);
+  //   if (cached) {
+  //     console.log("qstash-cache.server.ts: getCachedPlaylist: cache hit");
+  //     return cached as SpotifySimplifiedPlaylistObject;
+  //   }
+  //   console.log("qstash-cache.server.ts: getCachedPlaylist: cache miss");
+  // } catch (e) {
+  //   console.log("qstash-cache.server.ts: getCachedPlaylist: error", e);
+  // }
   return undefined;
 };
 
